@@ -1,4 +1,3 @@
-const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl/settings/api-keys; const SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVneWJ4b3dubWZzcWhtZG5jcmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTQyNTgsImV4cCI6MjA5MDA3MDI1OH0.lR1ane15u4tNwy9lOMXOn9ORQzCPY4mgNffGJr0KTnY;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +31,6 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
     padding-bottom: 6rem;
   }
 
-  /* ── HEADER ── */
   .header {
     background: var(--green);
     padding: 1rem 1.5rem 1.2rem;
@@ -47,21 +45,11 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
     align-items: center;
     justify-content: space-between;
   }
-  .header-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    color: var(--lime);
-  }
+  .header-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--lime); }
   .header-logo span { color: var(--pink); font-style: italic; }
   .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; }
   .header-step { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 500; }
-  .header-region {
-    font-size: 0.65rem;
-    color: var(--lime);
-    font-weight: 600;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-  }
+  .header-region { font-size: 0.65rem; color: var(--lime); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; }
 
   .progress-bar { height: 3px; background: rgba(255,255,255,0.2); position: sticky; top: 56px; z-index: 49; }
   .progress-fill { height: 100%; background: var(--lime); transition: width 0.4s ease; width: 20%; }
@@ -77,113 +65,31 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
   .step-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; line-height: 1.15; color: var(--navy); }
   .step-sub { font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
 
-  /* ── REGION BADGE ── */
-  .region-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: var(--navy);
-    color: var(--lime);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 0.35rem 0.85rem;
-    border-radius: 100px;
-    margin-bottom: 1.1rem;
-  }
+  .region-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--navy); color: var(--lime); font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 100px; margin-bottom: 1.1rem; }
 
-  /* ── COUNTY FILTERS ── */
-  .county-filters {
-    display: flex;
-    gap: 0.45rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  .county-btn {
-    padding: 0.35rem 0.85rem;
-    border-radius: 100px;
-    font-size: 0.78rem;
-    font-weight: 500;
-    cursor: pointer;
-    border: 2px solid var(--border);
-    background: var(--white);
-    color: var(--dark);
-    transition: all 0.18s;
-    user-select: none;
-  }
+  .county-filters { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .county-btn { padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.78rem; font-weight: 500; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--dark); transition: all 0.18s; user-select: none; }
   .county-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
 
-  /* ── SEARCH ── */
   .search-wrap { position: relative; margin-bottom: 1rem; }
-  .search-wrap input {
-    width: 100%;
-    padding: 0.9rem 1rem 0.9rem 2.8rem;
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    background: var(--white);
-    color: var(--dark);
-    outline: none;
-    transition: border-color 0.2s;
-  }
+  .search-wrap input { width: 100%; padding: 0.9rem 1rem 0.9rem 2.8rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; background: var(--white); color: var(--dark); outline: none; transition: border-color 0.2s; }
   .search-wrap input:focus { border-color: var(--green); }
   .search-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
 
-  /* ── COURSE OPTIONS ── */
   .course-suggestions { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1rem; max-height: 420px; overflow-y: auto; }
-
-  .course-option {
-    background: var(--white);
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 0.9rem 1rem;
-    cursor: pointer;
-    transition: all 0.18s;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
+  .course-option { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 0.9rem 1rem; cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 0.8rem; }
   .course-option:hover { border-color: var(--green); background: #f0f9f4; }
   .course-option.selected { border-color: var(--green); background: #e8f7ee; }
   .course-option.selected .course-check { opacity: 1; }
-  .course-option.hidden { display: none; }
-
   .course-info { flex: 1; min-width: 0; }
   .course-name-opt { font-weight: 600; font-size: 0.92rem; color: var(--navy); }
   .course-meta { display: flex; gap: 0.5rem; align-items: center; margin-top: 0.2rem; flex-wrap: wrap; }
   .course-loc { font-size: 0.75rem; color: var(--muted); }
-  .course-county-tag {
-    font-size: 0.65rem;
-    font-weight: 600;
-    padding: 0.1rem 0.5rem;
-    border-radius: 100px;
-    background: var(--lime);
-    color: var(--navy);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  .course-check {
-    width: 22px; height: 22px;
-    background: var(--green);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 0.75rem;
-    opacity: 0;
-    transition: opacity 0.2s;
-    flex-shrink: 0;
-  }
+  .course-county-tag { font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 100px; background: var(--lime); color: var(--navy); text-transform: uppercase; letter-spacing: 0.3px; }
+  .course-check { width: 22px; height: 22px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; opacity: 0; transition: opacity 0.2s; flex-shrink: 0; }
 
-  /* ── RATINGS ── */
   .rating-categories { display: flex; flex-direction: column; gap: 0.8rem; }
-  .rating-row {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 1.1rem 1.2rem;
-    border: 2px solid var(--border);
-    transition: border-color 0.2s;
-  }
+  .rating-row { background: var(--white); border-radius: 14px; padding: 1.1rem 1.2rem; border: 2px solid var(--border); transition: border-color 0.2s; }
   .rating-row.rated { border-color: var(--lime); }
   .rating-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.7rem; }
   .rating-cat-name { font-weight: 600; font-size: 0.92rem; color: var(--navy); }
@@ -194,187 +100,110 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
   .star.lit { color: var(--gold); }
   .star:hover { transform: scale(1.18); }
 
-  /* ── CHIPS ── */
   .chips-section { margin-bottom: 1rem; }
   .chips-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.7rem; }
   .chips-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-  .chip {
-    padding: 0.45rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500;
-    cursor: pointer; border: 2px solid var(--border); background: var(--white);
-    color: var(--dark); transition: all 0.18s; user-select: none;
-  }
-  .chip.good.selected  { background: #e8f7ee; border-color: var(--green); color: var(--green); }
-  .chip.bad.selected   { background: #fff0f0; border-color: var(--coral); color: var(--coral); }
+  .chip { padding: 0.45rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--dark); transition: all 0.18s; user-select: none; }
+  .chip.good.selected { background: #e8f7ee; border-color: var(--green); color: var(--green); }
+  .chip.bad.selected  { background: #fff0f0; border-color: var(--coral); color: var(--coral); }
 
-  /* ── TEXTAREA ── */
-  .review-textarea {
-    width: 100%; border: 2px solid var(--border); border-radius: 14px;
-    padding: 1rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-    color: var(--dark); background: var(--white); resize: none; outline: none;
-    min-height: 130px; line-height: 1.6; transition: border-color 0.2s;
-  }
+  .review-textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark); background: var(--white); resize: none; outline: none; min-height: 130px; line-height: 1.6; transition: border-color 0.2s; }
   .review-textarea:focus { border-color: var(--green); }
   .char-count { text-align: right; font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
 
-  /* ── TOGGLE ── */
-  .toggle-row {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--white); border: 2px solid var(--border); border-radius: 14px;
-    padding: 1rem 1.2rem; margin-bottom: 0.8rem;
-  }
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
   .toggle-label { font-size: 0.92rem; font-weight: 500; }
   .toggle-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-  .toggle {
-    width: 46px; height: 26px; background: var(--border); border-radius: 100px;
-    position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0;
-  }
+  .toggle { width: 46px; height: 26px; background: var(--border); border-radius: 100px; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
   .toggle.on { background: var(--green); }
-  .toggle::after {
-    content: ''; position: absolute; width: 20px; height: 20px;
-    background: white; border-radius: 50%; top: 3px; left: 3px;
-    transition: left 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
+  .toggle::after { content: ''; position: absolute; width: 20px; height: 20px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: left 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
   .toggle.on::after { left: 23px; }
 
-  /* ── INPUTS ── */
   .input-group { margin-bottom: 0.9rem; }
   .input-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
-  .input-field {
-    width: 100%; padding: 0.85rem 1rem; border: 2px solid var(--border);
-    border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-    background: var(--white); color: var(--dark); outline: none; transition: border-color 0.2s;
-  }
+  .input-field { width: 100%; padding: 0.85rem 1rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; background: var(--white); color: var(--dark); outline: none; transition: border-color 0.2s; }
   .input-field:focus { border-color: var(--green); }
 
-  /* ── SKILL LEVEL ── */
   .skill-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
-  .skill-opt {
-    background: var(--white); border: 2px solid var(--border); border-radius: 12px;
-    padding: 0.8rem 0.9rem; cursor: pointer; transition: all 0.18s; text-align: center;
-  }
+  .skill-opt { background: var(--white); border: 2px solid var(--border); border-radius: 12px; padding: 0.8rem 0.9rem; cursor: pointer; transition: all 0.18s; text-align: center; }
   .skill-opt:hover { border-color: var(--green); }
   .skill-opt.selected { background: #e8f7ee; border-color: var(--green); }
   .skill-opt-icon { font-size: 1.4rem; margin-bottom: 0.25rem; }
   .skill-opt-label { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
   .skill-opt-desc { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; }
 
-  /* ── PHOTO UPLOAD ── */
-  .photo-upload {
-    border: 2px dashed var(--border); border-radius: 14px; padding: 1.8rem;
-    text-align: center; cursor: pointer; background: var(--white);
-    transition: border-color 0.2s, background 0.2s; margin-bottom: 0.8rem;
-  }
+  .photo-upload { border: 2px dashed var(--border); border-radius: 14px; padding: 1.8rem; text-align: center; cursor: pointer; background: var(--white); transition: border-color 0.2s, background 0.2s; margin-bottom: 0.8rem; }
   .photo-upload:hover { border-color: var(--green); background: #f5fdf8; }
   .photo-upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
   .photo-upload-text { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
   .photo-upload-text strong { color: var(--green); }
 
-  /* ── CONFIRM ── */
-  .confirm-card {
-    background: var(--white); border-radius: 18px; padding: 1.5rem;
-    border: 2px solid var(--border); margin-bottom: 1rem;
-  }
+  .confirm-card { background: var(--white); border-radius: 18px; padding: 1.5rem; border: 2px solid var(--border); margin-bottom: 1rem; }
   .confirm-course-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.2rem; }
   .confirm-loc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
   .confirm-scores { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
   .confirm-score-item { background: var(--gray); border-radius: 10px; padding: 0.6rem 0.8rem; }
   .cscore-label { font-size: 0.72rem; color: var(--muted); font-weight: 500; }
   .cscore-stars { font-size: 0.85rem; margin-top: 0.15rem; }
-  .overall-score-big {
-    display: flex; align-items: center; gap: 1rem;
-    background: var(--green); border-radius: 14px; padding: 1rem 1.2rem;
-    color: white; margin-bottom: 0.8rem;
-  }
+  .overall-score-big { display: flex; align-items: center; gap: 1rem; background: var(--green); border-radius: 14px; padding: 1rem 1.2rem; color: white; margin-bottom: 0.8rem; }
   .score-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; line-height: 1; color: var(--lime); }
   .score-label { font-size: 0.9rem; opacity: 0.85; line-height: 1.4; }
 
-  /* ── INFO BOX ── */
-  .data-explainer {
-    background: var(--navy); border-radius: 14px; padding: 1.2rem;
-    margin-bottom: 1rem; display: flex; gap: 0.8rem; align-items: flex-start;
-  }
+  .data-explainer { background: var(--navy); border-radius: 14px; padding: 1.2rem; margin-bottom: 1rem; display: flex; gap: 0.8rem; align-items: flex-start; }
   .data-explainer-icon { font-size: 1.4rem; flex-shrink: 0; }
   .data-explainer-text { font-size: 0.82rem; color: rgba(255,255,255,0.75); line-height: 1.55; }
   .data-explainer-text strong { color: var(--lime); }
 
-  /* ── BUTTONS ── */
-  .btn-submit {
-    width: 100%; background: var(--green); color: var(--white); border: none;
-    padding: 1.1rem; border-radius: 14px; font-size: 1.05rem; font-weight: 600;
-    font-family: 'DM Sans', sans-serif; cursor: pointer;
-    transition: transform 0.18s, box-shadow 0.18s; margin-bottom: 0.6rem;
-  }
-  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,106,79,0.3); }
+  .error-banner { background: #fff0f0; border: 2px solid var(--coral); border-radius: 12px; padding: 0.9rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; color: #cc0000; display: none; }
+  .error-banner.show { display: block; }
+  .loading-overlay { display: none; position: absolute; inset: 0; background: rgba(255,248,238,0.85); z-index: 99; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; border-radius: 14px; }
+  .loading-overlay.show { display: flex; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--lime); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-  .nav-btns {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: var(--white); border-top: 1px solid var(--border);
-    padding: 0.9rem 1.2rem; display: flex; gap: 0.8rem; z-index: 50;
-    max-width: 500px; margin: 0 auto;
-  }
-  .btn-back {
-    flex: 1; background: var(--gray); color: var(--dark); border: none;
-    padding: 0.9rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500;
-    font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.18s;
-  }
+  .btn-submit { width: 100%; background: var(--green); color: var(--white); border: none; padding: 1.1rem; border-radius: 14px; font-size: 1.05rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s, opacity 0.2s; margin-bottom: 0.6rem; }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,106,79,0.3); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .nav-btns { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); padding: 0.9rem 1.2rem; display: flex; gap: 0.8rem; z-index: 50; max-width: 500px; margin: 0 auto; }
+  .btn-back { flex: 1; background: var(--gray); color: var(--dark); border: none; padding: 0.9rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.18s; }
   .btn-back:hover { background: var(--border); }
   .btn-back.hidden { display: none; }
-  .btn-next {
-    flex: 2; background: var(--green); color: var(--white); border: none;
-    padding: 0.9rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600;
-    font-family: 'DM Sans', sans-serif; cursor: pointer;
-    transition: transform 0.18s, box-shadow 0.18s;
-  }
+  .btn-next { flex: 2; background: var(--green); color: var(--white); border: none; padding: 0.9rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; }
   .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(45,106,79,0.3); }
 
-  /* ── SUCCESS ── */
-  .success-screen {
-    display: none; text-align: center; padding: 4rem 1.5rem;
-    max-width: 500px; margin: 0 auto; animation: slideIn 0.4s ease both;
-  }
+  .success-screen { display: none; text-align: center; padding: 4rem 1.5rem; max-width: 500px; margin: 0 auto; animation: slideIn 0.4s ease both; }
   .success-screen.show { display: block; }
   .success-icon { font-size: 4rem; margin-bottom: 1.2rem; }
   .success-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 0.6rem; }
   .success-sub { font-size: 1rem; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; }
-  .points-badge {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem;
-    border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 2rem;
-  }
-  .btn-another {
-    background: var(--green); color: white; border: none; padding: 0.9rem 2rem;
-    border-radius: 12px; font-size: 1rem; font-weight: 600;
-    font-family: 'DM Sans', sans-serif; cursor: pointer; display: block;
-    width: 100%; margin-bottom: 0.7rem; transition: transform 0.18s;
-  }
+  .points-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem; border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 2rem; }
+  .btn-another { background: var(--green); color: white; border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; display: block; width: 100%; margin-bottom: 0.7rem; transition: transform 0.18s; }
   .btn-another:hover { transform: translateY(-2px); }
-  .btn-home {
-    background: var(--gray); color: var(--dark); border: none; padding: 0.9rem 2rem;
-    border-radius: 12px; font-size: 0.95rem; font-weight: 500;
-    font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%;
-  }
+  .btn-home { background: var(--gray); color: var(--dark); border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; }
 
-  /* ── "NOT LISTED" SECTION ── */
-  .not-listed {
-    background: var(--white); border: 2px dashed var(--border); border-radius: 14px;
-    padding: 1rem 1.2rem; margin-bottom: 1rem; cursor: pointer;
-    transition: border-color 0.2s;
-  }
+  .not-listed { background: var(--white); border: 2px dashed var(--border); border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 1rem; cursor: pointer; transition: border-color 0.2s; }
   .not-listed:hover { border-color: var(--green); }
   .not-listed-label { font-size: 0.85rem; font-weight: 600; color: var(--green); }
   .not-listed-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
-  .not-listed-input {
-    width: 100%; margin-top: 0.8rem; padding: 0.7rem 0.9rem;
-    border: 2px solid var(--lime); border-radius: 10px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none;
-    display: none;
-  }
+  .not-listed-input { width: 100%; margin-top: 0.8rem; padding: 0.7rem 0.9rem; border: 2px solid var(--lime); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none; display: none; }
   .not-listed.open .not-listed-input { display: block; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ============================================================
+     STEP 1: PASTE YOUR SUPABASE VALUES HERE
+     Get these from: Supabase Dashboard → Settings → API
+     ============================================================ -->
+<script>
+  const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl/settings/api-keys;
+  const SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVneWJ4b3dubWZzcWhtZG5jcmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTQyNTgsImV4cCI6MjA5MDA3MDI1OH0.lR1ane15u4tNwy9lOMXOn9ORQzCPY4mgNffGJr0KTnY;
+</script>
+<!-- ============================================================ -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
 <div class="header">
   <div class="header-inner">
     <div class="header-logo">Friends <span>on Par</span></div>
@@ -390,7 +219,7 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
 
 <div class="container" id="mainContent">
 
-  <!-- ── STEP 1: FIND COURSE ── -->
+  <!-- STEP 1: FIND COURSE -->
   <div class="step-panel active" id="step1">
     <div class="step-header">
       <div class="region-badge">📍 Southeast Michigan</div>
@@ -398,8 +227,6 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
       <div class="step-title">Which course did you play?</div>
       <div class="step-sub">Browse by county or search by name</div>
     </div>
-
-    <!-- County filters -->
     <div class="county-filters" id="countyFilters">
       <button class="county-btn active" onclick="filterByCounty('All', this)">All</button>
       <button class="county-btn" onclick="filterByCounty('Oakland', this)">Oakland</button>
@@ -408,133 +235,87 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
       <button class="county-btn" onclick="filterByCounty('Macomb', this)">Macomb</button>
       <button class="county-btn" onclick="filterByCounty('Livingston', this)">Livingston</button>
     </div>
-
-    <!-- Search -->
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
       <input type="text" placeholder="Search courses..." id="courseSearch" oninput="searchCourses(this.value)">
     </div>
-
-    <!-- Course list -->
-    <div class="course-suggestions" id="courseSuggestions"></div>
-
-    <!-- Not listed -->
+    <div class="course-suggestions" id="courseSuggestions">
+      <div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.9rem;">Loading courses...</div>
+    </div>
     <div class="not-listed" id="notListedBox" onclick="openNotListed()">
       <div class="not-listed-label">+ My course isn't listed</div>
       <div class="not-listed-sub">Tap to add a new SE Michigan public course</div>
       <input class="not-listed-input" id="customCourseInput" type="text" placeholder="Course name, City, County" onclick="event.stopPropagation()">
     </div>
-
     <div class="data-explainer">
       <div class="data-explainer-icon">⛳</div>
-      <div class="data-explainer-text">Currently focused on <strong>public courses in Oakland, Wayne, Washtenaw, Macomb, and Livingston counties</strong>. Coverage expanding soon!</div>
+      <div class="data-explainer-text">Focused on <strong>public courses in SE Michigan</strong>. Coverage expanding soon!</div>
     </div>
   </div>
 
-  <!-- ── STEP 2: STAR RATINGS ── -->
+  <!-- STEP 2: RATINGS -->
   <div class="step-panel" id="step2">
     <div class="step-header">
       <div class="step-label">Step 2</div>
       <div class="step-title">Rate your experience</div>
       <div class="step-sub">Tap the stars — all 5 categories required</div>
     </div>
-
     <div class="rating-categories">
       <div class="rating-row" id="row-facilities">
         <div class="rating-top">
-          <div>
-            <div class="rating-cat-name">🏠 Facilities & Locker Room</div>
-            <div class="rating-cat-desc">Cleanliness, women's amenities, restrooms</div>
-          </div>
+          <div><div class="rating-cat-name">🏠 Facilities &amp; Locker Room</div><div class="rating-cat-desc">Cleanliness, women's amenities, restrooms</div></div>
           <div class="rating-val" id="val-facilities">–</div>
         </div>
         <div class="stars-row" data-cat="facilities">
-          <span class="star" onclick="rate('facilities',1)">★</span>
-          <span class="star" onclick="rate('facilities',2)">★</span>
-          <span class="star" onclick="rate('facilities',3)">★</span>
-          <span class="star" onclick="rate('facilities',4)">★</span>
-          <span class="star" onclick="rate('facilities',5)">★</span>
+          <span class="star" onclick="rate('facilities',1)">★</span><span class="star" onclick="rate('facilities',2)">★</span><span class="star" onclick="rate('facilities',3)">★</span><span class="star" onclick="rate('facilities',4)">★</span><span class="star" onclick="rate('facilities',5)">★</span>
         </div>
       </div>
-
       <div class="rating-row" id="row-pace">
         <div class="rating-top">
-          <div>
-            <div class="rating-cat-name">⚡ Pace of Play</div>
-            <div class="rating-cat-desc">Wait times, flow, respect for all skill levels</div>
-          </div>
+          <div><div class="rating-cat-name">⚡ Pace of Play</div><div class="rating-cat-desc">Wait times, flow, respect for all skill levels</div></div>
           <div class="rating-val" id="val-pace">–</div>
         </div>
         <div class="stars-row" data-cat="pace">
-          <span class="star" onclick="rate('pace',1)">★</span>
-          <span class="star" onclick="rate('pace',2)">★</span>
-          <span class="star" onclick="rate('pace',3)">★</span>
-          <span class="star" onclick="rate('pace',4)">★</span>
-          <span class="star" onclick="rate('pace',5)">★</span>
+          <span class="star" onclick="rate('pace',1)">★</span><span class="star" onclick="rate('pace',2)">★</span><span class="star" onclick="rate('pace',3)">★</span><span class="star" onclick="rate('pace',4)">★</span><span class="star" onclick="rate('pace',5)">★</span>
         </div>
       </div>
-
       <div class="rating-row" id="row-safety">
         <div class="rating-top">
-          <div>
-            <div class="rating-cat-name">🛡️ Safety & Parking</div>
-            <div class="rating-cat-desc">Well-lit, secure, comfortable environment</div>
-          </div>
+          <div><div class="rating-cat-name">🛡️ Safety &amp; Parking</div><div class="rating-cat-desc">Well-lit, secure, comfortable environment</div></div>
           <div class="rating-val" id="val-safety">–</div>
         </div>
         <div class="stars-row" data-cat="safety">
-          <span class="star" onclick="rate('safety',1)">★</span>
-          <span class="star" onclick="rate('safety',2)">★</span>
-          <span class="star" onclick="rate('safety',3)">★</span>
-          <span class="star" onclick="rate('safety',4)">★</span>
-          <span class="star" onclick="rate('safety',5)">★</span>
+          <span class="star" onclick="rate('safety',1)">★</span><span class="star" onclick="rate('safety',2)">★</span><span class="star" onclick="rate('safety',3)">★</span><span class="star" onclick="rate('safety',4)">★</span><span class="star" onclick="rate('safety',5)">★</span>
         </div>
       </div>
-
       <div class="rating-row" id="row-staff">
         <div class="rating-top">
-          <div>
-            <div class="rating-cat-name">😊 Staff Attitude</div>
-            <div class="rating-cat-desc">Welcoming, respectful, helpful to women players</div>
-          </div>
+          <div><div class="rating-cat-name">😊 Staff Attitude</div><div class="rating-cat-desc">Welcoming, respectful, helpful to women players</div></div>
           <div class="rating-val" id="val-staff">–</div>
         </div>
         <div class="stars-row" data-cat="staff">
-          <span class="star" onclick="rate('staff',1)">★</span>
-          <span class="star" onclick="rate('staff',2)">★</span>
-          <span class="star" onclick="rate('staff',3)">★</span>
-          <span class="star" onclick="rate('staff',4)">★</span>
-          <span class="star" onclick="rate('staff',5)">★</span>
+          <span class="star" onclick="rate('staff',1)">★</span><span class="star" onclick="rate('staff',2)">★</span><span class="star" onclick="rate('staff',3)">★</span><span class="star" onclick="rate('staff',4)">★</span><span class="star" onclick="rate('staff',5)">★</span>
         </div>
       </div>
-
       <div class="rating-row" id="row-vibe">
         <div class="rating-top">
-          <div>
-            <div class="rating-cat-name">🌿 Overall Vibe</div>
-            <div class="rating-cat-desc">Would you feel at home? Recommend to a friend?</div>
-          </div>
+          <div><div class="rating-cat-name">🌿 Overall Vibe</div><div class="rating-cat-desc">Would you feel at home? Recommend to a friend?</div></div>
           <div class="rating-val" id="val-vibe">–</div>
         </div>
         <div class="stars-row" data-cat="vibe">
-          <span class="star" onclick="rate('vibe',1)">★</span>
-          <span class="star" onclick="rate('vibe',2)">★</span>
-          <span class="star" onclick="rate('vibe',3)">★</span>
-          <span class="star" onclick="rate('vibe',4)">★</span>
-          <span class="star" onclick="rate('vibe',5)">★</span>
+          <span class="star" onclick="rate('vibe',1)">★</span><span class="star" onclick="rate('vibe',2)">★</span><span class="star" onclick="rate('vibe',3)">★</span><span class="star" onclick="rate('vibe',4)">★</span><span class="star" onclick="rate('vibe',5)">★</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── STEP 3: TAGS + REVIEW ── -->
+  <!-- STEP 3: TAGS + REVIEW -->
   <div class="step-panel" id="step3">
     <div class="step-header">
       <div class="step-label">Step 3</div>
       <div class="step-title">Tag your experience</div>
       <div class="step-sub">Pick all that apply</div>
     </div>
-
     <div class="chips-section">
       <div class="chips-label">✅ Stood out positively</div>
       <div class="chips-group">
@@ -551,7 +332,6 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
         <span class="chip good" onclick="toggleChip(this)">Well-Maintained Course</span>
         <span class="chip good" onclick="toggleChip(this)">Easy to Book</span>
       </div>
-
       <div class="chips-label">⚠️ Needs improvement</div>
       <div class="chips-group">
         <span class="chip bad" onclick="toggleChip(this)">Long Wait Times</span>
@@ -565,111 +345,78 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
       </div>
     </div>
-
     <div style="margin-bottom:1rem;">
       <div class="chips-label" style="margin-bottom:0.6rem;">✍️ In your own words (optional)</div>
-      <textarea class="review-textarea" id="reviewText" maxlength="500"
-        placeholder="What would you want another woman golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
+      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another woman golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
       <div class="char-count"><span id="charCount">0</span>/500</div>
     </div>
-
     <div class="toggle-row">
-      <div>
-        <div class="toggle-label">I played solo</div>
-        <div class="toggle-desc">Helps us flag solo-friendly courses</div>
-      </div>
+      <div><div class="toggle-label">I played solo</div><div class="toggle-desc">Helps us flag solo-friendly courses</div></div>
       <div class="toggle" id="soloToggle" onclick="toggleSolo()"></div>
     </div>
-
     <div class="toggle-row">
-      <div>
-        <div class="toggle-label">First time at this course</div>
-        <div class="toggle-desc">Helps us track first-impression scores</div>
-      </div>
+      <div><div class="toggle-label">First time at this course</div><div class="toggle-desc">Helps us track first-impression scores</div></div>
       <div class="toggle" id="firstTimeToggle" onclick="toggleFirstTime()"></div>
     </div>
   </div>
 
-  <!-- ── STEP 4: ABOUT YOU ── -->
+  <!-- STEP 4: ABOUT YOU -->
   <div class="step-panel" id="step4">
     <div class="step-header">
       <div class="step-label">Step 4</div>
       <div class="step-title">A few details about you</div>
-      <div class="step-sub">Helps us verify and personalize results for SE Michigan golfers</div>
+      <div class="step-sub">Helps us verify your review and personalize results</div>
     </div>
-
     <div class="input-group">
       <label class="input-label">First name</label>
       <input type="text" class="input-field" placeholder="e.g. Jessica" id="firstName">
     </div>
-
     <div class="input-group">
       <label class="input-label">Email (for verification)</label>
       <input type="email" class="input-field" placeholder="you@example.com" id="emailField">
     </div>
-
     <div class="input-group">
       <label class="input-label">Your ZIP code</label>
       <input type="text" class="input-field" placeholder="e.g. 48302" id="zipField" maxlength="5" inputmode="numeric">
     </div>
-
     <div style="margin-bottom:1.2rem;">
       <div class="input-label" style="margin-bottom:0.6rem;">Skill level</div>
       <div class="skill-options">
-        <div class="skill-opt" onclick="selectSkill(this)">
-          <div class="skill-opt-icon">🌱</div>
-          <div class="skill-opt-label">Beginner</div>
-          <div class="skill-opt-desc">Learning the game</div>
-        </div>
-        <div class="skill-opt" onclick="selectSkill(this)">
-          <div class="skill-opt-icon">⛳</div>
-          <div class="skill-opt-label">Casual</div>
-          <div class="skill-opt-desc">Play for fun</div>
-        </div>
-        <div class="skill-opt" onclick="selectSkill(this)">
-          <div class="skill-opt-icon">🏌️</div>
-          <div class="skill-opt-label">Intermediate</div>
-          <div class="skill-opt-desc">Regular player</div>
-        </div>
-        <div class="skill-opt" onclick="selectSkill(this)">
-          <div class="skill-opt-icon">🏆</div>
-          <div class="skill-opt-label">Advanced</div>
-          <div class="skill-opt-desc">Competitive play</div>
-        </div>
+        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🌱</div><div class="skill-opt-label">Beginner</div><div class="skill-opt-desc">Learning the game</div></div>
+        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">⛳</div><div class="skill-opt-label">Casual</div><div class="skill-opt-desc">Play for fun</div></div>
+        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏌️</div><div class="skill-opt-label">Intermediate</div><div class="skill-opt-desc">Regular player</div></div>
+        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏆</div><div class="skill-opt-label">Advanced</div><div class="skill-opt-desc">Competitive play</div></div>
       </div>
     </div>
-
     <div class="photo-upload" onclick="triggerPhotoUpload()">
       <div class="photo-upload-icon">📸</div>
-      <div class="photo-upload-text">
-        <strong>Add photos</strong> (optional)<br>
-        Course, facilities, views — tap to upload
-      </div>
+      <div class="photo-upload-text"><strong>Add photos</strong> (optional)<br>Course, facilities, views — tap to upload</div>
     </div>
-
     <div class="data-explainer">
       <div class="data-explainer-icon">🔒</div>
-      <div class="data-explainer-text">Your email is only used to verify your review. <strong>We never share or sell your data.</strong> Your name appears as first name + initial only.</div>
+      <div class="data-explainer-text">Your email is only used to verify your review. <strong>We never share or sell your data.</strong></div>
     </div>
   </div>
 
-  <!-- ── STEP 5: CONFIRM ── -->
+  <!-- STEP 5: CONFIRM -->
   <div class="step-panel" id="step5">
     <div class="step-header">
       <div class="step-label">Step 5</div>
       <div class="step-title">Review your submission</div>
       <div class="step-sub">Everything look right?</div>
     </div>
-
-    <div class="confirm-card">
+    <div class="error-banner" id="errorBanner"></div>
+    <div class="confirm-card" style="position:relative;">
+      <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div style="font-size:0.9rem;color:var(--green);font-weight:600;">Saving your review...</div>
+      </div>
       <div class="confirm-course-name" id="confirmCourseName">–</div>
       <div class="confirm-loc" id="confirmCourseLoc">–</div>
-
       <div class="overall-score-big">
         <div class="score-num" id="overallScore">–</div>
         <div class="score-label">Overall Score<br><span style="font-size:0.78rem;opacity:0.7;">Average of your 5 ratings × 2</span></div>
       </div>
-
       <div class="confirm-scores">
         <div class="confirm-score-item"><div class="cscore-label">Facilities</div><div class="cscore-stars" id="cs-facilities">–</div></div>
         <div class="confirm-score-item"><div class="cscore-label">Pace of Play</div><div class="cscore-stars" id="cs-pace">–</div></div>
@@ -678,16 +425,14 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
         <div class="confirm-score-item" style="grid-column:span 2"><div class="cscore-label">Overall Vibe</div><div class="cscore-stars" id="cs-vibe">–</div></div>
       </div>
     </div>
-
-    <button class="btn-submit" onclick="submitReview()">🏌️ Submit My Review</button>
-
+    <button class="btn-submit" id="submitBtn" onclick="submitReview()">🏌️ Submit My Review</button>
     <div class="data-explainer">
       <div class="data-explainer-icon">⭐</div>
-      <div class="data-explainer-text">You'll earn <strong>50 points</strong> for this review — redeemable for golf gear and local partner perks. <strong>Photos earn bonus points!</strong></div>
+      <div class="data-explainer-text">You'll earn <strong>50 points</strong> once your review is verified — redeemable for golf gear and local partner perks!</div>
     </div>
   </div>
 
-</div><!-- /container -->
+</div>
 
 <!-- BOTTOM NAV -->
 <div class="nav-btns" id="navBtns">
@@ -699,289 +444,261 @@ const SUPABASE_URL = https://supabase.com/dashboard/project/ugybxownmfsqhmdncrdl
 <div class="success-screen" id="successScreen">
   <div class="success-icon">🎉</div>
   <div class="success-title">Review Submitted!</div>
-  <div class="success-sub">Thanks for helping women golfers across SE Michigan make better decisions. Your review will be live after a quick verification.</div>
-  <div class="points-badge">⭐ +50 Points Earned!</div>
+  <div class="success-sub">Thanks for helping women golfers across SE Michigan make better decisions. Check your email to verify your review and unlock your points.</div>
+  <div class="points-badge">⭐ 50 Points Pending Verification</div>
   <button class="btn-another" onclick="resetForm()">Rate Another Course</button>
-  <button class="btn-home">Back to Home</button>
+  <button class="btn-home" onclick="window.location.href='/'">Back to Home</button>
 </div>
 
 <script>
-  // ── SE MICHIGAN COURSES DATABASE ──
-  const COURSES = [
-    // Oakland County
-    { name: "Shepherd's Hollow Golf Club",  loc: "Clarkston, MI",        county: "Oakland" },
-    { name: "Pine Trace Golf Club",          loc: "Rochester Hills, MI",  county: "Oakland" },
-    { name: "Cherry Creek Golf Club",        loc: "Clarkston, MI",        county: "Oakland" },
-    { name: "Northville Hills Golf Club",    loc: "Northville, MI",       county: "Oakland" },
-    { name: "The Orchards Golf Club",        loc: "Washington Twp, MI",   county: "Oakland" },
-    { name: "Blackheath Golf Course",        loc: "Oxford, MI",           county: "Oakland" },
-    { name: "Greystone Golf Club",           loc: "Washington Twp, MI",   county: "Oakland" },
-    { name: "Bogie Lake Golf Club",          loc: "White Lake, MI",       county: "Oakland" },
-    { name: "White Lake Oaks Golf Course",   loc: "White Lake, MI",       county: "Oakland" },
-    { name: "Springfield Oaks Golf Course",  loc: "Davisburg, MI",        county: "Oakland" },
-    { name: "Twin Lakes Golf Club",          loc: "Oakland Twp, MI",      county: "Oakland" },
-    { name: "Lyon Oaks Golf Club",           loc: "Wixom, MI",            county: "Oakland" },
-    { name: "Pontiac Country Club",          loc: "Pontiac, MI",          county: "Oakland" },
-    { name: "Indian Springs Metropark Golf", loc: "White Lake, MI",       county: "Oakland" },
-    { name: "Farmington Hills Golf Club",    loc: "Farmington Hills, MI", county: "Oakland" },
-    { name: "Kensington Metropark Golf",     loc: "Milford, MI",          county: "Oakland" },
-    { name: "Links of Novi",                 loc: "Novi, MI",             county: "Oakland" },
-    { name: "Bay Pointe Golf Club",          loc: "West Bloomfield, MI",  county: "Oakland" },
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Wayne County
-    { name: "Fox Hills Golf & Banquet",      loc: "Plymouth, MI",         county: "Wayne"   },
-    { name: "Rouge Park Golf Course",        loc: "Detroit, MI",          county: "Wayne"   },
-    { name: "Inkster Valley Golf Course",    loc: "Inkster, MI",          county: "Wayne"   },
-    { name: "Brennan Golf Course",           loc: "Detroit, MI",          county: "Wayne"   },
-    { name: "Hemlock Golf Club",             loc: "Dearborn Heights, MI", county: "Wayne"   },
-    { name: "Golfport",                      loc: "Lincoln Park, MI",     county: "Wayne"   },
-    { name: "Wayne County Golf Course",      loc: "Belleville, MI",       county: "Wayne"   },
+let currentStep = 1;
+const totalSteps = 5;
+let selectedCourse    = null;
+let selectedCourseId  = null;
+let selectedCourseLoc = null;
+let ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
+let soloPlayer  = false;
+let firstTime   = false;
+let selectedSkill = null;
+let activeCounty  = 'All';
+let allCourses    = [];
 
-    // Washtenaw County
-    { name: "Stonebridge Golf Club",         loc: "Ann Arbor, MI",        county: "Washtenaw" },
-    { name: "Eagle Crest Golf Club",         loc: "Ypsilanti, MI",        county: "Washtenaw" },
-    { name: "Peninsulas Golf Club",          loc: "Milan, MI",            county: "Washtenaw" },
-    { name: "Hudson Mills Metropark Golf",   loc: "Dexter, MI",           county: "Washtenaw" },
-    { name: "Saline Golf Course",            loc: "Saline, MI",           county: "Washtenaw" },
-    { name: "Leslie Park Golf Course",       loc: "Ann Arbor, MI",        county: "Washtenaw" },
+async function loadCourses() {
+  const { data, error } = await db
+    .from('courses')
+    .select('id, name, location, county')
+    .order('name');
+  if (error) {
+    document.getElementById('courseSuggestions').innerHTML =
+      '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Could not load courses. Check your Supabase config.</div>';
+    return;
+  }
+  allCourses = data;
+  renderCourses();
+}
 
-    // Macomb County
-    { name: "Partridge Creek Golf Course",   loc: "Clinton Twp, MI",      county: "Macomb"  },
-    { name: "Cherry Creek Golf Course",      loc: "Shelby Twp, MI",       county: "Macomb"  },
-    { name: "Dodge Park Golf Course",        loc: "Sterling Heights, MI", county: "Macomb"  },
-    { name: "Plum Brook Golf Club",          loc: "Sterling Heights, MI", county: "Macomb"  },
-    { name: "Clinton Valley Golf Course",    loc: "Mt. Clemens, MI",      county: "Macomb"  },
-    { name: "Selfridge Golf Course",         loc: "Harrison Twp, MI",     county: "Macomb"  },
-
-    // Livingston County
-    { name: "Moose Ridge Golf Course",       loc: "South Lyon, MI",       county: "Livingston" },
-    { name: "Hartland Glen Golf & CC",       loc: "Hartland, MI",         county: "Livingston" },
-    { name: "Chemung Hills Golf Club",       loc: "Howell, MI",           county: "Livingston" },
-    { name: "Tyrone Hills Golf Club",        loc: "Fenton, MI",           county: "Livingston" },
-    { name: "Lakelands Trail Golf Club",     loc: "Pinckney, MI",         county: "Livingston" },
-  ];
-
-  // ── STATE ──
-  let currentStep = 1;
-  const totalSteps = 5;
-  let selectedCourse = null;
-  let selectedCourseLocation = null;
-  let ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
-  let soloPlayer = false;
-  let firstTime = false;
-  let selectedSkill = null;
-  let activeCounty = 'All';
-
-  // ── RENDER COURSE LIST ──
-  function renderCourses(filter = '', county = 'All') {
-    const container = document.getElementById('courseSuggestions');
-    container.innerHTML = '';
-    const fl = filter.toLowerCase();
-    const filtered = COURSES.filter(c => {
-      const matchCounty = county === 'All' || c.county === county;
-      const matchSearch = !fl || c.name.toLowerCase().includes(fl) || c.loc.toLowerCase().includes(fl);
-      return matchCounty && matchSearch;
-    });
-    if (filtered.length === 0) {
-      container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">No courses found — try a different search or add yours below.</div>';
-      return;
-    }
-    filtered.forEach(c => {
-      const div = document.createElement('div');
-      div.className = 'course-option';
-      div.innerHTML = `
-        <div class="course-info">
-          <div class="course-name-opt">${c.name}</div>
-          <div class="course-meta">
-            <span class="course-loc">${c.loc}</span>
-            <span class="course-county-tag">${c.county}</span>
-          </div>
+function renderCourses(filter = '', county = 'All') {
+  const container = document.getElementById('courseSuggestions');
+  container.innerHTML = '';
+  const fl = filter.toLowerCase();
+  const filtered = allCourses.filter(c => {
+    const matchCounty = county === 'All' || c.county === county;
+    const matchSearch = !fl || c.name.toLowerCase().includes(fl) || c.location.toLowerCase().includes(fl);
+    return matchCounty && matchSearch;
+  });
+  if (filtered.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">No courses found — try a different search or add yours below.</div>';
+    return;
+  }
+  filtered.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'course-option';
+    div.innerHTML = `
+      <div class="course-info">
+        <div class="course-name-opt">${c.name}</div>
+        <div class="course-meta">
+          <span class="course-loc">${c.location}</span>
+          <span class="course-county-tag">${c.county}</span>
         </div>
-        <div class="course-check">✓</div>`;
-      div.onclick = () => selectCourse(div, c.name, c.loc);
-      container.appendChild(div);
-    });
-  }
+      </div>
+      <div class="course-check">✓</div>`;
+    div.onclick = () => selectCourse(div, c.id, c.name, c.location);
+    container.appendChild(div);
+  });
+}
 
-  function filterByCounty(county, btn) {
-    activeCounty = county;
-    document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderCourses(document.getElementById('courseSearch').value, county);
-  }
+function filterByCounty(county, btn) {
+  activeCounty = county;
+  document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCourses(document.getElementById('courseSearch').value, county);
+}
 
-  function searchCourses(val) {
-    renderCourses(val, activeCounty);
-  }
+function searchCourses(val) { renderCourses(val, activeCounty); }
 
-  function selectCourse(el, name, loc) {
-    document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedCourse = name;
-    selectedCourseLocation = loc;
-    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
+function selectCourse(el, id, name, loc) {
+  document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCourseId  = id;
+  selectedCourse    = name;
+  selectedCourseLoc = loc;
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
-  // ── NOT LISTED ──
-  function openNotListed() {
-    const box = document.getElementById('notListedBox');
-    box.classList.toggle('open');
-    if (box.classList.contains('open')) {
-      document.getElementById('customCourseInput').focus();
-    }
-  }
+function openNotListed() {
+  const box = document.getElementById('notListedBox');
+  box.classList.toggle('open');
+  if (box.classList.contains('open')) document.getElementById('customCourseInput').focus();
+}
 
-  // ── PROGRESS ──
-  function updateProgress() {
-    document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
-    document.getElementById('stepCounter').textContent = `Step ${currentStep} of ${totalSteps}`;
-    document.getElementById('backBtn').classList.toggle('hidden', currentStep === 1);
-    document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Review →' : 'Next →';
-  }
+function updateProgress() {
+  document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
+  document.getElementById('stepCounter').textContent = `Step ${currentStep} of ${totalSteps}`;
+  document.getElementById('backBtn').classList.toggle('hidden', currentStep === 1);
+  document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Review →' : 'Next →';
+}
 
-  // ── NAVIGATION ──
-  function goNext() {
-    if (currentStep === 1) {
-      const custom = document.getElementById('customCourseInput').value.trim();
-      if (!selectedCourse && !custom) { alert('Please select or enter a course.'); return; }
-      if (!selectedCourse && custom) { selectedCourse = custom; selectedCourseLocation = 'SE Michigan'; }
-    }
-    if (currentStep === 2) {
-      const allRated = Object.values(ratings).every(v => v > 0);
-      if (!allRated) { alert('Please rate all 5 categories to continue.'); return; }
-    }
-    if (currentStep < totalSteps) {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      currentStep++;
-      document.getElementById('step' + currentStep).classList.add('active');
-      updateProgress();
-      window.scrollTo(0, 0);
-    }
-    if (currentStep === totalSteps) buildConfirmStep();
+function goNext() {
+  if (currentStep === 1) {
+    const custom = document.getElementById('customCourseInput').value.trim();
+    if (!selectedCourse && !custom) { alert('Please select or enter a course.'); return; }
+    if (!selectedCourse && custom) { selectedCourse = custom; selectedCourseLoc = 'SE Michigan'; selectedCourseId = null; }
   }
-
-  function goBack() {
-    if (currentStep > 1) {
-      document.getElementById('step' + currentStep).classList.remove('active');
-      currentStep--;
-      document.getElementById('step' + currentStep).classList.add('active');
-      updateProgress();
-      window.scrollTo(0, 0);
-    }
+  if (currentStep === 2) {
+    if (!Object.values(ratings).every(v => v > 0)) { alert('Please rate all 5 categories to continue.'); return; }
   }
-
-  // ── STAR RATINGS ──
-  function rate(cat, val) {
-    ratings[cat] = val;
-    const row = document.querySelector(`[data-cat="${cat}"]`);
-    row.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < val));
-    document.getElementById('val-' + cat).textContent = val + '/5';
-    document.getElementById('row-' + cat).classList.add('rated');
+  if (currentStep === 4) {
+    const email = document.getElementById('emailField').value.trim();
+    if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
   }
-
-  // ── CHIPS ──
-  function toggleChip(el) { el.classList.toggle('selected'); }
-
-  // ── TOGGLES ──
-  function toggleSolo() {
-    soloPlayer = !soloPlayer;
-    document.getElementById('soloToggle').classList.toggle('on', soloPlayer);
+  if (currentStep < totalSteps) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep++;
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
   }
-  function toggleFirstTime() {
-    firstTime = !firstTime;
-    document.getElementById('firstTimeToggle').classList.toggle('on', firstTime);
-  }
+  if (currentStep === totalSteps) buildConfirmStep();
+}
 
-  // ── CHAR COUNT ──
-  function updateCharCount() {
-    document.getElementById('charCount').textContent = document.getElementById('reviewText').value.length;
+function goBack() {
+  if (currentStep > 1) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep--;
+    document.getElementById('step' + currentStep).classList.add('active');
+    updateProgress();
+    window.scrollTo(0, 0);
   }
+}
 
-  // ── SKILL ──
-  function selectSkill(el) {
-    document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedSkill = el.querySelector('.skill-opt-label').textContent;
-  }
+function rate(cat, val) {
+  ratings[cat] = val;
+  const row = document.querySelector(`[data-cat="${cat}"]`);
+  row.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < val));
+  document.getElementById('val-' + cat).textContent = val + '/5';
+  document.getElementById('row-' + cat).classList.add('rated');
+}
 
-  // ── PHOTO ──
-  function triggerPhotoUpload() {
-    const i = document.createElement('input');
-    i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
-  }
+function toggleChip(el) { el.classList.toggle('selected'); }
+function toggleSolo() { soloPlayer = !soloPlayer; document.getElementById('soloToggle').classList.toggle('on', soloPlayer); }
+function toggleFirstTime() { firstTime = !firstTime; document.getElementById('firstTimeToggle').classList.toggle('on', firstTime); }
+function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('reviewText').value.length; }
+function selectSkill(el) {
+  document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedSkill = el.querySelector('.skill-opt-label').textContent;
+}
+function triggerPhotoUpload() {
+  const i = document.createElement('input');
+  i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
+}
 
-  // ── CONFIRM ──
-  function buildConfirmStep() {
-    document.getElementById('confirmCourseName').textContent = selectedCourse || '–';
-    document.getElementById('confirmCourseLoc').textContent = selectedCourseLocation || '–';
+function buildConfirmStep() {
+  document.getElementById('confirmCourseName').textContent = selectedCourse || '–';
+  document.getElementById('confirmCourseLoc').textContent  = selectedCourseLoc || '–';
+  const cats = ['facilities', 'pace', 'safety', 'staff', 'vibe'];
+  cats.forEach(c => {
+    const v = ratings[c];
+    document.getElementById('cs-' + c).textContent = v ? '★'.repeat(v) + '☆'.repeat(5 - v) : '–';
+  });
+  const avg = cats.reduce((a, c) => a + ratings[c], 0) / cats.length;
+  document.getElementById('overallScore').textContent = avg ? (avg * 2).toFixed(1) : '–';
+  document.getElementById('errorBanner').classList.remove('show');
+}
+
+async function submitReview() {
+  const submitBtn     = document.getElementById('submitBtn');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  const errorBanner   = document.getElementById('errorBanner');
+  const email     = document.getElementById('emailField').value.trim().toLowerCase();
+  const firstName = document.getElementById('firstName').value.trim();
+  const zip       = document.getElementById('zipField').value.trim();
+
+  submitBtn.disabled = true;
+  loadingOverlay.classList.add('show');
+  errorBanner.classList.remove('show');
+
+  try {
+    const { data: reviewer, error: reviewerError } = await db
+      .from('reviewers')
+      .upsert({ email, first_name: firstName || null, zip_code: zip || null, skill_level: selectedSkill || null, last_active: new Date().toISOString() },
+        { onConflict: 'email', ignoreDuplicates: false })
+      .select('id').single();
+
+    if (reviewerError) throw new Error('Could not save reviewer: ' + reviewerError.message);
+
     const cats = ['facilities', 'pace', 'safety', 'staff', 'vibe'];
-    cats.forEach(c => {
-      const v = ratings[c];
-      document.getElementById('cs-' + c).textContent = v ? '★'.repeat(v) + '☆'.repeat(5 - v) : '–';
-    });
-    const avg = cats.reduce((a, c) => a + ratings[c], 0) / cats.length;
-    document.getElementById('overallScore').textContent = avg ? (avg * 2).toFixed(1) : '–';
-  }
+    const avg  = cats.reduce((a, c) => a + ratings[c], 0) / cats.length;
+    const overallScore = parseFloat((avg * 2).toFixed(1));
 
-  // ── SUBMIT ──
-  function submitReview() {
-    const payload = {
-      course: selectedCourse,
-      location: selectedCourseLocation,
-      ratings,
-      overallScore: (Object.values(ratings).reduce((a,b)=>a+b,0)/5*2).toFixed(1),
-      tags: [...document.querySelectorAll('.chip.selected')].map(c => c.textContent),
-      review: document.getElementById('reviewText').value,
-      solo: soloPlayer,
-      firstTime,
-      skill: selectedSkill,
-      name: document.getElementById('firstName').value,
-      zip: document.getElementById('zipField').value,
-      submitted: new Date().toISOString(),
-      region: 'SE Michigan'
-    };
-    console.log('📋 Submitted review:', JSON.stringify(payload, null, 2));
+    const { error: reviewError } = await db.from('reviews').insert({
+      course_id: selectedCourseId, course_name: selectedCourse, course_location: selectedCourseLoc,
+      reviewer_id: reviewer.id, reviewer_name: firstName || null, reviewer_zip: zip || null,
+      reviewer_skill: selectedSkill || null, score_facilities: ratings.facilities,
+      score_pace: ratings.pace, score_safety: ratings.safety, score_staff: ratings.staff,
+      score_vibe: ratings.vibe, score_overall: overallScore,
+      tags_positive: [...document.querySelectorAll('.chip.good.selected')].map(c => c.textContent),
+      tags_negative: [...document.querySelectorAll('.chip.bad.selected')].map(c => c.textContent),
+      review_text: document.getElementById('reviewText').value || null,
+      solo_player: soloPlayer, first_visit: firstTime, verified: false, region: 'SE Michigan'
+    });
+
+    if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
+
+    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified' } });
+
+    loadingOverlay.classList.remove('show');
     document.getElementById('mainContent').style.display = 'none';
     document.getElementById('navBtns').style.display = 'none';
     document.getElementById('successScreen').classList.add('show');
     window.scrollTo(0, 0);
-  }
 
-  // ── RESET ──
-  function resetForm() {
-    currentStep = 1; selectedCourse = null; selectedCourseLocation = null;
-    ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
-    soloPlayer = false; firstTime = false; selectedSkill = null; activeCounty = 'All';
-    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-    document.getElementById('step1').classList.add('active');
-    document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
-    document.querySelectorAll('.rating-row').forEach(r => r.classList.remove('rated'));
-    document.querySelectorAll('.rating-val').forEach(v => v.textContent = '–');
-    document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
-    document.getElementById('reviewText').value = '';
-    document.getElementById('charCount').textContent = '0';
-    document.getElementById('soloToggle').classList.remove('on');
-    document.getElementById('firstTimeToggle').classList.remove('on');
-    document.getElementById('firstName').value = '';
-    document.getElementById('emailField').value = '';
-    document.getElementById('zipField').value = '';
-    document.getElementById('courseSearch').value = '';
-    document.getElementById('notListedBox').classList.remove('open');
-    document.getElementById('customCourseInput').value = '';
-    document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.county-btn').classList.add('active');
-    document.getElementById('mainContent').style.display = '';
-    document.getElementById('navBtns').style.display = '';
-    document.getElementById('successScreen').classList.remove('show');
-    renderCourses();
-    updateProgress();
-    window.scrollTo(0, 0);
+  } catch (err) {
+    loadingOverlay.classList.remove('show');
+    submitBtn.disabled = false;
+    errorBanner.textContent = 'Something went wrong: ' + err.message + '. Please try again.';
+    errorBanner.classList.add('show');
   }
+}
 
-  // ── INIT ──
+function resetForm() {
+  currentStep = 1; selectedCourse = selectedCourseId = selectedCourseLoc = null;
+  ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
+  soloPlayer = false; firstTime = false; selectedSkill = null; activeCounty = 'All';
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.rating-row').forEach(r => r.classList.remove('rated'));
+  document.querySelectorAll('.rating-val').forEach(v => v.textContent = '–');
+  document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('reviewText').value = '';
+  document.getElementById('charCount').textContent = '0';
+  document.getElementById('soloToggle').classList.remove('on');
+  document.getElementById('firstTimeToggle').classList.remove('on');
+  document.getElementById('firstName').value = '';
+  document.getElementById('emailField').value = '';
+  document.getElementById('zipField').value = '';
+  document.getElementById('courseSearch').value = '';
+  document.getElementById('notListedBox').classList.remove('open');
+  document.getElementById('customCourseInput').value = '';
+  document.getElementById('submitBtn').disabled = false;
+  document.getElementById('errorBanner').classList.remove('show');
+  document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.county-btn').classList.add('active');
+  document.getElementById('mainContent').style.display = '';
+  document.getElementById('navBtns').style.display = '';
+  document.getElementById('successScreen').classList.remove('show');
   renderCourses();
   updateProgress();
+  window.scrollTo(0, 0);
+}
+
+loadCourses();
+updateProgress();
 </script>
 </body>
 </html>
