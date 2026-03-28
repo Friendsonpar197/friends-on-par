@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supabase Connection Test — Friends on Par</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f5f5f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 1rem; box-sizing: border-box; }
+  .card { background: white; border-radius: 16px; padding: 2rem; max-width: 480px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  h2 { margin: 0 0 0.5rem; font-size: 1.2rem; color: #1a1a1a; }
+  .sub { font-size: 0.85rem; color: #888; margin-bottom: 1.5rem; }
+  .status { padding: 1rem; border-radius: 10px; margin-bottom: 1rem; font-size: 0.9rem; line-height: 1.5; }
+  .status.pending  { background: #fff8e1; color: #7a5c00; }
+  .status.success  { background: #e8f7ee; color: #1a5c35; }
+  .status.error    { background: #fff0f0; color: #cc0000; }
+  .detail { font-size: 0.78rem; color: #666; margin-top: 0.5rem; word-break: break-all; }
+  .course-list { margin-top: 1rem; }
+  .course-item { padding: 0.5rem 0; border-bottom: 1px solid #eee; font-size: 0.88rem; color: #333; }
+  .course-item:last-child { border-bottom: none; }
+  button { background: #2D6A4F; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 10px; font-size: 0.95rem; cursor: pointer; width: 100%; margin-top: 1rem; }
+  button:hover { background: #245840; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Friends on Par — Connection Test</h2>
+  <p class="sub">Testing your Supabase connection</p>
+
+  <div class="status pending" id="urlStatus">
+    Checking Project URL...
+  </div>
+
+  <div class="status pending" id="keyStatus">
+    Checking anon key format...
+  </div>
+
+  <div class="status pending" id="connStatus">
+    Testing database connection...
+  </div>
+
+  <div id="courseList"></div>
+
+  <button onclick="runTest()">Run Test Again</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const SUPABASE_URL = 'https://ugybxownmfsqhmdncrdl.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVneWJ4b3dubWZzcWhtZG5jcmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTQyNTgsImV4cCI6MjA5MDA3MDI1OH0.lR1ane15u4tNwy9lOMXOn9ORQzCPY4mgNffGJr0KTnY';
+
+  async function runTest() {
+    const urlEl  = document.getElementById('urlStatus');
+    const keyEl  = document.getElementById('keyStatus');
+    const connEl = document.getElementById('connStatus');
+    const listEl = document.getElementById('courseList');
+
+    listEl.innerHTML = '';
+
+    // Test 1: URL format
+    urlEl.className = 'status pending';
+    urlEl.textContent = 'Checking URL...';
+
+    if (SUPABASE_URL.startsWith('https://') && SUPABASE_URL.endsWith('.supabase.co')) {
+      urlEl.className = 'status success';
+      urlEl.textContent = '✓ Project URL looks correct';
+      urlEl.innerHTML += '<div class="detail">' + SUPABASE_URL + '</div>';
+    } else {
+      urlEl.className = 'status error';
+      urlEl.textContent = '✗ Project URL format is wrong';
+      urlEl.innerHTML += '<div class="detail">Found: ' + SUPABASE_URL + '</div>';
+    }
+
+    // Test 2: Key format
+    keyEl.className = 'status pending';
+    keyEl.textContent = 'Checking anon key...';
+
+    const parts = SUPABASE_ANON_KEY.split('.');
+    if (parts.length === 3 && SUPABASE_ANON_KEY.startsWith('eyJ')) {
+      keyEl.className = 'status success';
+      keyEl.textContent = '✓ Anon key format looks correct';
+      keyEl.innerHTML += '<div class="detail">Starts with: ' + SUPABASE_ANON_KEY.substring(0, 20) + '...<br>Length: ' + SUPABASE_ANON_KEY.length + ' characters</div>';
+    } else {
+      keyEl.className = 'status error';
+      keyEl.textContent = '✗ Anon key format is wrong — should have 3 sections separated by periods';
+      keyEl.innerHTML += '<div class="detail">Sections found: ' + parts.length + ' (need 3)</div>';
+    }
+
+    // Test 3: Live connection
+    connEl.className = 'status pending';
+    connEl.textContent = 'Connecting to Supabase...';
+
+    try {
+      const { createClient } = supabase;
+      const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const { data, error } = await db
+        .from('courses')
+        .select('name, county')
+        .limit(5);
+
+      if (error) {
+        connEl.className = 'status error';
+        connEl.textContent = '✗ Connection failed';
+        connEl.innerHTML += '<div class="detail">Error: ' + error.message + '<br>Code: ' + error.code + '</div>';
+      } else if (!data || data.length === 0) {
+        connEl.className = 'status error';
+        connEl.textContent = '✗ Connected but courses table is empty';
+        connEl.innerHTML += '<div class="detail">The SQL setup may not have run correctly.</div>';
+      } else {
+        connEl.className = 'status success';
+        connEl.textContent = '✓ Connected! Found ' + data.length + ' courses (showing first 5)';
+        listEl.innerHTML = '<div class="course-list">' +
+          data.map(c => '<div class="course-item">' + c.name + ' — ' + c.county + '</div>').join('') +
+          '</div>';
+      }
+    } catch (err) {
+      connEl.className = 'status error';
+      connEl.textContent = '✗ Unexpected error';
+      connEl.innerHTML += '<div class="detail">' + err.message + '</div>';
+    }
+  }
+
+  runTest();
+</script>
+</body>
+</html>
