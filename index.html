@@ -20,63 +20,45 @@
     --muted:  #888;
     --dark:   #2A2A2A;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
-    color: var(--dark);
-    min-height: 100vh;
-    padding-bottom: 6rem;
-  }
-
-  .header {
-    background: var(--green);
-    padding: 1rem 1.5rem 1.2rem;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-  }
-  .header-inner {
-    max-width: 500px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; padding-bottom: 6rem; }
+  .header { background: var(--green); padding: 1rem 1.5rem 1.2rem; position: sticky; top: 0; z-index: 50; }
+  .header-inner { max-width: 500px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
   .header-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--lime); }
   .header-logo span { color: var(--pink); font-style: italic; }
   .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; }
   .header-step { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 500; }
   .header-region { font-size: 0.65rem; color: var(--lime); font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; }
-
   .progress-bar { height: 3px; background: rgba(255,255,255,0.2); position: sticky; top: 56px; z-index: 49; }
   .progress-fill { height: 100%; background: var(--lime); transition: width 0.4s ease; width: 20%; }
-
   .container { max-width: 500px; margin: 0 auto; padding: 0 1.2rem; }
-
   .step-panel { display: none; animation: slideIn 0.3s ease both; }
   .step-panel.active { display: block; }
   @keyframes slideIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
-
   .step-header { padding: 1.8rem 0 1.2rem; }
   .step-label { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--coral); font-weight: 600; margin-bottom: 0.4rem; }
   .step-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; line-height: 1.15; color: var(--navy); }
   .step-sub { font-size: 0.9rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
-
   .region-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--navy); color: var(--lime); font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 100px; margin-bottom: 1.1rem; }
-
+  .location-row { display: flex; gap: 0.6rem; margin-bottom: 0.5rem; }
+  .zip-wrap { position: relative; flex: 1; }
+  .zip-wrap input { width: 100%; padding: 0.9rem 1rem 0.9rem 2.8rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; background: var(--white); color: var(--dark); outline: none; transition: border-color 0.2s; }
+  .zip-wrap input:focus { border-color: var(--green); }
+  .zip-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
+  .btn-near-me { background: var(--green); color: var(--white); border: none; padding: 0.9rem 1rem; border-radius: 12px; font-size: 0.82rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; white-space: nowrap; transition: background 0.2s; flex-shrink: 0; }
+  .btn-near-me:hover { background: #245840; }
+  .btn-near-me:disabled { opacity: 0.6; cursor: not-allowed; }
+  .location-status { font-size: 0.78rem; color: var(--muted); text-align: center; margin-bottom: 0.8rem; min-height: 1rem; }
+  .location-status.found { color: var(--green); font-weight: 500; }
+  .location-status.error { color: var(--coral); }
   .county-filters { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1rem; }
   .county-btn { padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.78rem; font-weight: 500; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--dark); transition: all 0.18s; user-select: none; }
   .county-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
-
   .search-wrap { position: relative; margin-bottom: 1rem; }
   .search-wrap input { width: 100%; padding: 0.9rem 1rem 0.9rem 2.8rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; background: var(--white); color: var(--dark); outline: none; transition: border-color 0.2s; }
   .search-wrap input:focus { border-color: var(--green); }
   .search-icon { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
-
-  .course-suggestions { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1rem; max-height: 420px; overflow-y: auto; }
+  .course-suggestions { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1rem; max-height: 380px; overflow-y: auto; }
   .course-option { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 0.9rem 1rem; cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 0.8rem; }
   .course-option:hover { border-color: var(--green); background: #f0f9f4; }
   .course-option.selected { border-color: var(--green); background: #e8f7ee; }
@@ -87,7 +69,6 @@
   .course-loc { font-size: 0.75rem; color: var(--muted); }
   .course-county-tag { font-size: 0.65rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 100px; background: var(--lime); color: var(--navy); text-transform: uppercase; letter-spacing: 0.3px; }
   .course-check { width: 22px; height: 22px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; opacity: 0; transition: opacity 0.2s; flex-shrink: 0; }
-
   .rating-categories { display: flex; flex-direction: column; gap: 0.8rem; }
   .rating-row { background: var(--white); border-radius: 14px; padding: 1.1rem 1.2rem; border: 2px solid var(--border); transition: border-color 0.2s; }
   .rating-row.rated { border-color: var(--lime); }
@@ -99,18 +80,15 @@
   .star { font-size: 1.8rem; cursor: pointer; transition: transform 0.15s; line-height: 1; color: #DDD; user-select: none; }
   .star.lit { color: var(--gold); }
   .star:hover { transform: scale(1.18); }
-
   .chips-section { margin-bottom: 1rem; }
   .chips-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.7rem; }
   .chips-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   .chip { padding: 0.45rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--dark); transition: all 0.18s; user-select: none; }
   .chip.good.selected { background: #e8f7ee; border-color: var(--green); color: var(--green); }
   .chip.bad.selected  { background: #fff0f0; border-color: var(--coral); color: var(--coral); }
-
   .review-textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark); background: var(--white); resize: none; outline: none; min-height: 130px; line-height: 1.6; transition: border-color 0.2s; }
   .review-textarea:focus { border-color: var(--green); }
   .char-count { text-align: right; font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
-
   .toggle-row { display: flex; align-items: center; justify-content: space-between; background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 0.8rem; }
   .toggle-label { font-size: 0.92rem; font-weight: 500; }
   .toggle-desc { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
@@ -118,12 +96,10 @@
   .toggle.on { background: var(--green); }
   .toggle::after { content: ''; position: absolute; width: 20px; height: 20px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: left 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
   .toggle.on::after { left: 23px; }
-
   .input-group { margin-bottom: 0.9rem; }
   .input-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
   .input-field { width: 100%; padding: 0.85rem 1rem; border: 2px solid var(--border); border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; background: var(--white); color: var(--dark); outline: none; transition: border-color 0.2s; }
   .input-field:focus { border-color: var(--green); }
-
   .skill-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
   .skill-opt { background: var(--white); border: 2px solid var(--border); border-radius: 12px; padding: 0.8rem 0.9rem; cursor: pointer; transition: all 0.18s; text-align: center; }
   .skill-opt:hover { border-color: var(--green); }
@@ -131,13 +107,15 @@
   .skill-opt-icon { font-size: 1.4rem; margin-bottom: 0.25rem; }
   .skill-opt-label { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
   .skill-opt-desc { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; }
-
+  .gender-options { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .gender-opt { padding: 0.5rem 1.1rem; border-radius: 100px; font-size: 0.85rem; font-weight: 500; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--dark); transition: all 0.18s; user-select: none; }
+  .gender-opt:hover { border-color: var(--green); }
+  .gender-opt.selected { background: #e8f7ee; border-color: var(--green); color: var(--green); }
   .photo-upload { border: 2px dashed var(--border); border-radius: 14px; padding: 1.8rem; text-align: center; cursor: pointer; background: var(--white); transition: border-color 0.2s, background 0.2s; margin-bottom: 0.8rem; }
   .photo-upload:hover { border-color: var(--green); background: #f5fdf8; }
   .photo-upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
   .photo-upload-text { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
   .photo-upload-text strong { color: var(--green); }
-
   .confirm-card { background: var(--white); border-radius: 18px; padding: 1.5rem; border: 2px solid var(--border); margin-bottom: 1rem; }
   .confirm-course-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.2rem; }
   .confirm-loc { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
@@ -148,30 +126,25 @@
   .overall-score-big { display: flex; align-items: center; gap: 1rem; background: var(--green); border-radius: 14px; padding: 1rem 1.2rem; color: white; margin-bottom: 0.8rem; }
   .score-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; line-height: 1; color: var(--lime); }
   .score-label { font-size: 0.9rem; opacity: 0.85; line-height: 1.4; }
-
   .data-explainer { background: var(--navy); border-radius: 14px; padding: 1.2rem; margin-bottom: 1rem; display: flex; gap: 0.8rem; align-items: flex-start; }
   .data-explainer-icon { font-size: 1.4rem; flex-shrink: 0; }
   .data-explainer-text { font-size: 0.82rem; color: rgba(255,255,255,0.75); line-height: 1.55; }
   .data-explainer-text strong { color: var(--lime); }
-
   .error-banner { background: #fff0f0; border: 2px solid var(--coral); border-radius: 12px; padding: 0.9rem 1.1rem; margin-bottom: 1rem; font-size: 0.88rem; color: #cc0000; display: none; }
   .error-banner.show { display: block; }
   .loading-overlay { display: none; position: absolute; inset: 0; background: rgba(255,248,238,0.85); z-index: 99; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; border-radius: 14px; }
   .loading-overlay.show { display: flex; }
   .spinner { width: 36px; height: 36px; border: 3px solid var(--lime); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   .btn-submit { width: 100%; background: var(--green); color: var(--white); border: none; padding: 1.1rem; border-radius: 14px; font-size: 1.05rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s, opacity 0.2s; margin-bottom: 0.6rem; }
   .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,106,79,0.3); }
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
-
   .nav-btns { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); padding: 0.9rem 1.2rem; display: flex; gap: 0.8rem; z-index: 50; max-width: 500px; margin: 0 auto; }
   .btn-back { flex: 1; background: var(--gray); color: var(--dark); border: none; padding: 0.9rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.18s; }
   .btn-back:hover { background: var(--border); }
   .btn-back.hidden { display: none; }
   .btn-next { flex: 2; background: var(--green); color: var(--white); border: none; padding: 0.9rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; }
   .btn-next:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(45,106,79,0.3); }
-
   .success-screen { display: none; text-align: center; padding: 4rem 1.5rem; max-width: 500px; margin: 0 auto; animation: slideIn 0.4s ease both; }
   .success-screen.show { display: block; }
   .success-icon { font-size: 4rem; margin-bottom: 1.2rem; }
@@ -181,7 +154,6 @@
   .btn-another { background: var(--green); color: white; border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; display: block; width: 100%; margin-bottom: 0.7rem; transition: transform 0.18s; }
   .btn-another:hover { transform: translateY(-2px); }
   .btn-home { background: var(--gray); color: var(--dark); border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; }
-
   .not-listed { background: var(--white); border: 2px dashed var(--border); border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 1rem; cursor: pointer; transition: border-color 0.2s; }
   .not-listed:hover { border-color: var(--green); }
   .not-listed-label { font-size: 0.85rem; font-weight: 600; color: var(--green); }
@@ -192,16 +164,10 @@
 </head>
 <body>
 
-<!-- ============================================================
-     STEP 1: PASTE YOUR SUPABASE VALUES HERE
-     Get these from: Supabase Dashboard → Settings → API
-     ============================================================ -->
 <script>
   const SUPABASE_URL = 'https://ugybxownmfsqhmdncrdl.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVneWJ4b3dubWZzcWhtZG5jcmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTQyNTgsImV4cCI6MjA5MDA3MDI1OH0.lR1ane15u4tNwy9lOMXOn9ORQzCPY4mgNffGJr0KTnY';
 </script>
-<!-- ============================================================ -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 
 <div class="header">
@@ -213,9 +179,7 @@
     </div>
   </div>
 </div>
-<div class="progress-bar">
-  <div class="progress-fill" id="progressFill"></div>
-</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
 <div class="container" id="mainContent">
 
@@ -225,8 +189,16 @@
       <div class="region-badge">📍 Southeast Michigan</div>
       <div class="step-label">Step 1</div>
       <div class="step-title">Which course did you play?</div>
-      <div class="step-sub">Browse by county or search by name</div>
+      <div class="step-sub">Find by location, ZIP code, or county</div>
     </div>
+    <div class="location-row">
+      <div class="zip-wrap">
+        <span class="zip-icon">📍</span>
+        <input type="text" id="zipSearch" placeholder="Enter ZIP code..." maxlength="5" inputmode="numeric" oninput="filterByZip(this.value)">
+      </div>
+      <button class="btn-near-me" id="nearMeBtn" onclick="findNearMe()">📱 Near Me</button>
+    </div>
+    <div class="location-status" id="locationStatus"></div>
     <div class="county-filters" id="countyFilters">
       <button class="county-btn active" onclick="filterByCounty('All', this)">All</button>
       <button class="county-btn" onclick="filterByCounty('Oakland', this)">Oakland</button>
@@ -237,7 +209,7 @@
     </div>
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search courses..." id="courseSearch" oninput="searchCourses(this.value)">
+      <input type="text" placeholder="Search by course name..." id="courseSearch" oninput="searchCourses(this.value)">
     </div>
     <div class="course-suggestions" id="courseSuggestions">
       <div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.9rem;">Loading courses...</div>
@@ -262,49 +234,24 @@
     </div>
     <div class="rating-categories">
       <div class="rating-row" id="row-facilities">
-        <div class="rating-top">
-          <div><div class="rating-cat-name">🏠 Facilities &amp; Locker Room</div><div class="rating-cat-desc">Cleanliness, women's amenities, restrooms</div></div>
-          <div class="rating-val" id="val-facilities">–</div>
-        </div>
-        <div class="stars-row" data-cat="facilities">
-          <span class="star" onclick="rate('facilities',1)">★</span><span class="star" onclick="rate('facilities',2)">★</span><span class="star" onclick="rate('facilities',3)">★</span><span class="star" onclick="rate('facilities',4)">★</span><span class="star" onclick="rate('facilities',5)">★</span>
-        </div>
+        <div class="rating-top"><div><div class="rating-cat-name">🏠 Facilities &amp; Locker Room</div><div class="rating-cat-desc">Cleanliness, women's amenities, restrooms</div></div><div class="rating-val" id="val-facilities">–</div></div>
+        <div class="stars-row" data-cat="facilities"><span class="star" onclick="rate('facilities',1)">★</span><span class="star" onclick="rate('facilities',2)">★</span><span class="star" onclick="rate('facilities',3)">★</span><span class="star" onclick="rate('facilities',4)">★</span><span class="star" onclick="rate('facilities',5)">★</span></div>
       </div>
       <div class="rating-row" id="row-pace">
-        <div class="rating-top">
-          <div><div class="rating-cat-name">⚡ Pace of Play</div><div class="rating-cat-desc">Wait times, flow, respect for all skill levels</div></div>
-          <div class="rating-val" id="val-pace">–</div>
-        </div>
-        <div class="stars-row" data-cat="pace">
-          <span class="star" onclick="rate('pace',1)">★</span><span class="star" onclick="rate('pace',2)">★</span><span class="star" onclick="rate('pace',3)">★</span><span class="star" onclick="rate('pace',4)">★</span><span class="star" onclick="rate('pace',5)">★</span>
-        </div>
+        <div class="rating-top"><div><div class="rating-cat-name">⚡ Pace of Play</div><div class="rating-cat-desc">Wait times, flow, respect for all skill levels</div></div><div class="rating-val" id="val-pace">–</div></div>
+        <div class="stars-row" data-cat="pace"><span class="star" onclick="rate('pace',1)">★</span><span class="star" onclick="rate('pace',2)">★</span><span class="star" onclick="rate('pace',3)">★</span><span class="star" onclick="rate('pace',4)">★</span><span class="star" onclick="rate('pace',5)">★</span></div>
       </div>
       <div class="rating-row" id="row-safety">
-        <div class="rating-top">
-          <div><div class="rating-cat-name">🛡️ Safety &amp; Parking</div><div class="rating-cat-desc">Well-lit, secure, comfortable environment</div></div>
-          <div class="rating-val" id="val-safety">–</div>
-        </div>
-        <div class="stars-row" data-cat="safety">
-          <span class="star" onclick="rate('safety',1)">★</span><span class="star" onclick="rate('safety',2)">★</span><span class="star" onclick="rate('safety',3)">★</span><span class="star" onclick="rate('safety',4)">★</span><span class="star" onclick="rate('safety',5)">★</span>
-        </div>
+        <div class="rating-top"><div><div class="rating-cat-name">🛡️ Safety &amp; Parking</div><div class="rating-cat-desc">Well-lit, secure, comfortable environment</div></div><div class="rating-val" id="val-safety">–</div></div>
+        <div class="stars-row" data-cat="safety"><span class="star" onclick="rate('safety',1)">★</span><span class="star" onclick="rate('safety',2)">★</span><span class="star" onclick="rate('safety',3)">★</span><span class="star" onclick="rate('safety',4)">★</span><span class="star" onclick="rate('safety',5)">★</span></div>
       </div>
       <div class="rating-row" id="row-staff">
-        <div class="rating-top">
-          <div><div class="rating-cat-name">😊 Staff Attitude</div><div class="rating-cat-desc">Welcoming, respectful, helpful to women players</div></div>
-          <div class="rating-val" id="val-staff">–</div>
-        </div>
-        <div class="stars-row" data-cat="staff">
-          <span class="star" onclick="rate('staff',1)">★</span><span class="star" onclick="rate('staff',2)">★</span><span class="star" onclick="rate('staff',3)">★</span><span class="star" onclick="rate('staff',4)">★</span><span class="star" onclick="rate('staff',5)">★</span>
-        </div>
+        <div class="rating-top"><div><div class="rating-cat-name">😊 Staff Attitude</div><div class="rating-cat-desc">Welcoming, respectful, helpful to women players</div></div><div class="rating-val" id="val-staff">–</div></div>
+        <div class="stars-row" data-cat="staff"><span class="star" onclick="rate('staff',1)">★</span><span class="star" onclick="rate('staff',2)">★</span><span class="star" onclick="rate('staff',3)">★</span><span class="star" onclick="rate('staff',4)">★</span><span class="star" onclick="rate('staff',5)">★</span></div>
       </div>
       <div class="rating-row" id="row-vibe">
-        <div class="rating-top">
-          <div><div class="rating-cat-name">🌿 Overall Vibe</div><div class="rating-cat-desc">Would you feel at home? Recommend to a friend?</div></div>
-          <div class="rating-val" id="val-vibe">–</div>
-        </div>
-        <div class="stars-row" data-cat="vibe">
-          <span class="star" onclick="rate('vibe',1)">★</span><span class="star" onclick="rate('vibe',2)">★</span><span class="star" onclick="rate('vibe',3)">★</span><span class="star" onclick="rate('vibe',4)">★</span><span class="star" onclick="rate('vibe',5)">★</span>
-        </div>
+        <div class="rating-top"><div><div class="rating-cat-name">🌿 Overall Vibe</div><div class="rating-cat-desc">Would you feel at home? Recommend to a friend?</div></div><div class="rating-val" id="val-vibe">–</div></div>
+        <div class="stars-row" data-cat="vibe"><span class="star" onclick="rate('vibe',1)">★</span><span class="star" onclick="rate('vibe',2)">★</span><span class="star" onclick="rate('vibe',3)">★</span><span class="star" onclick="rate('vibe',4)">★</span><span class="star" onclick="rate('vibe',5)">★</span></div>
       </div>
     </div>
   </div>
@@ -347,7 +294,7 @@
     </div>
     <div style="margin-bottom:1rem;">
       <div class="chips-label" style="margin-bottom:0.6rem;">✍️ In your own words (optional)</div>
-      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another woman golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
+      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
       <div class="char-count"><span id="charCount">0</span>/500</div>
     </div>
     <div class="toggle-row">
@@ -378,6 +325,15 @@
     <div class="input-group">
       <label class="input-label">Your ZIP code</label>
       <input type="text" class="input-field" placeholder="e.g. 48302" id="zipField" maxlength="5" inputmode="numeric">
+    </div>
+    <div style="margin-bottom:1.2rem;">
+      <div class="input-label" style="margin-bottom:0.6rem;">Gender (optional)</div>
+      <div class="gender-options">
+        <span class="gender-opt" onclick="selectGender(this)">Woman</span>
+        <span class="gender-opt" onclick="selectGender(this)">Man</span>
+        <span class="gender-opt" onclick="selectGender(this)">Non-binary</span>
+        <span class="gender-opt" onclick="selectGender(this)">Prefer not to say</span>
+      </div>
     </div>
     <div style="margin-bottom:1.2rem;">
       <div class="input-label" style="margin-bottom:0.6rem;">Skill level</div>
@@ -434,17 +390,15 @@
 
 </div>
 
-<!-- BOTTOM NAV -->
 <div class="nav-btns" id="navBtns">
   <button class="btn-back hidden" id="backBtn" onclick="goBack()">← Back</button>
   <button class="btn-next" id="nextBtn" onclick="goNext()">Next →</button>
 </div>
 
-<!-- SUCCESS SCREEN -->
 <div class="success-screen" id="successScreen">
   <div class="success-icon">🎉</div>
   <div class="success-title">Review Submitted!</div>
-  <div class="success-sub">Thanks for helping women golfers across SE Michigan make better decisions. Check your email to verify your review and unlock your points.</div>
+  <div class="success-sub">Thanks for helping golfers across SE Michigan make better decisions. Check your email to verify your review and unlock your points.</div>
   <div class="points-badge">⭐ 50 Points Pending Verification</div>
   <button class="btn-another" onclick="resetForm()">Rate Another Course</button>
   <button class="btn-home" onclick="window.location.href='/'">Back to Home</button>
@@ -460,17 +414,64 @@ let selectedCourse    = null;
 let selectedCourseId  = null;
 let selectedCourseLoc = null;
 let ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
-let soloPlayer  = false;
-let firstTime   = false;
+let soloPlayer    = false;
+let firstTime     = false;
 let selectedSkill = null;
+let selectedGender = null;
 let activeCounty  = 'All';
 let allCourses    = [];
 
+const ZIP_COUNTIES = {
+  '48301':'Oakland','48302':'Oakland','48303':'Oakland','48304':'Oakland','48305':'Oakland',
+  '48306':'Oakland','48307':'Oakland','48308':'Oakland','48309':'Oakland','48310':'Oakland',
+  '48312':'Oakland','48313':'Oakland','48314':'Oakland','48315':'Oakland','48316':'Oakland',
+  '48317':'Oakland','48320':'Oakland','48322':'Oakland','48323':'Oakland','48324':'Oakland',
+  '48326':'Oakland','48327':'Oakland','48328':'Oakland','48329':'Oakland','48330':'Oakland',
+  '48331':'Oakland','48334':'Oakland','48335':'Oakland','48336':'Oakland','48340':'Oakland',
+  '48341':'Oakland','48342':'Oakland','48346':'Oakland','48348':'Oakland','48350':'Oakland',
+  '48356':'Oakland','48357':'Oakland','48359':'Oakland','48360':'Oakland','48362':'Oakland',
+  '48363':'Oakland','48366':'Oakland','48367':'Oakland','48370':'Oakland','48371':'Oakland',
+  '48374':'Oakland','48375':'Oakland','48377':'Oakland','48380':'Oakland','48382':'Oakland',
+  '48383':'Oakland','48386':'Oakland','48390':'Oakland','48393':'Oakland',
+  '48025':'Oakland','48030':'Oakland','48033':'Oakland','48034':'Oakland',
+  '48067':'Oakland','48068':'Oakland','48069':'Oakland','48070':'Oakland',
+  '48071':'Oakland','48072':'Oakland','48073':'Oakland','48075':'Oakland',
+  '48076':'Oakland','48083':'Oakland','48084':'Oakland','48085':'Oakland',
+  '48098':'Oakland','48099':'Oakland','48009':'Oakland',
+  '48201':'Wayne','48202':'Wayne','48203':'Wayne','48204':'Wayne','48205':'Wayne',
+  '48206':'Wayne','48207':'Wayne','48208':'Wayne','48209':'Wayne','48210':'Wayne',
+  '48211':'Wayne','48212':'Wayne','48213':'Wayne','48214':'Wayne','48215':'Wayne',
+  '48216':'Wayne','48217':'Wayne','48218':'Wayne','48219':'Wayne','48221':'Wayne',
+  '48223':'Wayne','48224':'Wayne','48225':'Wayne','48226':'Wayne','48227':'Wayne',
+  '48228':'Wayne','48229':'Wayne','48230':'Wayne','48234':'Wayne','48235':'Wayne',
+  '48236':'Wayne','48237':'Wayne','48238':'Wayne','48239':'Wayne','48240':'Wayne',
+  '48101':'Wayne','48111':'Wayne','48120':'Wayne','48122':'Wayne','48124':'Wayne',
+  '48125':'Wayne','48126':'Wayne','48127':'Wayne','48128':'Wayne','48134':'Wayne',
+  '48135':'Wayne','48138':'Wayne','48141':'Wayne','48146':'Wayne','48150':'Wayne',
+  '48152':'Wayne','48154':'Wayne','48164':'Wayne','48167':'Wayne','48168':'Wayne',
+  '48170':'Wayne','48173':'Wayne','48174':'Wayne','48180':'Wayne','48183':'Wayne',
+  '48184':'Wayne','48185':'Wayne','48186':'Wayne','48187':'Wayne','48188':'Wayne',
+  '48192':'Wayne','48193':'Wayne','48195':'Wayne',
+  '48103':'Washtenaw','48104':'Washtenaw','48105':'Washtenaw','48108':'Washtenaw',
+  '48109':'Washtenaw','48118':'Washtenaw','48130':'Washtenaw','48158':'Washtenaw',
+  '48160':'Washtenaw','48176':'Washtenaw','48189':'Washtenaw','48190':'Washtenaw',
+  '48197':'Washtenaw','48198':'Washtenaw',
+  '48001':'Macomb','48002':'Macomb','48003':'Macomb','48005':'Macomb',
+  '48014':'Macomb','48015':'Macomb','48021':'Macomb','48026':'Macomb',
+  '48035':'Macomb','48036':'Macomb','48038':'Macomb','48039':'Macomb',
+  '48040':'Macomb','48042':'Macomb','48043':'Macomb','48044':'Macomb',
+  '48045':'Macomb','48047':'Macomb','48048':'Macomb','48050':'Macomb',
+  '48051':'Macomb','48054':'Macomb','48060':'Macomb','48062':'Macomb',
+  '48065':'Macomb','48066':'Macomb','48080':'Macomb','48081':'Macomb',
+  '48082':'Macomb','48088':'Macomb','48089':'Macomb','48092':'Macomb',
+  '48093':'Macomb','48094':'Macomb','48095':'Macomb','48096':'Macomb',
+  '48114':'Livingston','48116':'Livingston','48139':'Livingston','48169':'Livingston',
+  '48353':'Livingston','48381':'Livingston','48430':'Livingston','48451':'Livingston',
+  '48462':'Livingston'
+};
+
 async function loadCourses() {
-  const { data, error } = await db
-    .from('courses')
-    .select('id, name, location, county')
-    .order('name');
+  const { data, error } = await db.from('courses').select('id, name, location, county').order('name');
   if (error) {
     document.getElementById('courseSuggestions').innerHTML =
       '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Could not load courses. Check your Supabase config.</div>';
@@ -510,10 +511,77 @@ function renderCourses(filter = '', county = 'All') {
   });
 }
 
+function filterByZip(zip) {
+  if (zip.length === 5) {
+    const county = ZIP_COUNTIES[zip];
+    if (county) {
+      document.getElementById('locationStatus').textContent = 'Showing courses in ' + county + ' County';
+      document.getElementById('locationStatus').className = 'location-status found';
+      document.querySelectorAll('.county-btn').forEach(b => b.classList.toggle('active', b.textContent === county));
+      activeCounty = county;
+      renderCourses(document.getElementById('courseSearch').value, county);
+    } else {
+      document.getElementById('locationStatus').textContent = 'ZIP not found in SE Michigan — showing all courses';
+      document.getElementById('locationStatus').className = 'location-status error';
+      renderCourses(document.getElementById('courseSearch').value, 'All');
+    }
+  } else if (zip.length === 0) {
+    document.getElementById('locationStatus').textContent = '';
+    document.getElementById('locationStatus').className = 'location-status';
+  }
+}
+
+function findNearMe() {
+  const btn = document.getElementById('nearMeBtn');
+  const status = document.getElementById('locationStatus');
+  if (!navigator.geolocation) {
+    status.textContent = 'Location not supported on this device';
+    status.className = 'location-status error';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '📡 Finding...';
+  status.textContent = 'Getting your location...';
+  status.className = 'location-status';
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);
+        const data = await res.json();
+        const zip = data.address?.postcode?.substring(0, 5);
+        if (zip && ZIP_COUNTIES[zip]) {
+          document.getElementById('zipSearch').value = zip;
+          filterByZip(zip);
+          status.textContent = 'Showing courses near you (' + zip + ')';
+          status.className = 'location-status found';
+        } else {
+          status.textContent = 'Location found — showing all SE Michigan courses';
+          status.className = 'location-status found';
+        }
+      } catch {
+        status.textContent = 'Location found — showing all SE Michigan courses';
+        status.className = 'location-status found';
+      }
+      btn.disabled = false;
+      btn.textContent = '📱 Near Me';
+    },
+    () => {
+      status.textContent = 'Could not get location — please enter your ZIP code';
+      status.className = 'location-status error';
+      btn.disabled = false;
+      btn.textContent = '📱 Near Me';
+    },
+    { timeout: 10000 }
+  );
+}
+
 function filterByCounty(county, btn) {
   activeCounty = county;
   document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('zipSearch').value = '';
+  document.getElementById('locationStatus').textContent = '';
+  document.getElementById('locationStatus').className = 'location-status';
   renderCourses(document.getElementById('courseSearch').value, county);
 }
 
@@ -522,9 +590,7 @@ function searchCourses(val) { renderCourses(val, activeCounty); }
 function selectCourse(el, id, name, loc) {
   document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
-  selectedCourseId  = id;
-  selectedCourse    = name;
-  selectedCourseLoc = loc;
+  selectedCourseId = id; selectedCourse = name; selectedCourseLoc = loc;
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -547,9 +613,7 @@ function goNext() {
     if (!selectedCourse && !custom) { alert('Please select or enter a course.'); return; }
     if (!selectedCourse && custom) { selectedCourse = custom; selectedCourseLoc = 'SE Michigan'; selectedCourseId = null; }
   }
-  if (currentStep === 2) {
-    if (!Object.values(ratings).every(v => v > 0)) { alert('Please rate all 5 categories to continue.'); return; }
-  }
+  if (currentStep === 2 && !Object.values(ratings).every(v => v > 0)) { alert('Please rate all 5 categories to continue.'); return; }
   if (currentStep === 4) {
     const email = document.getElementById('emailField').value.trim();
     if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
@@ -576,8 +640,7 @@ function goBack() {
 
 function rate(cat, val) {
   ratings[cat] = val;
-  const row = document.querySelector(`[data-cat="${cat}"]`);
-  row.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < val));
+  document.querySelector(`[data-cat="${cat}"]`).querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < val));
   document.getElementById('val-' + cat).textContent = val + '/5';
   document.getElementById('row-' + cat).classList.add('rated');
 }
@@ -591,6 +654,11 @@ function selectSkill(el) {
   el.classList.add('selected');
   selectedSkill = el.querySelector('.skill-opt-label').textContent;
 }
+function selectGender(el) {
+  document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedGender = el.textContent;
+}
 function triggerPhotoUpload() {
   const i = document.createElement('input');
   i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
@@ -598,7 +666,7 @@ function triggerPhotoUpload() {
 
 function buildConfirmStep() {
   document.getElementById('confirmCourseName').textContent = selectedCourse || '–';
-  document.getElementById('confirmCourseLoc').textContent  = selectedCourseLoc || '–';
+  document.getElementById('confirmCourseLoc').textContent = selectedCourseLoc || '–';
   const cats = ['facilities', 'pace', 'safety', 'staff', 'vibe'];
   cats.forEach(c => {
     const v = ratings[c];
@@ -610,9 +678,9 @@ function buildConfirmStep() {
 }
 
 async function submitReview() {
-  const submitBtn     = document.getElementById('submitBtn');
+  const submitBtn      = document.getElementById('submitBtn');
   const loadingOverlay = document.getElementById('loadingOverlay');
-  const errorBanner   = document.getElementById('errorBanner');
+  const errorBanner    = document.getElementById('errorBanner');
   const email     = document.getElementById('emailField').value.trim().toLowerCase();
   const firstName = document.getElementById('firstName').value.trim();
   const zip       = document.getElementById('zipField').value.trim();
@@ -624,10 +692,9 @@ async function submitReview() {
   try {
     const { data: reviewer, error: reviewerError } = await db
       .from('reviewers')
-      .upsert({ email, first_name: firstName || null, zip_code: zip || null, skill_level: selectedSkill || null, last_active: new Date().toISOString() },
+      .upsert({ email, first_name: firstName || null, zip_code: zip || null, skill_level: selectedSkill || null, gender: selectedGender || null, last_active: new Date().toISOString() },
         { onConflict: 'email', ignoreDuplicates: false })
       .select('id').single();
-
     if (reviewerError) throw new Error('Could not save reviewer: ' + reviewerError.message);
 
     const cats = ['facilities', 'pace', 'safety', 'staff', 'vibe'];
@@ -645,7 +712,6 @@ async function submitReview() {
       review_text: document.getElementById('reviewText').value || null,
       solo_player: soloPlayer, first_visit: firstTime, verified: false, region: 'SE Michigan'
     });
-
     if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
 
     await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified' } });
@@ -665,9 +731,10 @@ async function submitReview() {
 }
 
 function resetForm() {
-  currentStep = 1; selectedCourse = selectedCourseId = selectedCourseLoc = null;
+  currentStep = 1;
+  selectedCourse = selectedCourseId = selectedCourseLoc = null;
   ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
-  soloPlayer = false; firstTime = false; selectedSkill = null; activeCounty = 'All';
+  soloPlayer = false; firstTime = false; selectedSkill = null; selectedGender = null; activeCounty = 'All';
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step1').classList.add('active');
   document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
@@ -675,6 +742,7 @@ function resetForm() {
   document.querySelectorAll('.rating-row').forEach(r => r.classList.remove('rated'));
   document.querySelectorAll('.rating-val').forEach(v => v.textContent = '–');
   document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
   document.getElementById('reviewText').value = '';
   document.getElementById('charCount').textContent = '0';
   document.getElementById('soloToggle').classList.remove('on');
@@ -682,6 +750,9 @@ function resetForm() {
   document.getElementById('firstName').value = '';
   document.getElementById('emailField').value = '';
   document.getElementById('zipField').value = '';
+  document.getElementById('zipSearch').value = '';
+  document.getElementById('locationStatus').textContent = '';
+  document.getElementById('locationStatus').className = 'location-status';
   document.getElementById('courseSearch').value = '';
   document.getElementById('notListedBox').classList.remove('open');
   document.getElementById('customCourseInput').value = '';
@@ -702,4 +773,3 @@ updateProgress();
 </script>
 </body>
 </html>
-
