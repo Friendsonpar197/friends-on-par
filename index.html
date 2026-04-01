@@ -24,7 +24,7 @@
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; padding-bottom: 6rem; }
   .header { background: var(--green); padding: 1rem 1.5rem 1.2rem; position: sticky; top: 0; z-index: 50; }
   .header-inner { max-width: 500px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-  .header-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--lime); }
+  .header-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--lime); display: flex; align-items: center; gap: 0.6rem; }
   .header-logo span { color: var(--pink); font-style: italic; }
   .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; }
   .header-step { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 500; }
@@ -172,8 +172,11 @@
 
 <div class="header">
   <div class="header-inner">
-    <div class="header-logo">
+  <div class="header-logo">
   <img src="logo-icon.png" alt="Friends on Par" style="height:36px;width:auto;">
+  <span style="display:flex;flex-direction:column;line-height:1.1;">
+    Friends <span style="color:var(--pink);font-style:italic;">on Par</span>
+  </span>
 </div>
     <div class="header-right">
       <div class="header-step" id="stepCounter">Step 1 of 5</div>
