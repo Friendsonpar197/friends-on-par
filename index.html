@@ -25,8 +25,8 @@
   .header { background: var(--green); padding: 1rem 1.5rem 1.2rem; position: sticky; top: 0; z-index: 50; }
   .header-inner { max-width: 500px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.5rem; }
   .header-logo { display: flex; align-items: center; gap: 0.5rem; }
-  .header-logo img { height: 61px; width: auto; }
-  .header-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--lime); text-align: center; white-space: nowrap; }
+  .header-logo img { height: 60px; width: auto; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--pink); text-align: center; white-space: nowrap; }
   .header-title span { color: var(--pink); font-style: italic; }
   .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.1rem; }
   .header-step { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 500; }
@@ -82,12 +82,31 @@
   .star { font-size: 1.8rem; cursor: pointer; transition: transform 0.15s; line-height: 1; color: #DDD; user-select: none; }
   .star.lit { color: var(--gold); }
   .star:hover { transform: scale(1.18); }
+
+  /* ── STEP 3 STYLES ── */
   .chips-section { margin-bottom: 1rem; }
   .chips-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.7rem; }
   .chips-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   .chip { padding: 0.45rem 0.9rem; border-radius: 100px; font-size: 0.82rem; font-weight: 500; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--dark); transition: all 0.18s; user-select: none; }
   .chip.good.selected { background: #e8f7ee; border-color: var(--green); color: var(--green); }
   .chip.bad.selected  { background: #fff0f0; border-color: var(--coral); color: var(--coral); }
+
+  .journey-section { margin-bottom: 1rem; }
+  .journey-label { font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.6rem; padding: 0.3rem 0.8rem; background: var(--gray); border-radius: 100px; display: inline-block; }
+  .q-list { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.5rem; }
+  .q-card { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 0.9rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; transition: border-color 0.2s; }
+  .q-card.answered-yes { border-color: var(--lime); }
+  .q-card.answered-no { border-color: var(--coral); }
+  .q-card.hidden { display: none; }
+  .q-text { font-size: 0.88rem; color: var(--navy); flex: 1; line-height: 1.5; font-weight: 500; }
+  .q-btns { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .q-btn { width: 40px; height: 32px; border-radius: 8px; border: 2px solid var(--border); background: var(--white); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.18s; font-weight: 600; }
+  .q-btn.yes:hover { border-color: var(--green); background: #e8f7ee; }
+  .q-btn.no:hover { border-color: var(--coral); background: #fff0f0; }
+  .q-btn.yes.selected { background: #e8f7ee; border-color: var(--green); }
+  .q-btn.no.selected { background: #fff0f0; border-color: var(--coral); }
+  .q-note { font-size: 0.72rem; color: var(--muted); text-align: center; margin-top: 0.5rem; font-style: italic; }
+
   .review-textarea { width: 100%; border: 2px solid var(--border); border-radius: 14px; padding: 1rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: var(--dark); background: var(--white); resize: none; outline: none; min-height: 130px; line-height: 1.6; transition: border-color 0.2s; }
   .review-textarea:focus { border-color: var(--green); }
   .char-count { text-align: right; font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }
@@ -177,7 +196,7 @@
     <div class="header-logo">
       <img src="logo-icon.png" alt="Friends on Par">
     </div>
-    <div class="header-title" style="color:var(--pink);">Friends <span>on Par</span></div>
+    <div class="header-title">Friends <span>on Par</span></div>
     <div class="header-right">
       <div class="header-step" id="stepCounter">Step 1 of 5</div>
       <div class="header-region">📍 SE Michigan</div>
@@ -261,43 +280,119 @@
     </div>
   </div>
 
-  <!-- STEP 3: TAGS + REVIEW -->
+  <!-- STEP 3: TAGS + YES/NO + REVIEW -->
   <div class="step-panel" id="step3">
     <div class="step-header">
       <div class="step-label">Step 3</div>
-      <div class="step-title">Tag your experience</div>
-      <div class="step-sub">Pick all that apply</div>
+      <div class="step-title">Your experience</div>
+      <div class="step-sub">Quick tags and a few yes/no questions</div>
     </div>
+
+    <!-- TAGS -->
     <div class="chips-section">
       <div class="chips-label">✅ Stood out positively</div>
       <div class="chips-group">
-        <span class="chip good" onclick="toggleChip(this)">Clean Facilities</span>
         <span class="chip good" onclick="toggleChip(this)">Welcoming Staff</span>
-        <span class="chip good" onclick="toggleChip(this)">Safe Parking</span>
         <span class="chip good" onclick="toggleChip(this)">Fast Play</span>
-        <span class="chip good" onclick="toggleChip(this)">Great Locker Room</span>
         <span class="chip good" onclick="toggleChip(this)">Beginner Friendly</span>
         <span class="chip good" onclick="toggleChip(this)">Scenic Views</span>
         <span class="chip good" onclick="toggleChip(this)">Good Signage</span>
         <span class="chip good" onclick="toggleChip(this)">Solo-Player Friendly</span>
         <span class="chip good" onclick="toggleChip(this)">Affordable</span>
         <span class="chip good" onclick="toggleChip(this)">Well-Maintained Course</span>
-        <span class="chip good" onclick="toggleChip(this)">Easy to Book</span>
       </div>
       <div class="chips-label">⚠️ Needs improvement</div>
       <div class="chips-group">
         <span class="chip bad" onclick="toggleChip(this)">Long Wait Times</span>
-        <span class="chip bad" onclick="toggleChip(this)">Outdated Facilities</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Signage</span>
         <span class="chip bad" onclick="toggleChip(this)">Unwelcoming Atmosphere</span>
-        <span class="chip bad" onclick="toggleChip(this)">Safety Concerns</span>
         <span class="chip bad" onclick="toggleChip(this)">Slow Groups</span>
-        <span class="chip bad" onclick="toggleChip(this)">No Women's Amenities</span>
         <span class="chip bad" onclick="toggleChip(this)">Expensive</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
+        <span class="chip bad" onclick="toggleChip(this)">Paired With Strangers Without Notice</span>
       </div>
     </div>
-    <div style="margin-bottom:1rem;">
+
+    <!-- YES/NO QUESTIONS -->
+    <div class="chips-label" style="margin-bottom:0.8rem;">Quick questions — tap yes ✓ or no ✗</div>
+
+    <div class="journey-section">
+      <div class="journey-label">🚗 Arrival</div>
+      <div class="q-list">
+        <div class="q-card" id="q1">
+          <div class="q-text">Did you feel safe walking to and from your car?</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q1', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q1', false, this)">✗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-section">
+      <div class="journey-label">🏌️ Pro Shop &amp; Facilities</div>
+      <div class="q-list">
+        <div class="q-card" id="q2">
+          <div class="q-text">Did staff greet you proactively and respectfully?</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q2', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q2', false, this)">✗</button>
+          </div>
+        </div>
+        <div class="q-card" id="q3">
+          <div class="q-text">Did the pro shop have a fitting area or space designed for women?</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q3', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q3', false, this)">✗</button>
+          </div>
+        </div>
+        <div class="q-card" id="q4">
+          <div class="q-text">Did the women's restroom reflect a high standard of care — clean, fresh, well-lit, and properly stocked?</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q4', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q4', false, this)">✗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-section">
+      <div class="journey-label">⛳ On the Course</div>
+      <div class="q-list">
+        <div class="q-card" id="q5">
+          <div class="q-text">Were proper women's restrooms available on the course? (not just a porta potty)</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q5', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q5', false, this)">✗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journey-section">
+      <div class="journey-label">🏁 Overall Reflection</div>
+      <div class="q-list">
+        <div class="q-card" id="q6">
+          <div class="q-text">Would you recommend this course to a woman golfer friend?</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q6', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q6', false, this)">✗</button>
+          </div>
+        </div>
+        <div class="q-card" id="q7">
+          <div class="q-text">Did you feel valued as a woman golfer at this course?</div>
+          <div class="q-btns">
+            <button class="q-btn yes" onclick="answerQ('q7', true, this)">✓</button>
+            <button class="q-btn no" onclick="answerQ('q7', false, this)">✗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-note">All questions are optional — only answer what you experienced during your visit.</div>
+
+    <!-- WRITTEN REVIEW -->
+    <div style="margin:1.2rem 0 1rem;">
       <div class="chips-label" style="margin-bottom:0.6rem;">✍️ In your own words (optional)</div>
       <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
       <div class="char-count"><span id="charCount">0</span>/500</div>
@@ -425,6 +520,7 @@ let selectedSkill = null;
 let selectedGender = null;
 let activeCounty  = 'All';
 let allCourses    = [];
+let qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null };
 
 const ZIP_COUNTIES = {
   '48301':'Oakland','48302':'Oakland','48303':'Oakland','48304':'Oakland','48305':'Oakland',
@@ -539,15 +635,9 @@ function filterByZip(zip) {
 function findNearMe() {
   const btn = document.getElementById('nearMeBtn');
   const status = document.getElementById('locationStatus');
-  if (!navigator.geolocation) {
-    status.textContent = 'Location not supported on this device';
-    status.className = 'location-status error';
-    return;
-  }
-  btn.disabled = true;
-  btn.textContent = '📡 Finding...';
-  status.textContent = 'Getting your location...';
-  status.className = 'location-status';
+  if (!navigator.geolocation) { status.textContent = 'Location not supported on this device'; status.className = 'location-status error'; return; }
+  btn.disabled = true; btn.textContent = '📡 Finding...';
+  status.textContent = 'Getting your location...'; status.className = 'location-status';
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       try {
@@ -563,19 +653,10 @@ function findNearMe() {
           status.textContent = 'Location found — showing all SE Michigan courses';
           status.className = 'location-status found';
         }
-      } catch {
-        status.textContent = 'Location found — showing all SE Michigan courses';
-        status.className = 'location-status found';
-      }
-      btn.disabled = false;
-      btn.textContent = '📱 Near Me';
+      } catch { status.textContent = 'Location found — showing all SE Michigan courses'; status.className = 'location-status found'; }
+      btn.disabled = false; btn.textContent = '📱 Near Me';
     },
-    () => {
-      status.textContent = 'Could not get location — please enter your ZIP code';
-      status.className = 'location-status error';
-      btn.disabled = false;
-      btn.textContent = '📱 Near Me';
-    },
+    () => { status.textContent = 'Could not get location — please enter your ZIP code'; status.className = 'location-status error'; btn.disabled = false; btn.textContent = '📱 Near Me'; },
     { timeout: 10000 }
   );
 }
@@ -654,6 +735,7 @@ function toggleChip(el) { el.classList.toggle('selected'); }
 function toggleSolo() { soloPlayer = !soloPlayer; document.getElementById('soloToggle').classList.toggle('on', soloPlayer); }
 function toggleFirstTime() { firstTime = !firstTime; document.getElementById('firstTimeToggle').classList.toggle('on', firstTime); }
 function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('reviewText').value.length; }
+
 function selectSkill(el) {
   document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
@@ -667,6 +749,16 @@ function selectGender(el) {
 function triggerPhotoUpload() {
   const i = document.createElement('input');
   i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
+}
+
+function answerQ(qId, answer, btn) {
+  qAnswers[qId] = answer;
+  const card = document.getElementById(qId);
+  const btns = card.querySelectorAll('.q-btn');
+  btns.forEach(b => { b.classList.remove('selected'); });
+  btn.classList.add('selected');
+  card.classList.remove('answered-yes', 'answered-no');
+  card.classList.add(answer ? 'answered-yes' : 'answered-no');
 }
 
 function buildConfirmStep() {
@@ -715,7 +807,14 @@ async function submitReview() {
       tags_positive: [...document.querySelectorAll('.chip.good.selected')].map(c => c.textContent),
       tags_negative: [...document.querySelectorAll('.chip.bad.selected')].map(c => c.textContent),
       review_text: document.getElementById('reviewText').value || null,
-      solo_player: soloPlayer, first_visit: firstTime, verified: false, region: 'SE Michigan'
+      solo_player: soloPlayer, first_visit: firstTime, verified: false, region: 'SE Michigan',
+      q_safe_parking:      qAnswers.q1,
+      q_staff_greeting:    qAnswers.q2,
+      q_proshop_women:     qAnswers.q3,
+      q_restroom_standard: qAnswers.q4,
+      q_oncourse_restroom: qAnswers.q5,
+      q_recommend:         qAnswers.q6,
+      q_felt_valued:       qAnswers.q7
     });
     if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
 
@@ -740,6 +839,7 @@ function resetForm() {
   selectedCourse = selectedCourseId = selectedCourseLoc = null;
   ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
   soloPlayer = false; firstTime = false; selectedSkill = null; selectedGender = null; activeCounty = 'All';
+  qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null };
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step1').classList.add('active');
   document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
@@ -748,6 +848,8 @@ function resetForm() {
   document.querySelectorAll('.rating-val').forEach(v => v.textContent = '–');
   document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
   document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered-yes', 'answered-no'));
   document.getElementById('reviewText').value = '';
   document.getElementById('charCount').textContent = '0';
   document.getElementById('soloToggle').classList.remove('on');
@@ -778,3 +880,4 @@ updateProgress();
 </script>
 </body>
 </html>
+
