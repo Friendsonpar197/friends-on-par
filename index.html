@@ -292,20 +292,38 @@
     <div class="chips-section">
       <div class="chips-label">✅ Stood out positively</div>
       <div class="chips-group">
+        <span class="chip good" onclick="toggleChip(this)">Welcoming Staff</span>
+        <span class="chip good" onclick="toggleChip(this)">Fast Play</span>
+        <span class="chip good" onclick="toggleChip(this)">Beginner Friendly</span>
         <span class="chip good" onclick="toggleChip(this)">Scenic Views</span>
         <span class="chip good" onclick="toggleChip(this)">Good Signage</span>
+        <span class="chip good" onclick="toggleChip(this)">Solo-Player Friendly</span>
         <span class="chip good" onclick="toggleChip(this)">Affordable</span>
         <span class="chip good" onclick="toggleChip(this)">Well-Maintained Course</span>
       </div>
       <div class="chips-label">⚠️ Needs improvement</div>
       <div class="chips-group">
+        <span class="chip bad" onclick="toggleChip(this)">Long Wait Times</span>
+        <span class="chip bad" onclick="toggleChip(this)">Poor Signage</span>
+        <span class="chip bad" onclick="toggleChip(this)">Unwelcoming Atmosphere</span>
         <span class="chip bad" onclick="toggleChip(this)">Slow Groups</span>
+        <span class="chip bad" onclick="toggleChip(this)">Expensive</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
         <span class="chip bad" onclick="toggleChip(this)">Paired With Strangers Without Notice</span>
       </div>
     </div>
 
-    <!-- YES/NO QUESTIONS -->
+    <!-- GENDER SELECTOR -->
+    <div style="margin-bottom:1.2rem;">
+      <div class="chips-label" style="margin-bottom:0.6rem;">Are you a woman golfer?</div>
+      <div class="gender-options">
+        <span class="gender-opt" onclick="selectGenderStep3(this, 'Woman')">Yes — I am</span>
+        <span class="gender-opt" onclick="selectGenderStep3(this, 'Other')">No — skip these questions</span>
+      </div>
+    </div>
+
+    <!-- YES/NO QUESTIONS — only shown for women -->
+    <div id="womenQuestionsSection" style="display:none;">
     <div class="chips-label" style="margin-bottom:0.8rem;">Quick questions — tap yes ✓ or no ✗</div>
 
     <div class="journey-section">
@@ -382,8 +400,14 @@
     </div>
 
     <div class="q-note">All questions are optional — only answer what you experienced during your visit.</div>
+    </div><!-- end womenQuestionsSection -->
 
     <!-- WRITTEN REVIEW -->
+    <div style="margin:1.2rem 0 1rem;">
+      <div class="chips-label" style="margin-bottom:0.6rem;">✍️ In your own words (optional)</div>
+      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
+      <div class="char-count"><span id="charCount">0</span>/500</div>
+    </div>
     <div class="toggle-row">
       <div><div class="toggle-label">I played solo</div><div class="toggle-desc">Helps us flag solo-friendly courses</div></div>
       <div class="toggle" id="soloToggle" onclick="toggleSolo()"></div>
@@ -413,15 +437,7 @@
       <label class="input-label">Your ZIP code</label>
       <input type="text" class="input-field" placeholder="e.g. 48302" id="zipField" maxlength="5" inputmode="numeric">
     </div>
-    <div style="margin-bottom:1.2rem;">
-      <div class="input-label" style="margin-bottom:0.6rem;">Gender (optional)</div>
-      <div class="gender-options">
-        <span class="gender-opt" onclick="selectGender(this)">Woman</span>
-        <span class="gender-opt" onclick="selectGender(this)">Man</span>
-        <span class="gender-opt" onclick="selectGender(this)">Non-binary</span>
-        <span class="gender-opt" onclick="selectGender(this)">Prefer not to say</span>
-      </div>
-    </div>
+
     <div style="margin-bottom:1.2rem;">
       <div class="input-label" style="margin-bottom:0.6rem;">Skill level</div>
       <div class="skill-options">
@@ -430,11 +446,6 @@
         <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏌️</div><div class="skill-opt-label">Intermediate</div><div class="skill-opt-desc">Regular player</div></div>
         <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏆</div><div class="skill-opt-label">Advanced</div><div class="skill-opt-desc">Competitive play</div></div>
       </div>
-      <div style="margin-bottom:1rem;">
-  <div class="input-label" style="margin-bottom:0.6rem;">In your own words (optional)</div>
-  <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
-  <div class="char-count"><span id="charCount">0</span>/500</div>
-</div>
     </div>
     <div class="photo-upload" onclick="triggerPhotoUpload()">
       <div class="photo-upload-icon">📸</div>
@@ -733,6 +744,18 @@ function selectSkill(el) {
   el.classList.add('selected');
   selectedSkill = el.querySelector('.skill-opt-label').textContent;
 }
+function selectGenderStep3(el, value) {
+  document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('womenQuestionsSection').style.display = 'none';
+  el.classList.add('selected');
+  selectedGender = value === 'Woman' ? 'Woman' : null;
+  document.getElementById('womenQuestionsSection').style.display = value === 'Woman' ? 'block' : 'none';
+  if (value !== 'Woman') {
+    qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null };
+    document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered-yes', 'answered-no'));
+  }
+}
 function selectGender(el) {
   document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
@@ -872,4 +895,3 @@ updateProgress();
 </script>
 </body>
 </html>
-
