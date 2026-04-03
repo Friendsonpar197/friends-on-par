@@ -384,11 +384,6 @@
     <div class="q-note">All questions are optional — only answer what you experienced during your visit.</div>
 
     <!-- WRITTEN REVIEW -->
-    <div style="margin:1.2rem 0 1rem;">
-      <div class="chips-label" style="margin-bottom:0.6rem;">✍️ In your own words (optional)</div>
-      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
-      <div class="char-count"><span id="charCount">0</span>/500</div>
-    </div>
     <div class="toggle-row">
       <div><div class="toggle-label">I played solo</div><div class="toggle-desc">Helps us flag solo-friendly courses</div></div>
       <div class="toggle" id="soloToggle" onclick="toggleSolo()"></div>
@@ -435,6 +430,11 @@
         <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏌️</div><div class="skill-opt-label">Intermediate</div><div class="skill-opt-desc">Regular player</div></div>
         <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏆</div><div class="skill-opt-label">Advanced</div><div class="skill-opt-desc">Competitive play</div></div>
       </div>
+      <div style="margin-bottom:1rem;">
+  <div class="input-label" style="margin-bottom:0.6rem;">In your own words (optional)</div>
+  <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in SE Michigan to know about this course?" oninput="updateCharCount()"></textarea>
+  <div class="char-count"><span id="charCount">0</span>/500</div>
+</div>
     </div>
     <div class="photo-upload" onclick="triggerPhotoUpload()">
       <div class="photo-upload-icon">📸</div>
