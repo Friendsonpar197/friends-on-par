@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Profile — Friends on Par</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:  #2D6A4F;
+    --lime:   #B7E05A;
+    --coral:  #FF6B6B;
+    --cream:  #FFF8EE;
+    --gold:   #F4C542;
+    --navy:   #1A1F3C;
+    --pink:   #FF00FF;
+    --white:  #FFFFFF;
+    --gray:   #F5F4F0;
+    --border: #E8E4DC;
+    --muted:  #888;
+    --dark:   #2A2A2A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; padding-bottom: 4rem; }
+  .header { background: var(--green); padding: 1rem 1.5rem; position: sticky; top: 0; z-index: 50; }
+  .header-inner { max-width: 600px; margin: 0 auto; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.5rem; }
+  .header-logo { display: flex; align-items: center; }
+  .header-logo img { height: 60px; width: auto; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--pink); text-align: center; white-space: nowrap; }
+  .header-title span { color: var(--pink); font-style: italic; }
+  .back-btn { font-size: 0.82rem; color: rgba(255,255,255,0.8); text-decoration: none; }
+  .back-btn:hover { color: var(--lime); }
+  .container { max-width: 600px; margin: 0 auto; padding: 0 1.2rem; }
+  .state-screen { text-align: center; padding: 4rem 1.5rem; }
+  .spinner { width: 40px; height: 40px; border: 3px solid var(--lime); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .state-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.5rem; }
+  .state-sub { font-size: 0.9rem; color: var(--muted); }
+  .course-hero { background: var(--green); padding: 2rem 1.5rem 1.5rem; }
+  .course-hero-inner { max-width: 600px; margin: 0 auto; }
+  .course-county-tag { display: inline-block; background: rgba(255,255,255,0.15); color: var(--lime); font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 100px; margin-bottom: 0.7rem; }
+  .course-name { font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--white); line-height: 1.15; margin-bottom: 0.3rem; }
+  .course-location { font-size: 0.88rem; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+  .score-row { display: flex; align-items: center; gap: 1.5rem; }
+  .score-big { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--lime); line-height: 1; }
+  .score-info { display: flex; flex-direction: column; gap: 0.3rem; }
+  .score-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+  .score-reviews { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+  .women-approved-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--pink); color: var(--white); font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.85rem; border-radius: 100px; margin-top: 0.5rem; }
+  .section { background: var(--white); border-radius: 18px; padding: 1.4rem 1.2rem; margin: 1rem 0; border: 2px solid var(--border); }
+  .section-title { font-size: 0.72rem; font-weight: 600; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.1rem; }
+  .category-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.85rem; }
+  .category-row:last-child { margin-bottom: 0; }
+  .cat-label { font-size: 0.82rem; font-weight: 500; color: var(--navy); width: 130px; flex-shrink: 0; }
+  .cat-bar-wrap { flex: 1; background: var(--gray); border-radius: 100px; height: 8px; overflow: hidden; }
+  .cat-bar-fill { height: 100%; background: var(--green); border-radius: 100px; transition: width 0.8s ease; width: 0%; }
+  .cat-score { font-size: 0.82rem; font-weight: 600; color: var(--green); min-width: 28px; text-align: right; }
+  .reviews-header { display: flex; align-items: center; justify-content: space-between; margin: 1.2rem 0 0.8rem; }
+  .reviews-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); }
+  .reviews-count { font-size: 0.82rem; color: var(--muted); }
+  .review-card { background: var(--white); border-radius: 14px; padding: 1.1rem 1.2rem; border: 2px solid var(--border); margin-bottom: 0.8rem; }
+  .review-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+  .reviewer-info { display: flex; align-items: center; gap: 0.7rem; }
+  .reviewer-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--green); display: flex; align-items: center; justify-content: center; color: var(--lime); font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+  .reviewer-name { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+  .reviewer-skill { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+  .review-score { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: var(--green); }
+  .review-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
+  .tag { font-size: 0.72rem; padding: 0.2rem 0.6rem; border-radius: 100px; font-weight: 500; }
+  .tag.good { background: #e8f7ee; color: var(--green); }
+  .tag.bad { background: #fff0f0; color: var(--coral); }
+  .review-text { font-size: 0.88rem; color: var(--dark); line-height: 1.6; }
+  .review-date { font-size: 0.72rem; color: var(--muted); margin-top: 0.6rem; }
+  .review-badges { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .review-badge { font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 100px; background: var(--gray); color: var(--muted); }
+  .no-reviews { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .no-reviews-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .rate-btn { display: block; width: 100%; background: var(--green); color: var(--white); border: none; padding: 1rem; border-radius: 14px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; margin-top: 1rem; transition: transform 0.18s; }
+  .rate-btn:hover { transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<script>
+  const SUPABASE_URL = 'https://ugybxownmfsqhmdncrdl.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVneWJ4b3dublWZzcWhtZG5jcmRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTQyNTgsImV4cCI6MjA5MDA3MDI1OH0.lR1ane15u4tNwy9lOMXOn9ORQzCPY4mgNffGJr0KTnY';
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-logo"><img src="logo-icon.png" alt="Friends on Par"></div>
+    <div class="header-title">Friends <span>on Par</span></div>
+    <a class="back-btn" href="/">← Back</a>
+  </div>
+</div>
+
+<div id="loadingState" class="container">
+  <div class="state-screen">
+    <div class="spinner"></div>
+    <div class="state-title">Loading course...</div>
+  </div>
+</div>
+
+<div id="errorState" class="container" style="display:none;">
+  <div class="state-screen">
+    <div class="state-icon" style="font-size:3rem;margin-bottom:1rem;">⛳</div>
+    <div class="state-title">Course not found</div>
+    <div class="state-sub">This course may not exist or has no reviews yet.</div>
+    <a href="/" style="display:inline-block;margin-top:1.5rem;color:var(--green);font-weight:600;">← Back to home</a>
+  </div>
+</div>
+
+<div id="courseContent" style="display:none;">
+  <div class="course-hero">
+    <div class="course-hero-inner">
+      <div class="course-county-tag" id="courseCounty"></div>
+      <div class="course-name" id="courseName">–</div>
+      <div class="course-location" id="courseLocation">–</div>
+      <div class="score-row">
+        <div class="score-big" id="scoreOverall">–</div>
+        <div class="score-info">
+          <div class="score-label">out of 10</div>
+          <div class="score-reviews" id="reviewCount">– reviews</div>
+          <div id="womenApprovedBadge" style="display:none;">
+            <div class="women-approved-badge">⭐ Women-Approved</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <div class="section-title">Category Scores</div>
+      <div class="category-row">
+        <div class="cat-label">🏠 Facilities</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-facilities"></div></div>
+        <div class="cat-score" id="score-facilities">–</div>
+      </div>
+      <div class="category-row">
+        <div class="cat-label">⚡ Pace of Play</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-pace"></div></div>
+        <div class="cat-score" id="score-pace">–</div>
+      </div>
+      <div class="category-row">
+        <div class="cat-label">🛡️ Safety</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-safety"></div></div>
+        <div class="cat-score" id="score-safety">–</div>
+      </div>
+      <div class="category-row">
+        <div class="cat-label">😊 Staff</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-staff"></div></div>
+        <div class="cat-score" id="score-staff">–</div>
+      </div>
+      <div class="category-row">
+        <div class="cat-label">🌿 Overall Vibe</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-vibe"></div></div>
+        <div class="cat-score" id="score-vibe">–</div>
+      </div>
+    </div>
+
+    <div class="reviews-header">
+      <div class="reviews-title">Reviews</div>
+      <div class="reviews-count" id="reviewsCountLabel"></div>
+    </div>
+
+    <div id="reviewsList"></div>
+
+    <a href="/" class="rate-btn">🏌️ Rate This Course</a>
+  </div>
+</div>
+
+<script>
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const params   = new URLSearchParams(window.location.search);
+const courseId = params.get('id');
+
+async function loadCourse() {
+  if (!courseId) { showError(); return; }
+
+  const { data: course, error: courseError } = await db
+    .from('courses').select('*').eq('id', courseId).single();
+
+  if (courseError || !course) { showError(); return; }
+
+  const { data: reviews } = await db
+    .from('reviews').select('*')
+    .eq('course_id', courseId)
+    .eq('verified', true)
+    .order('submitted_at', { ascending: false });
+
+  document.getElementById('courseCounty').textContent   = course.county + ' County';
+  document.getElementById('courseName').textContent     = course.name;
+  document.getElementById('courseLocation').textContent = course.location;
+
+  const overall = parseFloat(course.score_overall);
+  document.getElementById('scoreOverall').textContent  = overall > 0 ? overall.toFixed(1) : '–';
+  document.getElementById('reviewCount').textContent   = (course.review_count || 0) + (course.review_count === 1 ? ' review' : ' reviews');
+  document.getElementById('reviewsCountLabel').textContent = (course.review_count || 0) + ' verified';
+
+  if (course.women_approved) document.getElementById('womenApprovedBadge').style.display = 'block';
+
+  [['facilities', course.score_facilities], ['pace', course.score_pace],
+   ['safety', course.score_safety], ['staff', course.score_staff], ['vibe', course.score_vibe]]
+  .forEach(([key, val]) => {
+    const v = parseFloat(val) || 0;
+    document.getElementById('bar-' + key).style.width   = (v / 5 * 100).toFixed(0) + '%';
+    document.getElementById('score-' + key).textContent = v > 0 ? (v * 2).toFixed(1) : '–';
+  });
+
+  const list = document.getElementById('reviewsList');
+  if (!reviews || reviews.length === 0) {
+    list.innerHTML = `<div class="no-reviews"><div class="no-reviews-icon">⛳</div>No verified reviews yet.<br>Be the first to rate this course!</div>`;
+  } else {
+    reviews.forEach(r => {
+      const initials = r.reviewer_name ? r.reviewer_name.charAt(0).toUpperCase() : '?';
+      const name     = r.reviewer_name || 'Anonymous';
+      const score    = r.score_overall ? parseFloat(r.score_overall).toFixed(1) : '–';
+      const date     = new Date(r.submitted_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      const goodTags = (r.tags_positive || []).map(t => `<span class="tag good">${t}</span>`).join('');
+      const badTags  = (r.tags_negative || []).map(t => `<span class="tag bad">${t}</span>`).join('');
+      const badges   = [r.solo_player && 'Solo player', r.first_visit && 'First visit', r.reviewer_skill].filter(Boolean);
+
+      list.innerHTML += `
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">${initials}</div>
+              <div>
+                <div class="reviewer-name">${name}</div>
+                ${r.reviewer_skill ? `<div class="reviewer-skill">${r.reviewer_skill} golfer</div>` : ''}
+              </div>
+            </div>
+            <div class="review-score">${score}</div>
+          </div>
+          ${goodTags || badTags ? `<div class="review-tags">${goodTags}${badTags}</div>` : ''}
+          ${r.review_text ? `<div class="review-text">${r.review_text}</div>` : ''}
+          ${badges.length ? `<div class="review-badges">${badges.map(b => `<span class="review-badge">${b}</span>`).join('')}</div>` : ''}
+          <div class="review-date">${date}</div>
+        </div>`;
+    });
+  }
+
+  document.getElementById('loadingState').style.display  = 'none';
+  document.getElementById('courseContent').style.display = 'block';
+}
+
+function showError() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('errorState').style.display   = 'block';
+}
+
+loadCourse();
+</script>
+</body>
+</html>
