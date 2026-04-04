@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Verified — Friends on Par</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2D6A4F;
+    --lime:  #B7E05A;
+    --navy:  #1A1F3C;
+    --pink:  #FF00FF;
+    --cream: #FFF8EE;
+    --muted: #888;
+    --white: #FFFFFF;
+    --border: #E8E4DC;
+    --dark:  #2A2A2A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; display: flex; flex-direction: column; }
+  .header { background: var(--green); padding: 1rem 1.5rem; }
+  .header-inner { max-width: 500px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+  .header-logo { display: flex; align-items: center; gap: 0.6rem; }
+  .header-logo img { height: 60px; width: auto; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--pink); }
+  .header-title span { font-style: italic; }
+  .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.2rem; }
+  .card { background: var(--white); border-radius: 20px; border: 2px solid var(--border); padding: 2.5rem 2rem; max-width: 440px; width: 100%; text-align: center; }
+  .icon { font-size: 4rem; margin-bottom: 1.2rem; }
+  .title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.2; }
+  .subtitle { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; }
+  .points-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem; border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 2rem; }
+  .divider { height: 1px; background: var(--border); margin: 0 0 1.5rem; }
+  .feedback-section { background: var(--navy); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.5rem; text-align: left; }
+  .feedback-label { font-size: 0.78rem; font-weight: 600; color: var(--lime); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .feedback-text { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 1rem; }
+  .feedback-input { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; resize: none; min-height: 80px; outline: none; }
+  .feedback-btn { width: 100%; background: var(--lime); color: var(--navy); border: none; padding: 0.8rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 0.6rem; transition: opacity 0.2s; }
+  .feedback-btn:hover { opacity: 0.85; }
+  .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .feedback-thanks { font-size: 0.85rem; color: var(--lime); text-align: center; margin-top: 0.6rem; display: none; }
+  .btn-rate { display: block; width: 100%; background: var(--green); color: var(--white); border: none; padding: 1rem; border-radius: 14px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 0.7rem; transition: transform 0.18s; }
+  .btn-rate:hover { transform: translateY(-2px); }
+  .btn-home { display: block; width: 100%; background: #F5F4F0; color: var(--dark); border: none; padding: 0.9rem; border-radius: 14px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <img src="logo-icon.png" alt="Friends on Par">
+      <div class="header-title">Friends <span>on Par</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="card">
+    <div class="icon">🎉</div>
+    <div class="title">Your email is verified!</div>
+    <div class="subtitle">Thank you for helping women golfers make better decisions. Your review is now pending approval — once verified your points will be credited automatically.</div>
+
+    <div class="points-badge">⭐ 50 Points Pending</div>
+
+    <div class="divider"></div>
+
+    <div class="feedback-section">
+      <div class="feedback-label">💬 Help us build Friends on Par</div>
+      <div class="feedback-text">What would you love to see on this site? We read every suggestion.</div>
+      <textarea class="feedback-input" id="feedbackText" placeholder="e.g. Course comparison tool, find a golf partner, women's league finder..."></textarea>
+      <button class="feedback-btn" id="feedbackBtn" onclick="submitFeedback()">Send My Suggestion</button>
+      <div class="feedback-thanks" id="feedbackThanks">Thank you — we really appreciate your input! ⛳</div>
+    </div>
+
+    <a href="/" class="btn-rate">🏌️ Rate Another Course</a>
+    <a href="/" class="btn-home">Back to Home</a>
+  </div>
+</div>
+
+<script>
+function submitFeedback() {
+  const text = document.getElementById('feedbackText').value.trim();
+  if (!text) return;
+  const btn = document.getElementById('feedbackBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  setTimeout(() => {
+    document.getElementById('feedbackThanks').style.display = 'block';
+    document.getElementById('feedbackText').style.display = 'none';
+    btn.style.display = 'none';
+  }, 800);
+}
+</script>
+</body>
+</html>
