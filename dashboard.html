@@ -160,10 +160,10 @@
       </div>
     </div>
 
-    <!-- POINTS HISTORY -->
+    <!-- POINTS SUMMARY -->
     <div class="section">
-      <div class="section-title">Points History</div>
-      <div id="ledgerList"><div class="empty-state">No points earned yet — submit and verify a review to earn your first 50 points!</div></div>
+      <div class="section-title">Points Summary</div>
+      <div id="ledgerList"></div>
     </div>
 
     <!-- REVIEW HISTORY -->
@@ -236,26 +236,35 @@ async function lookupReviewer() {
   document.getElementById('statLifetime').textContent   = reviewer.points_lifetime || 0;
   document.getElementById('statReviews').textContent    = reviews ? reviews.length : 0;
 
-  // Ledger
+  // Points Summary
   const ledgerList = document.getElementById('ledgerList');
   if (ledger && ledger.length > 0) {
-    ledgerList.innerHTML = ledger.map(entry => {
-      const date = new Date(entry.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const icon = entry.event_type === 'review_verified' ? '⭐' : '🎁';
-      return `
+    const totalEarned = ledger.reduce((sum, e) => sum + e.points, 0);
+    const verifiedCount = ledger.filter(e => e.event_type === 'review_verified').length;
+    const pioneerCount = ledger.filter(e => e.note && e.note.includes('Pioneer')).length;
+    ledgerList.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:0.7rem;">
         <div class="ledger-row">
           <div class="ledger-left">
-            <div class="ledger-dot">${icon}</div>
-            <div>
-              <div class="ledger-note">${entry.note || 'Points earned'}</div>
-              <div class="ledger-date">${date}</div>
-            </div>
+            <div class="ledger-dot">⭐</div>
+            <div><div class="ledger-note">Total points earned</div><div class="ledger-date">From ${verifiedCount} verified review${verifiedCount === 1 ? '' : 's'}</div></div>
           </div>
-          <div class="ledger-points">+${entry.points}</div>
-        </div>`;
-    }).join('');
+          <div class="ledger-points">+${totalEarned}</div>
+        </div>
+        ${pioneerCount > 0 ? `
+        <div class="ledger-row">
+          <div class="ledger-left">
+            <div class="ledger-dot">🏆</div>
+            <div><div class="ledger-note">Pioneer bonuses earned</div><div class="ledger-date">First review of a course</div></div>
+          </div>
+          <div class="ledger-points">x${pioneerCount}</div>
+        </div>` : ''}
+        <div style="background:var(--gray);border-radius:10px;padding:0.8rem 1rem;font-size:0.82rem;color:var(--muted);line-height:1.6;">
+          Points can be redeemed for golf gear and local partner perks. More details coming soon!
+        </div>
+      </div>`;
   } else {
-    ledgerList.innerHTML = '<div class="empty-state">No points earned yet — verify a review to earn your first 50 points!</div>';
+    ledgerList.innerHTML = '<div class="empty-state">No points earned yet — submit and verify a review to earn your first 50 points!</div>';
   }
 
   // Reviews
