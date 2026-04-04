@@ -828,7 +828,7 @@ async function submitReview() {
     });
     if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
 
-    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified' } });
+    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified.html' } });
 
     loadingOverlay.classList.remove('show');
     document.getElementById('mainContent').style.display = 'none';
