@@ -309,7 +309,7 @@
         <span class="chip bad" onclick="toggleChip(this)">Slow Groups</span>
         <span class="chip bad" onclick="toggleChip(this)">Paired With Strangers Without Notice</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
-	<span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
+        <span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
       </div>
     </div>
 
@@ -713,13 +713,17 @@ async function submitNewCourse() {
   status.style.color = 'var(--muted)';
   status.textContent = 'Adding course...';
 
+  const state = document.getElementById('newCourseState').value.trim() || 'Michigan';
+  const stateAbbr = state.toLowerCase() === 'michigan' ? 'MI' : state.toLowerCase() === 'florida' ? 'FL' : state.substring(0,2).toUpperCase();
+
   const { data: newCourse, error } = await db
     .from('courses')
     .insert({
       name,
-      location: city + ', MI',
+      location: city + ', ' + stateAbbr,
       county,
-      region: 'Michigan',
+      state,
+      region: state,
       needs_review: true,
       submitted_by: document.getElementById('emailField') ? document.getElementById('emailField').value.trim() : null
     })
