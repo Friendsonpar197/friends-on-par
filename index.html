@@ -246,7 +246,7 @@
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCity" type="text" placeholder="City *">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCounty" type="text" placeholder="County (e.g. Oakland)">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseState" type="text" placeholder="State (e.g. Michigan)" value="Michigan">
-        <button onclick="event.stopPropagation();submitNewCourse()" style="width:100%;padding:0.7rem;background:var(--green);color:white;border:none;border-radius:10px;font-family:DM Sans,sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">Add This Course</button>
+        <button type="button" onclick="event.stopPropagation();event.preventDefault();submitNewCourse()" style="width:100%;padding:0.7rem;background:var(--green);color:white;border:none;border-radius:10px;font-family:DM Sans,sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">Add This Course</button>
         <div id="newCourseStatus" style="font-size:0.78rem;text-align:center;margin-top:0.5rem;color:var(--green);display:none;"></div>
       </div>
     </div>
@@ -732,7 +732,7 @@ async function submitNewCourse() {
 
   if (error) {
     status.style.color = 'var(--coral)';
-    status.textContent = 'Something went wrong — please try again.';
+    status.textContent = 'Error: ' + error.message;
     return;
   }
 
