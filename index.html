@@ -240,8 +240,14 @@
     </div>
     <div class="not-listed" id="notListedBox" onclick="openNotListed()">
       <div class="not-listed-label">+ My course isn't listed</div>
-      <div class="not-listed-sub">Tap to add a new SE Michigan public course</div>
-      <input class="not-listed-input" id="customCourseInput" type="text" placeholder="Course name, City, County" onclick="event.stopPropagation()">
+      <div class="not-listed-sub">Tap to suggest a public course — we'll add it right away</div>
+      <div id="notListedForm" style="display:none;" onclick="event.stopPropagation()">
+        <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseName" type="text" placeholder="Course name *">
+        <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCity" type="text" placeholder="City *">
+        <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCounty" type="text" placeholder="County (e.g. Oakland)">
+        <button onclick="event.stopPropagation();submitNewCourse()" style="width:100%;padding:0.7rem;background:var(--green);color:white;border:none;border-radius:10px;font-family:DM Sans,sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">Add This Course</button>
+        <div id="newCourseStatus" style="font-size:0.78rem;text-align:center;margin-top:0.5rem;color:var(--green);display:none;"></div>
+      </div>
     </div>
     <div class="data-explainer">
       <div class="data-explainer-icon">⛳</div>
@@ -302,7 +308,7 @@
         <span class="chip bad" onclick="toggleChip(this)">Slow Groups</span>
         <span class="chip bad" onclick="toggleChip(this)">Paired With Strangers Without Notice</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
-        <span class="chip bad" onclick="toggleChip(this)">Need Healthy Food Options</span>
+        <span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
       </div>
     </div>
 
@@ -683,24 +689,72 @@ function selectCourse(el, id, name, loc) {
 }
 
 function openNotListed() {
-  const box = document.getElementById('notListedBox');
-  box.classList.toggle('open');
-  if (box.classList.contains('open')) document.getElementById('customCourseInput').focus();
+  const form = document.getElementById('notListedForm');
+  const isOpen = form.style.display === 'block';
+  form.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) document.getElementById('newCourseName').focus();
+}
+
+async function submitNewCourse() {
+  const name   = document.getElementById('newCourseName').value.trim();
+  const city   = document.getElementById('newCourseCity').value.trim();
+  const county = document.getElementById('newCourseCounty').value.trim() || 'Unknown';
+  const status = document.getElementById('newCourseStatus');
+
+  if (!name || !city) {
+    status.style.display = 'block';
+    status.style.color = 'var(--coral)';
+    status.textContent = 'Please enter at least the course name and city.';
+    return;
+  }
+
+  status.style.display = 'block';
+  status.style.color = 'var(--muted)';
+  status.textContent = 'Adding course...';
+
+  const { data: newCourse, error } = await db
+    .from('courses')
+    .insert({
+      name,
+      location: city + ', MI',
+      county,
+      region: 'Michigan',
+      needs_review: true,
+      submitted_by: document.getElementById('emailField') ? document.getElementById('emailField').value.trim() : null
+    })
+    .select('id, name, location, county, review_count, women_approved')
+    .single();
+
+  if (error) {
+    status.style.color = 'var(--coral)';
+    status.textContent = 'Something went wrong — please try again.';
+    return;
+  }
+
+  allCourses.push(newCourse);
+  selectCourse(
+    document.querySelector('.course-option') || document.createElement('div'),
+    newCourse.id, newCourse.name, newCourse.location
+  );
+
+  status.style.color = 'var(--green)';
+  status.textContent = '✓ Course added! It has been selected for your review.';
+  document.getElementById('newCourseName').value = '';
+  document.getElementById('newCourseCity').value = '';
+  document.getElementById('newCourseCounty').value = '';
+  renderCourses(document.getElementById('courseSearch').value, activeCounty);
 }
 
 function updateProgress() {
   document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
   document.getElementById('stepCounter').textContent = `Step ${currentStep} of ${totalSteps}`;
   document.getElementById('backBtn').classList.toggle('hidden', currentStep === 1);
-  document.getElementById('nextBtn').textContent = 'Next →';
-document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
+  document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Review →' : 'Next →';
 }
 
 function goNext() {
   if (currentStep === 1) {
-    const custom = document.getElementById('customCourseInput').value.trim();
-    if (!selectedCourse && !custom) { alert('Please select or enter a course.'); return; }
-    if (!selectedCourse && custom) { selectedCourse = custom; selectedCourseLoc = 'SE Michigan'; selectedCourseId = null; }
+    if (!selectedCourse) { alert('Please select or enter a course.'); return; }
   }
   if (currentStep === 2 && !Object.values(ratings).every(v => v > 0)) { alert('Please rate all 5 categories to continue.'); return; }
   if (currentStep === 4) {
@@ -833,7 +887,7 @@ async function submitReview() {
     });
     if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
 
-    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified.html' } });
+    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified' } });
 
     loadingOverlay.classList.remove('show');
     document.getElementById('mainContent').style.display = 'none';
@@ -876,8 +930,12 @@ function resetForm() {
   document.getElementById('locationStatus').textContent = '';
   document.getElementById('locationStatus').className = 'location-status';
   document.getElementById('courseSearch').value = '';
-  document.getElementById('notListedBox').classList.remove('open');
-  document.getElementById('customCourseInput').value = '';
+  document.getElementById('notListedForm').style.display = 'none';
+  document.getElementById('newCourseName').value = '';
+  document.getElementById('newCourseCity').value = '';
+  document.getElementById('newCourseCounty').value = '';
+  document.getElementById('newCourseStatus').style.display = 'none';
+
   document.getElementById('submitBtn').disabled = false;
   document.getElementById('errorBanner').classList.remove('show');
   document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
