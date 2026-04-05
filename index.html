@@ -245,6 +245,7 @@
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseName" type="text" placeholder="Course name *">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCity" type="text" placeholder="City *">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCounty" type="text" placeholder="County (e.g. Oakland)">
+        <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseState" type="text" placeholder="State (e.g. Michigan)" value="Michigan">
         <button onclick="event.stopPropagation();submitNewCourse()" style="width:100%;padding:0.7rem;background:var(--green);color:white;border:none;border-radius:10px;font-family:DM Sans,sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">Add This Course</button>
         <div id="newCourseStatus" style="font-size:0.78rem;text-align:center;margin-top:0.5rem;color:var(--green);display:none;"></div>
       </div>
@@ -308,7 +309,7 @@
         <span class="chip bad" onclick="toggleChip(this)">Slow Groups</span>
         <span class="chip bad" onclick="toggleChip(this)">Paired With Strangers Without Notice</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
-        <span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
+	<span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
       </div>
     </div>
 
@@ -742,6 +743,7 @@ async function submitNewCourse() {
   document.getElementById('newCourseName').value = '';
   document.getElementById('newCourseCity').value = '';
   document.getElementById('newCourseCounty').value = '';
+  document.getElementById('newCourseState').value = 'Michigan';
   renderCourses(document.getElementById('courseSearch').value, activeCounty);
 }
 
@@ -934,6 +936,7 @@ function resetForm() {
   document.getElementById('newCourseName').value = '';
   document.getElementById('newCourseCity').value = '';
   document.getElementById('newCourseCounty').value = '';
+  document.getElementById('newCourseState').value = 'Michigan';
   document.getElementById('newCourseStatus').style.display = 'none';
 
   document.getElementById('submitBtn').disabled = false;
