@@ -210,33 +210,26 @@
   <!-- STEP 1: FIND COURSE -->
   <div class="step-panel active" id="step1">
     <div class="step-header">
-      <div class="region-badge">📍 Southeast Michigan</div>
       <div class="step-label">Step 1</div>
       <div class="step-title">Which course did you play?</div>
-      <div class="step-sub">Find by location, ZIP code, or county</div>
+      <div class="step-sub">Search by name or city, or use Near Me</div>
     </div>
-    <div class="location-row">
-      <div class="zip-wrap">
-        <span class="zip-icon">📍</span>
-        <input type="text" id="zipSearch" placeholder="Enter ZIP code..." maxlength="5" inputmode="numeric" oninput="filterByZip(this.value)">
+
+    <!-- NEAR ME + SEARCH -->
+    <div class="location-row" style="margin-bottom:1rem;">
+      <div class="search-wrap" style="flex:1;margin-bottom:0;">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Course name or city..." id="courseSearch" oninput="searchCourses(this.value)" autocomplete="off">
       </div>
       <button class="btn-near-me" id="nearMeBtn" onclick="findNearMe()">📱 Near Me</button>
     </div>
     <div class="location-status" id="locationStatus"></div>
-    <div class="county-filters" id="countyFilters">
-      <button class="county-btn active" onclick="filterByCounty('All', this)">All</button>
-      <button class="county-btn" onclick="filterByCounty('Oakland', this)">Oakland</button>
-      <button class="county-btn" onclick="filterByCounty('Wayne', this)">Wayne</button>
-      <button class="county-btn" onclick="filterByCounty('Washtenaw', this)">Washtenaw</button>
-      <button class="county-btn" onclick="filterByCounty('Macomb', this)">Macomb</button>
-      <button class="county-btn" onclick="filterByCounty('Livingston', this)">Livingston</button>
-    </div>
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="text" placeholder="Search by course name..." id="courseSearch" oninput="searchCourses(this.value)">
-    </div>
+
     <div class="course-suggestions" id="courseSuggestions">
-      <div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.9rem;">Loading courses...</div>
+      <div style="text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
+        <div style="font-size:2rem;margin-bottom:0.8rem;">⛳</div>
+        Start typing a course name or city above,<br>or tap <strong>Near Me</strong> to find courses close to you.
+      </div>
     </div>
     <div class="not-listed" id="notListedBox" onclick="openNotListed()">
       <div class="not-listed-label">+ My course isn't listed</div>
@@ -576,69 +569,71 @@ const ZIP_COUNTIES = {
   '48462':'Livingston'
 };
 
+let searchTimeout = null;
+
 async function loadCourses() {
-  const { data, error } = await db.from('courses').select('id, name, location, county, review_count, women_approved').order('name');
-  if (error) {
-    document.getElementById('courseSuggestions').innerHTML =
-      '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Could not load courses. Check your Supabase config.</div>';
-    return;
-  }
-  allCourses = data;
-  renderCourses();
+  // No longer loads all courses on startup — search driven
 }
 
-function renderCourses(filter = '', county = 'All') {
+async function searchCourses(val) {
   const container = document.getElementById('courseSuggestions');
-  container.innerHTML = '';
-  const fl = filter.toLowerCase();
-  const filtered = allCourses.filter(c => {
-    const matchCounty = county === 'All' || c.county === county;
-    const matchSearch = !fl || c.name.toLowerCase().includes(fl) || c.location.toLowerCase().includes(fl);
-    return matchCounty && matchSearch;
-  });
-  if (filtered.length === 0) {
-    container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">No courses found — try a different search or add yours below.</div>';
+  clearTimeout(searchTimeout);
+
+  if (!val || val.trim().length < 2) {
+    container.innerHTML = `<div style="text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
+      <div style="font-size:2rem;margin-bottom:0.8rem;">⛳</div>
+      Start typing a course name or city above,<br>or tap <strong>Near Me</strong> to find courses close to you.
+    </div>`;
     return;
   }
-  filtered.forEach(c => {
-    const div = document.createElement('div');
-    div.className = 'course-option';
-    div.innerHTML = `
-      <div class="course-info">
-        <div class="course-name-opt">${c.name}</div>
-        <div class="course-meta">
-          <span class="course-loc">${c.location}</span>
-          <span class="course-county-tag">${c.county}</span>
+
+  container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">Searching...</div>';
+
+  searchTimeout = setTimeout(async () => {
+    const term = val.trim().toLowerCase();
+    const { data, error } = await db
+      .from('courses')
+      .select('id, name, location, county, state, review_count, women_approved')
+      .or(`name.ilike.%${val.trim()}%,location.ilike.%${val.trim()}%`)
+      .order('name')
+      .limit(20);
+
+    if (error) {
+      container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Search failed — please try again.</div>';
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">No courses found — try a different name or city, or add yours below.</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    data.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'course-option';
+      div.innerHTML = `
+        <div class="course-info">
+          <div class="course-name-opt">${c.name}</div>
+          <div class="course-meta">
+            <span class="course-loc">${c.location}</span>
+            <span class="course-county-tag">${c.county || ''}</span>
+            ${c.women_approved ? '<span style="font-size:0.65rem;font-weight:600;color:#FF00FF;padding:0.1rem 0.5rem;border-radius:100px;background:#ffe0ff;">⭐ Women-Approved</span>' : ''}
+          </div>
+          <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
+            <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
+            ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
+          </div>
         </div>
-        <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
-          <button onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
-          ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
-        </div>
-      </div>
-      <div class="course-check">✓</div>`;
-    div.onclick = () => selectCourse(div, c.id, c.name, c.location);
-    container.appendChild(div);
-  });
+        <div class="course-check">✓</div>`;
+      div.onclick = () => selectCourse(div, c.id, c.name, c.location);
+      container.appendChild(div);
+    });
+  }, 300);
 }
 
 function filterByZip(zip) {
-  if (zip.length === 5) {
-    const county = ZIP_COUNTIES[zip];
-    if (county) {
-      document.getElementById('locationStatus').textContent = 'Showing courses in ' + county + ' County';
-      document.getElementById('locationStatus').className = 'location-status found';
-      document.querySelectorAll('.county-btn').forEach(b => b.classList.toggle('active', b.textContent === county));
-      activeCounty = county;
-      renderCourses(document.getElementById('courseSearch').value, county);
-    } else {
-      document.getElementById('locationStatus').textContent = 'ZIP not found in SE Michigan — showing all courses';
-      document.getElementById('locationStatus').className = 'location-status error';
-      renderCourses(document.getElementById('courseSearch').value, 'All');
-    }
-  } else if (zip.length === 0) {
-    document.getElementById('locationStatus').textContent = '';
-    document.getElementById('locationStatus').className = 'location-status';
-  }
+  // ZIP search now handled by Near Me GPS
 }
 
 function findNearMe() {
@@ -654,12 +649,19 @@ function findNearMe() {
         const data = await res.json();
         const zip = data.address?.postcode?.substring(0, 5);
         if (zip && ZIP_COUNTIES[zip]) {
-          document.getElementById('zipSearch').value = zip;
-          filterByZip(zip);
-          status.textContent = 'Showing courses near you (' + zip + ')';
+          const county = ZIP_COUNTIES[zip];
+          status.textContent = 'Showing courses near you — ' + county + ' County';
           status.className = 'location-status found';
+          document.getElementById('courseSearch').value = county;
+          searchCourses(county);
+        } else if (data.address?.city || data.address?.town || data.address?.village) {
+          const city = data.address.city || data.address.town || data.address.village;
+          status.textContent = 'Showing courses near ' + city;
+          status.className = 'location-status found';
+          document.getElementById('courseSearch').value = city;
+          searchCourses(city);
         } else {
-          status.textContent = 'Location found — showing all SE Michigan courses';
+          status.textContent = 'Location found — type a course name to search';
           status.className = 'location-status found';
         }
       } catch { status.textContent = 'Location found — showing all SE Michigan courses'; status.className = 'location-status found'; }
@@ -671,13 +673,7 @@ function findNearMe() {
 }
 
 function filterByCounty(county, btn) {
-  activeCounty = county;
-  document.querySelectorAll('.county-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('zipSearch').value = '';
-  document.getElementById('locationStatus').textContent = '';
-  document.getElementById('locationStatus').className = 'location-status';
-  renderCourses(document.getElementById('courseSearch').value, county);
+  // County filter now replaced by search
 }
 
 function searchCourses(val) { renderCourses(val, activeCounty); }
@@ -736,11 +732,10 @@ async function submitNewCourse() {
     return;
   }
 
-  allCourses.push(newCourse);
-  selectCourse(
-    document.querySelector('.course-option') || document.createElement('div'),
-    newCourse.id, newCourse.name, newCourse.location
-  );
+  const tempDiv = document.createElement('div');
+  tempDiv.className = 'course-option';
+  document.getElementById('courseSuggestions').appendChild(tempDiv);
+  selectCourse(tempDiv, newCourse.id, newCourse.name, newCourse.location);
 
   status.style.color = 'var(--green)';
   status.textContent = '✓ Course added! It has been selected for your review.';
@@ -932,10 +927,13 @@ function resetForm() {
   document.getElementById('firstName').value = '';
   document.getElementById('emailField').value = '';
   document.getElementById('zipField').value = '';
-  document.getElementById('zipSearch').value = '';
   document.getElementById('locationStatus').textContent = '';
   document.getElementById('locationStatus').className = 'location-status';
   document.getElementById('courseSearch').value = '';
+  document.getElementById('courseSuggestions').innerHTML = `<div style="text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
+    <div style="font-size:2rem;margin-bottom:0.8rem;">⛳</div>
+    Start typing a course name or city above,<br>or tap <strong>Near Me</strong> to find courses close to you.
+  </div>`;
   document.getElementById('notListedForm').style.display = 'none';
   document.getElementById('newCourseName').value = '';
   document.getElementById('newCourseCity').value = '';
@@ -955,8 +953,8 @@ function resetForm() {
   window.scrollTo(0, 0);
 }
 
-loadCourses();
 updateProgress();
 </script>
 </body>
 </html>
+
