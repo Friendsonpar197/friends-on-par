@@ -591,10 +591,11 @@ async function searchCourses(val) {
 
   searchTimeout = setTimeout(async () => {
     const term = val.trim().toLowerCase();
+    const searchTerm = val.trim();
     const { data, error } = await db
       .from('courses')
       .select('id, name, location, county, state, review_count, women_approved')
-      .or(`name.ilike.%${val.trim()}%,location.ilike.%${val.trim()}%`)
+      .or('name.ilike.*' + searchTerm + '*,location.ilike.*' + searchTerm + '*')
       .order('name')
       .limit(20);
 
