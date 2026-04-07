@@ -592,14 +592,28 @@ async function searchCourses(val) {
   searchTimeout = setTimeout(async () => {
     const term = val.trim().toLowerCase();
     const searchTerm = val.trim();
-    const { data, error } = await db
+
+    const { data: nameResults, error: nameError } = await db
       .from('courses')
       .select('id, name, location, county, state, review_count, women_approved')
-      .or('name.ilike.*' + searchTerm + '*,location.ilike.*' + searchTerm + '*')
+      .ilike('name', '%' + searchTerm + '%')
       .order('name')
-      .limit(20);
+      .limit(15);
 
-    if (error) {
+    const { data: locResults } = await db
+      .from('courses')
+      .select('id, name, location, county, state, review_count, women_approved')
+      .ilike('location', '%' + searchTerm + '%')
+      .order('name')
+      .limit(10);
+
+    const seen = new Set();
+    const data = [];
+    [...(nameResults || []), ...(locResults || [])].forEach(c => {
+      if (!seen.has(c.id)) { seen.add(c.id); data.push(c); }
+    });
+
+    if (nameError) {
       container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Search failed — please try again.</div>';
       return;
     }
