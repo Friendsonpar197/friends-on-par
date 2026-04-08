@@ -157,6 +157,18 @@
             <div class="stat-label">Reviews</div>
           </div>
         </div>
+
+        <!-- BADGE -->
+        <div style="background:rgba(255,255,255,0.12);border-radius:14px;padding:1rem;margin-top:0.8rem;display:flex;align-items:center;gap:1rem;">
+          <div id="dashBadgeIcon" style="font-size:2.2rem;">🌱</div>
+          <div style="flex:1;">
+            <div id="dashBadgeName" style="font-size:0.95rem;font-weight:600;color:var(--white);">Newcomer Reviewer</div>
+            <div id="dashBadgeProgress" style="font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:0.2rem;"></div>
+            <div style="background:rgba(255,255,255,0.2);border-radius:100px;height:5px;margin-top:0.5rem;overflow:hidden;">
+              <div id="dashBadgeBar" style="height:100%;background:var(--lime);border-radius:100px;transition:width 0.8s ease;width:0%;"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -189,6 +201,19 @@
 <script>
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const BADGES = [
+  { name: 'Newcomer',    icon: '🌱', min: 0,    max: 99,   next: 100  },
+  { name: 'Regular',     icon: '⛳', min: 100,  max: 299,  next: 300  },
+  { name: 'Contributor', icon: '🏌️', min: 300,  max: 599,  next: 600  },
+  { name: 'Ambassador',  icon: '🎖️', min: 600,  max: 999,  next: 1000 },
+  { name: 'Elite',       icon: '🏆', min: 1000, max: 1999, next: 2000 },
+  { name: 'Legend',      icon: '⭐', min: 2000, max: 99999, next: null }
+];
+
+function getBadge(pts) {
+  return BADGES.find(b => pts >= b.min && pts <= b.max) || BADGES[0];
+}
 
 async function lookupReviewer() {
   const email = document.getElementById('emailInput').value.trim().toLowerCase();
@@ -231,10 +256,25 @@ async function lookupReviewer() {
     .eq('reviewer_id', reviewer.id)
     .order('created_at', { ascending: false });
 
+  const lifetime = reviewer.points_lifetime || 0;
+  const badge = getBadge(lifetime);
+  const nextBadge = BADGES[BADGES.indexOf(badge) + 1];
+
   document.getElementById('profileName').textContent    = reviewer.first_name || 'Golfer';
   document.getElementById('statPoints').textContent     = reviewer.points_balance || 0;
-  document.getElementById('statLifetime').textContent   = reviewer.points_lifetime || 0;
+  document.getElementById('statLifetime').textContent   = lifetime;
   document.getElementById('statReviews').textContent    = reviews ? reviews.length : 0;
+
+  document.getElementById('dashBadgeIcon').textContent  = badge.icon;
+  document.getElementById('dashBadgeName').textContent  = badge.name + ' Reviewer';
+  if (nextBadge) {
+    const progress = ((lifetime - badge.min) / (nextBadge.min - badge.min) * 100).toFixed(0);
+    document.getElementById('dashBadgeProgress').textContent = lifetime + ' pts — ' + (nextBadge.min - lifetime) + ' pts to ' + nextBadge.name;
+    document.getElementById('dashBadgeBar').style.width = Math.min(progress, 100) + '%';
+  } else {
+    document.getElementById('dashBadgeProgress').textContent = 'Maximum badge — Legend! 🎉';
+    document.getElementById('dashBadgeBar').style.width = '100%';
+  }
 
   // Points Summary
   const ledgerList = document.getElementById('ledgerList');
