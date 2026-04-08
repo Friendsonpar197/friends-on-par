@@ -680,10 +680,10 @@ function findNearMe() {
 
         if (county) {
           const cleanCounty = county.replace(' County', '').replace(' county', '').trim();
-          document.getElementById('courseSearch').value = cleanCounty;
-          searchCourses(cleanCounty);
           status.textContent = 'Showing courses in ' + cleanCounty + ' County' + (state ? ', ' + state : '');
           status.className = 'location-status found';
+          document.getElementById('courseSearch').value = '';
+          await searchByCounty(cleanCounty);
         } else if (city) {
           document.getElementById('courseSearch').value = city;
           searchCourses(city);
@@ -711,6 +711,45 @@ function filterByCounty(county, btn) {
 }
 
 // searchCourses now defined above as async server-side search
+
+async function searchByCounty(county) {
+  const container = document.getElementById('courseSuggestions');
+  container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">Finding courses near you...</div>';
+
+  const { data, error } = await db
+    .from('courses')
+    .select('id, name, location, county, state, review_count, women_approved')
+    .ilike('county', county)
+    .order('name')
+    .limit(30);
+
+  if (error || !data || data.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">No courses found in this area — try searching by name.</div>';
+    return;
+  }
+
+  container.innerHTML = '';
+  data.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'course-option';
+    div.innerHTML = `
+      <div class="course-info">
+        <div class="course-name-opt">${c.name}</div>
+        <div class="course-meta">
+          <span class="course-loc">${c.location}</span>
+          <span class="course-county-tag">${c.county || ''}</span>
+          ${c.women_approved ? '<span style="font-size:0.65rem;font-weight:600;color:#FF00FF;padding:0.1rem 0.5rem;border-radius:100px;background:#ffe0ff;">⭐ Women-Approved</span>' : ''}
+        </div>
+        <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
+          <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
+          ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
+        </div>
+      </div>
+      <div class="course-check">✓</div>`;
+    div.onclick = () => selectCourse(div, c.id, c.name, c.location);
+    container.appendChild(div);
+  });
+}
 
 function selectCourse(el, id, name, loc) {
   document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
