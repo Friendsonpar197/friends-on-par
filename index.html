@@ -660,31 +660,39 @@ function findNearMe() {
   status.textContent = 'Getting your location...'; status.className = 'location-status';
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      status.textContent = 'Location found — finding nearby courses...';
+      status.className = 'location-status found';
+      btn.disabled = false;
+      btn.textContent = '📱 Near Me';
+
       try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`);
+        const res = await fetch(
+          'https://nominatim.openstreetmap.org/reverse?lat=' + lat + '&lon=' + lng + '&format=json',
+          { headers: { 'Accept-Language': 'en' } }
+        );
         const data = await res.json();
-        const zip = data.address?.postcode?.substring(0, 5);
-        if (zip && ZIP_COUNTIES[zip]) {
-          const county = ZIP_COUNTIES[zip];
-          status.textContent = 'Showing courses near you — ' + county + ' County';
-          status.className = 'location-status found';
-          document.getElementById('courseSearch').value = county;
-          searchCourses(county);
-        } else if (data.address?.city || data.address?.town || data.address?.village) {
-          const city = data.address.city || data.address.town || data.address.village;
-          status.textContent = 'Showing courses near ' + city;
-          status.className = 'location-status found';
+        const city = data.address?.city || data.address?.town || data.address?.village || data.address?.county || '';
+        if (city) {
           document.getElementById('courseSearch').value = city;
           searchCourses(city);
+          status.textContent = 'Showing courses near ' + city;
         } else {
           status.textContent = 'Location found — type a course name to search';
-          status.className = 'location-status found';
         }
-      } catch { status.textContent = 'Location found — showing all SE Michigan courses'; status.className = 'location-status found'; }
-      btn.disabled = false; btn.textContent = '📱 Near Me';
+      } catch(e) {
+        status.textContent = 'Location found — type a course name to search';
+      }
     },
-    () => { status.textContent = 'Could not get location — please enter your ZIP code'; status.className = 'location-status error'; btn.disabled = false; btn.textContent = '📱 Near Me'; },
-    { timeout: 10000 }
+    (err) => {
+      status.textContent = 'Location access denied — please type a course name or city';
+      status.className = 'location-status error';
+      btn.disabled = false;
+      btn.textContent = '📱 Near Me';
+    },
+    { timeout: 15000, enableHighAccuracy: false }
   );
 }
 
@@ -973,4 +981,5 @@ updateProgress();
 </script>
 </body>
 </html>
+
 
