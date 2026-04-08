@@ -855,7 +855,7 @@ function goNext() {
 
 // Pre-load gender on page start so Step 3 shows correctly
 try {
-  const saved = localStorage.getItem('fop_reviewer');
+  const saved = getCookie('fop_reviewer');
   if (saved) {
     const info = JSON.parse(saved);
     if (info.gender) {
@@ -927,16 +927,32 @@ function triggerPhotoUpload() {
   i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
 }
 
-// ── REMEMBER ME ──
+// ── REMEMBER ME (cookie-based for iPhone Safari compatibility) ──
+function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax';
+}
+
+function getCookie(name) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, null);
+}
+
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
 function saveReviewerInfo(firstName, email, zip, skill, gender) {
   try {
-    localStorage.setItem('fop_reviewer', JSON.stringify({ firstName, email, zip, skill, gender }));
+    setCookie('fop_reviewer', JSON.stringify({ firstName, email, zip, skill, gender }), 365);
   } catch(e) {}
 }
 
 function loadSavedInfo() {
   try {
-    const saved = localStorage.getItem('fop_reviewer');
+    const saved = getCookie('fop_reviewer');
     if (!saved) return;
     const info = JSON.parse(saved);
     if (info.firstName) document.getElementById('firstName').value = info.firstName;
@@ -970,7 +986,7 @@ function loadSavedInfo() {
 }
 
 function clearSavedInfo() {
-  try { localStorage.removeItem('fop_reviewer'); } catch(e) {}
+  try { deleteCookie('fop_reviewer'); } catch(e) {}
   document.getElementById('firstName').value = '';
   document.getElementById('emailField').value = '';
   document.getElementById('zipField').value = '';
@@ -1116,4 +1132,3 @@ updateProgress();
 </script>
 </body>
 </html>
-
