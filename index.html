@@ -600,6 +600,8 @@ async function searchCourses(val) {
       .order('name')
       .limit(15);
 
+    container.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--muted);font-size:0.78rem;">Debug: searched for ' + searchTerm + ', error: ' + (nameError ? nameError.message : 'none') + ', results: ' + (nameResults ? nameResults.length : 'null') + '</div>';
+
     const { data: locResults } = await db
       .from('courses')
       .select('id, name, location, county, state, review_count, women_approved')
@@ -614,7 +616,7 @@ async function searchCourses(val) {
     });
 
     if (nameError) {
-      container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Search failed — please try again.</div>';
+      container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--coral);font-size:0.9rem;">Search failed: ' + nameError.message + '</div>';
       return;
     }
 
