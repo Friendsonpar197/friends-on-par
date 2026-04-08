@@ -178,6 +178,19 @@ const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const params   = new URLSearchParams(window.location.search);
 const courseId = params.get('id');
 
+const BADGES = [
+  { name: 'Newcomer',    icon: '🌱', min: 0,    max: 99   },
+  { name: 'Regular',     icon: '⛳', min: 100,  max: 299  },
+  { name: 'Contributor', icon: '🏌️', min: 300,  max: 599  },
+  { name: 'Ambassador',  icon: '🎖️', min: 600,  max: 999  },
+  { name: 'Elite',       icon: '🏆', min: 1000, max: 1999 },
+  { name: 'Legend',      icon: '⭐', min: 2000, max: 99999 }
+];
+
+function getBadge(pts) {
+  return BADGES.find(b => pts >= b.min && pts <= b.max) || BADGES[0];
+}
+
 async function loadCourse() {
   if (!courseId) { showError(); return; }
 
@@ -187,7 +200,7 @@ async function loadCourse() {
   if (courseError || !course) { showError(); return; }
 
   const { data: reviews } = await db
-    .from('reviews').select('*')
+    .from('reviews').select('*, reviewers(points_lifetime)')
     .eq('course_id', courseId)
     .eq('verified', true)
     .order('submitted_at', { ascending: false });
@@ -218,6 +231,9 @@ async function loadCourse() {
     reviews.forEach(r => {
       const initials = r.reviewer_name ? r.reviewer_name.charAt(0).toUpperCase() : '?';
       const name     = r.reviewer_name || 'Anonymous';
+      const reviewerPts = r.reviewers?.points_lifetime || 0;
+      const reviewerBadge = getBadge(reviewerPts);
+      const showBadge = reviewerPts >= 1000;
       const score    = r.score_overall ? parseFloat(r.score_overall).toFixed(1) : '–';
       const date     = new Date(r.submitted_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
       const goodTags = (r.tags_positive || []).map(t => `<span class="tag good">${t}</span>`).join('');
@@ -257,4 +273,3 @@ loadCourse();
 </script>
 </body>
 </html>
-
