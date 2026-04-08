@@ -508,10 +508,19 @@
 <div class="success-screen" id="successScreen">
   <div class="success-icon">🎉</div>
   <div class="success-title">Review Submitted!</div>
-  <div class="success-sub">Thanks for helping golfers across SE Michigan make better decisions. Check your email to verify your review and unlock your points.</div>
-  <div class="points-badge">⭐ 50 Points Pending Verification</div>
+  <div class="success-sub">Thanks for helping women golfers make better decisions. Check your email to verify your review and unlock your points.</div>
+  <div class="points-badge" id="successPointsBadge">⭐ Points Pending Verification</div>
+  <div id="successBonusBreakdown" style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.8;"></div>
+  <div id="successBadgeSection" style="background:var(--white);border:2px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:1.5rem;text-align:center;display:none;">
+    <div id="successBadgeIcon" style="font-size:2.5rem;margin-bottom:0.4rem;"></div>
+    <div id="successBadgeName" style="font-size:1rem;font-weight:600;color:var(--navy);"></div>
+    <div id="successBadgeProgress" style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;"></div>
+    <div style="background:var(--border);border-radius:100px;height:6px;margin-top:0.8rem;overflow:hidden;">
+      <div id="successBadgeBar" style="height:100%;background:var(--green);border-radius:100px;transition:width 0.8s ease;"></div>
+    </div>
+  </div>
   <button class="btn-another" onclick="resetForm()">Rate Another Course</button>
-  <button class="btn-home" onclick="window.location.href='/'">Back to Home</button>
+  <a href="dashboard.html" class="btn-home" style="display:block;text-align:center;text-decoration:none;padding:0.9rem 2rem;border-radius:12px;background:var(--gray);color:var(--dark);font-size:0.95rem;font-weight:500;margin-top:0.7rem;">View My Dashboard</a>
 </div>
 
 <script>
@@ -927,6 +936,32 @@ function triggerPhotoUpload() {
   i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
 }
 
+// ── BADGE SYSTEM ──
+const BADGES = [
+  { name: 'Newcomer',    icon: '🌱', min: 0,    max: 99,   next: 100  },
+  { name: 'Regular',     icon: '⛳', min: 100,  max: 299,  next: 300  },
+  { name: 'Contributor', icon: '🏌️', min: 300,  max: 599,  next: 600  },
+  { name: 'Ambassador',  icon: '🎖️', min: 600,  max: 999,  next: 1000 },
+  { name: 'Elite',       icon: '🏆', min: 1000, max: 1999, next: 2000 },
+  { name: 'Legend',      icon: '⭐', min: 2000, max: 99999, next: null }
+];
+
+function getBadge(lifetimePoints) {
+  return BADGES.find(b => lifetimePoints >= b.min && lifetimePoints <= b.max) || BADGES[0];
+}
+
+function calculatePotentialPoints() {
+  let pts = 50;
+  const breakdown = ['✓ Base review: 50 pts'];
+  const answeredQs = Object.values(qAnswers).filter(v => v !== null).length;
+  if (answeredQs === 7) { pts += 25; breakdown.push('✓ All questions answered: +25 pts'); }
+  const reviewText = document.getElementById('reviewText') ? document.getElementById('reviewText').value : '';
+  if (reviewText && reviewText.length > 10) { pts += 15; breakdown.push('✓ Written review: +15 pts'); }
+  if (soloPlayer) { pts += 5; breakdown.push('✓ Solo player: +5 pts'); }
+  if (firstTime) { pts += 5; breakdown.push('✓ First visit: +5 pts'); }
+  return { pts, breakdown };
+}
+
 // ── REMEMBER ME (cookie-based for iPhone Safari compatibility) ──
 function setCookie(name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
@@ -953,6 +988,8 @@ function saveReviewerInfo(firstName, email, zip, skill, gender) {
 function loadSavedInfo() {
   try {
     const saved = getCookie('fop_reviewer');
+    console.log('FOP Cookie:', saved);
+    alert('Cookie check: ' + (saved ? 'Found: ' + saved.substring(0, 50) : 'Not found'));
     if (!saved) return;
     const info = JSON.parse(saved);
     if (info.firstName) document.getElementById('firstName').value = info.firstName;
