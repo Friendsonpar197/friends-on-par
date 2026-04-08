@@ -590,7 +590,6 @@ async function searchCourses(val) {
   container.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:0.9rem;">Searching...</div>';
 
   searchTimeout = setTimeout(async () => {
-    const term = val.trim().toLowerCase();
     const searchTerm = val.trim();
 
     const { data: nameResults, error: nameError } = await db
@@ -693,7 +692,7 @@ function filterByCounty(county, btn) {
   // County filter now replaced by search
 }
 
-function searchCourses(val) { renderCourses(val, activeCounty); }
+// searchCourses now defined above as async server-side search
 
 function selectCourse(el, id, name, loc) {
   document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
