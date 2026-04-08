@@ -420,6 +420,18 @@
       <div class="step-title">A few details about you</div>
       <div class="step-sub">Helps us verify your review and personalize results</div>
     </div>
+
+    <!-- RETURNING USER BANNER -->
+    <div id="returningBanner" style="display:none;background:#e8f7ee;border:2px solid var(--lime);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1rem;display:none;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:0.88rem;font-weight:600;color:var(--green);">Welcome back! 👋</div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;" id="returningName"></div>
+        </div>
+        <button type="button" onclick="clearSavedInfo()" style="font-size:0.75rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;">Not you?</button>
+      </div>
+    </div>
+
     <div class="input-group">
       <label class="input-label">First name</label>
       <input type="text" class="input-field" placeholder="e.g. Jessica" id="firstName">
@@ -840,7 +852,27 @@ function goNext() {
     currentStep++;
     document.getElementById('step' + currentStep).classList.add('active');
     updateProgress();
+
+// Pre-load gender on page start so Step 3 shows correctly
+try {
+  const saved = localStorage.getItem('fop_reviewer');
+  if (saved) {
+    const info = JSON.parse(saved);
+    if (info.gender) {
+      selectedGender = info.gender;
+      document.querySelectorAll('.gender-opt').forEach(o => {
+        if (o.textContent.trim() === info.gender) {
+          o.classList.add('selected');
+          if (info.gender === 'Woman') {
+            document.getElementById('womenQuestionsSection').style.display = 'block';
+          }
+        }
+      });
+    }
+  }
+} catch(e) {}
     window.scrollTo(0, 0);
+    if (currentStep === 4) loadSavedInfo();
   }
   if (currentStep === totalSteps) buildConfirmStep();
 }
@@ -875,6 +907,7 @@ function selectSkill(el) {
 function selectGenderStep3(el, value) {
   document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
   document.getElementById('womenQuestionsSection').style.display = 'none';
+  document.getElementById('returningBanner').style.display = 'none';
   el.classList.add('selected');
   selectedGender = value === 'Woman' ? 'Woman' : null;
   document.getElementById('womenQuestionsSection').style.display = value === 'Woman' ? 'block' : 'none';
@@ -892,6 +925,59 @@ function selectGender(el) {
 function triggerPhotoUpload() {
   const i = document.createElement('input');
   i.type = 'file'; i.accept = 'image/*'; i.multiple = true; i.click();
+}
+
+// ── REMEMBER ME ──
+function saveReviewerInfo(firstName, email, zip, skill, gender) {
+  try {
+    localStorage.setItem('fop_reviewer', JSON.stringify({ firstName, email, zip, skill, gender }));
+  } catch(e) {}
+}
+
+function loadSavedInfo() {
+  try {
+    const saved = localStorage.getItem('fop_reviewer');
+    if (!saved) return;
+    const info = JSON.parse(saved);
+    if (info.firstName) document.getElementById('firstName').value = info.firstName;
+    if (info.email)     document.getElementById('emailField').value = info.email;
+    if (info.zip)       document.getElementById('zipField').value = info.zip;
+    if (info.skill) {
+      document.querySelectorAll('.skill-opt').forEach(o => {
+        if (o.querySelector('.skill-opt-label').textContent === info.skill) {
+          o.classList.add('selected');
+          selectedSkill = info.skill;
+        }
+      });
+    }
+    if (info.gender) {
+      selectedGender = info.gender;
+      document.querySelectorAll('.gender-opt').forEach(o => {
+        if (o.textContent.trim() === info.gender) {
+          o.classList.add('selected');
+          if (info.gender === 'Woman') {
+            document.getElementById('womenQuestionsSection').style.display = 'block';
+          }
+        }
+      });
+    }
+    const banner = document.getElementById('returningBanner');
+    if (banner && info.firstName) {
+      banner.style.display = 'block';
+      document.getElementById('returningName').textContent = info.email;
+    }
+  } catch(e) {}
+}
+
+function clearSavedInfo() {
+  try { localStorage.removeItem('fop_reviewer'); } catch(e) {}
+  document.getElementById('firstName').value = '';
+  document.getElementById('emailField').value = '';
+  document.getElementById('zipField').value = '';
+  document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
+  selectedSkill = null;
+  selectedGender = null;
+  document.getElementById('returningBanner').style.display = 'none';
 }
 
 function answerQ(qId, answer, btn) {
@@ -1030,5 +1116,4 @@ updateProgress();
 </script>
 </body>
 </html>
-
 
