@@ -127,6 +127,8 @@
   .hamburger-btn.open span:nth-child(2) { opacity: 0; }
   .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+  #reviewerMap { z-index: 1 !important; }
+  .leaflet-pane, .leaflet-top, .leaflet-bottom { z-index: 1 !important; }
   .nav-overlay.open { opacity: 1; pointer-events: all; }
   .nav-drawer { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--white); z-index: 200; transition: right 0.3s ease; box-shadow: -4px 0 24px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
   .nav-drawer.open { right: 0; }
