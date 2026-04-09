@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us — Friends on Par</title>
+<title>About — Friends on Par</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -11,7 +11,6 @@
     --lime:   #B7E05A;
     --coral:  #FF6B6B;
     --cream:  #FFF8EE;
-    --gold:   #F4C542;
     --navy:   #1A1F3C;
     --pink:   #FF00FF;
     --white:  #FFFFFF;
@@ -66,27 +65,11 @@
   .section-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
   .section-body { font-size: 0.95rem; color: var(--dark); line-height: 1.8; margin-bottom: 1rem; }
   .section-body strong { color: var(--green); }
-  .pull-quote { background: var(--navy); border-radius: 16px; padding: 1.5rem 1.5rem 1.5rem 2rem; margin: 1.5rem 0; position: relative; }
-  .pull-quote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 5rem; color: var(--pink); position: absolute; top: -0.5rem; left: 0.8rem; line-height: 1; opacity: 0.5; }
-  .pull-quote-text { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--white); line-height: 1.6; font-style: italic; }
-  .pull-quote-text span { color: var(--lime); }
   .what-we-do { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0; }
   .what-item { display: flex; gap: 1rem; align-items: flex-start; background: var(--white); border-radius: 14px; padding: 1rem 1.1rem; border: 2px solid var(--border); }
   .what-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
   .what-text { font-size: 0.88rem; color: var(--dark); line-height: 1.6; }
   .what-text strong { color: var(--navy); font-size: 0.92rem; display: block; margin-bottom: 0.2rem; }
-  .men-welcome { background: var(--white); border: 2px solid var(--lime); border-radius: 18px; padding: 1.5rem; margin: 1.5rem 0; }
-  .men-welcome-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.6rem; }
-  .men-welcome-body { font-size: 0.9rem; color: var(--dark); line-height: 1.7; margin-bottom: 0.7rem; }
-  .men-welcome-body strong { color: var(--green); }
-  .badge-explainer { background: var(--white); border: 2px solid var(--lime); border-radius: 16px; padding: 1.5rem; margin: 1.2rem 0; }
-  .badge-title { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.8rem; }
-  .badge-icon { font-size: 1.8rem; }
-  .badge-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); }
-  .badge-desc { font-size: 0.88rem; color: var(--dark); line-height: 1.7; }
-  .badge-criteria { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.8rem; }
-  .badge-criterion { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.83rem; color: var(--dark); }
-  .badge-check { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 0.1rem; }
   .get-involved { background: var(--green); border-radius: 18px; padding: 1.8rem 1.5rem; margin: 1.5rem 0; text-align: center; }
   .get-involved-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--white); margin-bottom: 0.6rem; }
   .get-involved-sub { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 1.5rem; }
@@ -101,6 +84,7 @@
   .contact-email { color: var(--green); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
   .contact-email:hover { text-decoration: underline; }
 </style>
+
 <script>
 function toggleNav() {
   var drawer = document.getElementById('navDrawer');
@@ -143,38 +127,40 @@ function closeNav() {
 <div class="nav-drawer" id="navDrawer">
   <div class="nav-drawer-header">
     <div class="nav-drawer-logo">Friends on Par</div>
-    <button class="nav-close-btn" onclick="closeNav()">✕</button>
+    <button class="nav-close-btn" onclick="closeNav()">&#x2715;</button>
   </div>
   <div class="nav-items">
-    <a href="/" class="nav-item"><span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span></a>
-    <a href="/index.html" class="nav-item"><span class="nav-item-icon">⛳</span><span class="nav-item-label">Rate a Course</span></a>
-    <a href="/dashboard.html" class="nav-item"><span class="nav-item-icon">📊</span><span class="nav-item-label">My Dashboard</span></a>
-    <span class="nav-item coming-soon"><span class="nav-item-icon">🗺️</span><span class="nav-item-label">Community Map</span><span class="nav-coming-tag">Soon</span></span>
-    <a href="/about.html" class="nav-item active"><span class="nav-item-icon">ℹ️</span><span class="nav-item-label">About Us</span></a>
+    <a href="/" class="nav-item"><span class="nav-item-icon">&#127968;</span><span class="nav-item-label">Home</span></a>
+    <a href="/index.html" class="nav-item"><span class="nav-item-icon">&#9971;</span><span class="nav-item-label">Rate a Course</span></a>
+    <a href="/dashboard.html" class="nav-item"><span class="nav-item-icon">&#128202;</span><span class="nav-item-label">My Dashboard</span></a>
+    <span class="nav-item coming-soon"><span class="nav-item-icon">&#128506;</span><span class="nav-item-label">Community Map</span><span class="nav-coming-tag">Soon</span></span>
+    <a href="/about.html" class="nav-item active"><span class="nav-item-icon">&#8505;&#65039;</span><span class="nav-item-label">About</span></a>
   </div>
-  <div class="nav-footer">friendsonpar.com · Built by women</div>
+  <div class="nav-footer">friendsonpar.com &middot; Built by women</div>
 </div>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-label">About Friends on Par</div>
+    <div class="hero-label">What is Friends on Par?</div>
     <div class="hero-title">A community that <span>loves this game</span></div>
-    <div class="hero-sub">Friends on Par is a community where women and men golfers come together to share honest experiences, discover great courses, and make their voices heard.</div>
+    <div class="hero-sub">Friends on Par is a community where women and men golfers come together to share honest experiences and discover great courses.</div>
   </div>
 </div>
 
+<!-- STATS -->
 <div class="stat-bar">
   <div class="stat-bar-inner">
     <div>
-      <div class="stat-item-val">⛳</div>
+      <div class="stat-item-val">&#9971;</div>
       <div class="stat-item-label">courses across Michigan and beyond</div>
     </div>
     <div>
-      <div class="stat-item-val">💬</div>
+      <div class="stat-item-val">&#128172;</div>
       <div class="stat-item-label">real reviews from golfers who've been there</div>
     </div>
     <div>
-      <div class="stat-item-val">💚</div>
+      <div class="stat-item-val">&#128154;</div>
       <div class="stat-item-label">a community raising the standard for everyone</div>
     </div>
   </div>
@@ -182,98 +168,46 @@ function closeNav() {
 
 <div class="container">
 
-  <div class="section">
-    <div class="section-label">Why We Exist</div>
-    <div class="section-title">Every golfer deserves to feel at home on the course</div>
-    <div class="section-body">Golf has always been a game of connection — with the course, with the people you play with, and with the community around the game. Friends on Par was built on that belief. We created a space where women and all golfers can share their honest experiences, find courses where they feel genuinely welcome, and know that their perspective matters.</div>
-    <div class="section-body">We know that when a golfer walks off a course feeling respected, well cared for, and valued — she talks about it. She tells her golf group, her friends, and anyone who asks. Friends on Par gives that conversation a home.</div>
-    <div class="section-body"><strong>This is your community.</strong> A place to celebrate the courses that get it right, share what could be better, and help every golfer find their next great round.</div>
-  </div>
-
+  <!-- WHAT WE DO -->
   <div class="section">
     <div class="section-label">What We Do</div>
     <div class="section-title">Intelligence the scorecard never captures</div>
-    <div class="section-body">A golf course's rating has always been about the layout. Friends on Par captures something more valuable — the full experience of every golfer who plays it.</div>
+    <div class="section-body">A golf course's rating has always been about the layout. Friends on Par captures something more valuable &mdash; the full experience of every golfer who plays it.</div>
     <div class="what-we-do">
       <div class="what-item">
-        <div class="what-icon">⭐</div>
-        <div class="what-text"><strong>Honest course ratings</strong>Facilities, pace of play, safety, staff attitude, and overall vibe — rated by real golfers who've been there and know what to look for.</div>
+        <div class="what-icon">&#11088;</div>
+        <div class="what-text"><strong>Honest course ratings</strong>Facilities, pace of play, safety, staff attitude, and overall vibe &mdash; rated by real golfers who've been there and know what to look for.</div>
       </div>
       <div class="what-item">
-        <div class="what-icon">❓</div>
-        <div class="what-text"><strong>Women's experience insights</strong>Seven targeted questions that capture what matters most to women golfers — from parking safety to restroom standards to feeling genuinely valued. Data the industry has never had before.</div>
+        <div class="what-icon">&#128506;</div>
+        <div class="what-text"><strong>Course discovery built for everyone</strong>Find courses near you across Michigan and beyond &mdash; by name, city, or GPS. Every golfer benefits from courses that meet a higher standard.</div>
       </div>
       <div class="what-item">
-        <div class="what-icon">📊</div>
-        <div class="what-text"><strong>The gap that tells the story</strong>When women consistently rate a course lower than men on staff attitude or facilities, that gap is the most powerful piece of data a course operator can receive. Specific, actionable, and impossible to ignore.</div>
-      </div>
-      <div class="what-item">
-        <div class="what-icon">🗺️</div>
-        <div class="what-text"><strong>Course discovery built for everyone</strong>Find courses near you across Michigan and beyond — by name, city, or GPS. Every golfer benefits from courses that meet a higher standard.</div>
+        <div class="what-icon">🌺</div>
+        <div class="what-text"><strong>Women's experience insights</strong>Seven targeted questions that capture what matters most to women golfers &mdash; from parking safety to restroom standards to feeling genuinely valued. Data the industry has never had before.</div>
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-label">A Note to Men</div>
-    <div class="section-title">Your perspective matters here too</div>
-    <div class="men-welcome">
-      <div class="men-welcome-title">⛳ Welcome, gentlemen</div>
-      <div class="men-welcome-body">Friends on Par was built by women and centers the women's golf experience — but men are genuinely welcome here, and your reviews matter.</div>
-      <div class="men-welcome-body"><strong>The comparison between men's and women's ratings is some of the most powerful data we collect.</strong> When men rate a course highly and women rate it lower, that gap tells course operators exactly where the experience breaks down — and gives them a clear path to improvement.</div>
-      <div class="men-welcome-body">If you're a husband, partner, father, or friend of a woman golfer — or simply someone who believes the game is better when everyone feels welcome — your review is a contribution to a golf industry that serves all of us better.</div>
-      <div class="men-welcome-body" style="margin-bottom:0;"><strong>Rate a course. Help close the gap.</strong></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-label">Our Standard</div>
-    <div class="section-title">The Women-Approved badge</div>
-    <div class="section-body">The Women-Approved badge is the gold standard for courses that have demonstrated a genuine commitment to the women's golf experience. It is earned — not purchased, not requested, and not negotiated.</div>
-    <div class="badge-explainer">
-      <div class="badge-title">
-        <div class="badge-icon">⭐</div>
-        <div class="badge-name">Women-Approved</div>
-      </div>
-      <div class="badge-desc">A course earns the Women-Approved badge when verified women reviewers consistently report that they felt safe, valued, and well served across every part of their experience. The badge is awarded automatically by our system — and held to the same standard every day.</div>
-      <div class="badge-criteria">
-        <div class="badge-criterion"><span class="badge-check">✓</span>Minimum verified reviews from women golfers</div>
-        <div class="badge-criterion"><span class="badge-check">✓</span>Strong overall score from women reviewers</div>
-        <div class="badge-criterion"><span class="badge-check">✓</span>High yes rates on key women's experience questions</div>
-        <div class="badge-criterion"><span class="badge-check">✓</span>Restroom and facility standards that reflect genuine care</div>
-      </div>
-    </div>
-    <div class="section-body">For course operators, the Women-Approved badge is more than recognition — it's a signal to one of golf's most loyal and vocal audiences that your course is worth their time, their money, and their recommendation.</div>
-  </div>
-
+  <!-- GET INVOLVED -->
   <div class="section">
     <div class="section-label">Get Involved</div>
     <div class="section-title">Every review raises the standard</div>
-    <div class="section-body">Every review you submit adds to a growing body of intelligence that helps women golfers find the courses that deserve their loyalty — and helps course operators understand what it takes to earn it. You earn points for every verified review, with bonuses for the details that matter most.</div>
+    <div class="section-body">Every review you submit adds to a growing body of intelligence that helps golfers find the courses that deserve their loyalty &mdash; and helps course operators understand what it takes to earn it. You earn points for every verified review, with bonuses for the details that matter most.</div>
     <div class="get-involved">
       <div class="get-involved-title">Ready to make your voice count?</div>
-      <div class="get-involved-sub">Rate a course you've played. Share your honest experience. Help raise the standard for every golfer — and help the industry discover what women already know.</div>
+      <div class="get-involved-sub">Rate a course you've played. Share your honest experience. Help raise the standard for every golfer &mdash; and help the industry discover what women already know.</div>
       <div class="get-involved-btns">
-        <a href="/index.html" class="btn-primary">⛳ Rate a Course Now</a>
-        <a href="/dashboard.html" class="btn-secondary">📊 View My Dashboard</a>
+        <a href="/index.html" class="btn-primary">&#9971; Rate a Course Now</a>
+        <a href="/dashboard.html" class="btn-secondary">&#128202; View My Dashboard</a>
       </div>
     </div>
   </div>
 
+  <!-- CONTACT -->
   <div class="contact-section">
     <div class="contact-title">Questions or feedback?</div>
-    <div class="contact-sub">We'd love to hear from you — whether you're a golfer, a course operator, or someone who believes the game can be better for everyone.</div>
-    <a href="#" onclick="window.location.href='mail'+'to:hello@'+'friendsonpar.com'; return false;" class="contact-email"><span class="__cf_email__" data-cfemail="e58d8089898aa583978c808b81968a8b958497cb868a88">[email&#160;protected]</span></a>
+    <div class="contact-sub">We'd love to hear from you &mdash; whether you're a golfer, a course operator, or someone who believes the game can be better for everyone.</div>
+    <a href="#" onclick="window.location.href='mail'+'to:hello@'+'friendsonpar.com'; return false;" class="contact-email"><span class="__cf_email__" data-cfemail="b6ded3dadad9f6d0c4dfd3d8d2c5d9d8c6d7c498d5d9db">[email&#160;protected]</span></a>
     <div style="margin-top:1.5rem;font-size:0.78rem;color:var(--muted);">
-      <a href="/privacy.html" style="color:var(--green);text-decoration:none;">Privacy & Community Policy</a>
-    </div>
-  </div>
-
-</div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-function toggleNav() {
-  const drawer = document.getElementById('navDrawer');
-  const overlay = document.getElementById('navOverlay');
-  const btn = document.getElementById('hamburgerBtn');
-  drawer.classList.tog
+      <a href="/privacy.html" style="color:var(--green);text-d
