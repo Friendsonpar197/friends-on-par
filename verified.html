@@ -44,11 +44,11 @@
   .btn-home { display: block; width: 100%; background: #F5F4F0; color: var(--dark); border: none; padding: 0.9rem; border-radius: 14px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; }
 
   /* ── SHARED HEADER & NAV ── */
-  .header { background: var(--green); padding: 0.8rem 1.2rem; position: sticky; top: 0; z-index: 100; }
+  .header { background: var(--green); padding: 0.6rem 1.2rem 0.8rem; position: sticky; top: 0; z-index: 100; }
   .header-inner { max-width: 560px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
   .header-logo-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; }
-  .header-logo-wrap img { height: 52px; width: auto; }
-  .header-tagline { font-size: 0.58rem; color: var(--lime); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-top: 0.15rem; text-align: center; }
+  .header-logo-wrap img { height: 72px; width: auto; }
+  .header-tagline { font-size: 0.58rem; color: var(--lime); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-top: 0.5rem; text-align: center; font-style: italic; }
   .header-left { width: 44px; }
   .hamburger-btn { background: none; border: none; cursor: pointer; padding: 0.4rem; display: flex; flex-direction: column; gap: 5px; align-items: center; justify-content: center; width: 44px; height: 44px; }
   .hamburger-btn span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
@@ -81,7 +81,7 @@
     <div class="header-left"></div>
     <div class="header-logo-wrap">
       <img src="logo-icon.png" alt="Friends on Par">
-      <div class="header-tagline">Golf ratings that reveal what the scorecard doesn't</div>
+      <div class="header-tagline">Ratings that reveal what the scorecard doesn't</div>
     </div>
     <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -97,7 +97,7 @@
   <div class="nav-items">
     <a href="/" class="nav-item "><span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span></a>
     <a href="/index.html" class="nav-item "><span class="nav-item-icon">⛳</span><span class="nav-item-label">Rate a Course</span></a>
-    <a href="/dashboard.html" class="nav-item "><span class="nav-item-icon">👩</span><span class="nav-item-label">My Dashboard</span></a>
+    <a href="/dashboard.html" class="nav-item "><span class="nav-item-icon">📊</span><span class="nav-item-label">My Dashboard</span></a>
     <span class="nav-item coming-soon"><span class="nav-item-icon">🗺️</span><span class="nav-item-label">Community Map</span><span class="nav-coming-tag">Soon</span></span>
     <span class="nav-item coming-soon"><span class="nav-item-icon">ℹ️</span><span class="nav-item-label">About Us</span><span class="nav-coming-tag">Soon</span></span>
   </div>
@@ -109,7 +109,7 @@
   <div class="card">
     <div class="icon">🎉</div>
     <div class="title">Your email is verified!</div>
-    <div class="subtitle">Thank you for helping women golfers across SE Michigan make better decisions. Your review is now pending approval — once verified your points will be credited automatically.</div>
+    <div class="subtitle">Thank you for helping women golfers across Michigan make better decisions. Your review is now pending approval — once verified your points will be credited automatically.</div>
 
     <div class="points-badge">⭐ 50 Points Pending</div>
 
