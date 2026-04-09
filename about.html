@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Friends on Par</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:  #2D6A4F;
+    --lime:   #B7E05A;
+    --coral:  #FF6B6B;
+    --cream:  #FFF8EE;
+    --gold:   #F4C542;
+    --navy:   #1A1F3C;
+    --pink:   #FF00FF;
+    --white:  #FFFFFF;
+    --gray:   #F5F4F0;
+    --border: #E8E4DC;
+    --muted:  #888;
+    --dark:   #2A2A2A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; padding-bottom: 4rem; }
+  .header { background: var(--green); padding: 0.6rem 1.2rem 0.8rem; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 560px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+  .header-logo-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .header-logo-wrap img { height: 72px; width: auto; }
+  .header-tagline { font-size: 0.58rem; color: var(--lime); letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; margin-top: 0.5rem; text-align: center; font-style: italic; }
+  .header-left { width: 44px; }
+  .hamburger-btn { background: none; border: none; cursor: pointer; padding: 0.4rem; display: flex; flex-direction: column; gap: 5px; align-items: center; justify-content: center; width: 44px; height: 44px; }
+  .hamburger-btn span { display: block; width: 22px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
+  .hamburger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger-btn.open span:nth-child(2) { opacity: 0; }
+  .hamburger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-drawer { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--white); z-index: 200; transition: right 0.3s ease; box-shadow: -4px 0 24px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+  .nav-drawer.open { right: 0; }
+  .nav-drawer-header { background: var(--green); padding: 1.2rem 1.2rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+  .nav-drawer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--pink); font-style: italic; }
+  .nav-close-btn { background: none; border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0.2rem; }
+  .nav-items { flex: 1; padding: 1rem 0; overflow-y: auto; }
+  .nav-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; text-decoration: none; color: var(--dark); font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; transition: background 0.15s; border-left: 3px solid transparent; }
+  .nav-item:hover { background: var(--gray); border-left-color: var(--green); }
+  .nav-item.active { background: #e8f7ee; border-left-color: var(--green); color: var(--green); font-weight: 600; }
+  .nav-item.coming-soon { opacity: 0.5; cursor: not-allowed; pointer-events: none; display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; color: var(--dark); font-size: 0.95rem; font-weight: 500; }
+  .nav-item-icon { font-size: 1.2rem; width: 28px; text-align: center; }
+  .nav-item-label { flex: 1; }
+  .nav-coming-tag { font-size: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.1rem 0.4rem; border-radius: 100px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .nav-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); }
+  .container { max-width: 600px; margin: 0 auto; padding: 0 1.2rem; }
+  .hero { background: var(--green); padding: 3rem 1.5rem; text-align: center; }
+  .hero-inner { max-width: 560px; margin: 0 auto; }
+  .hero-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--lime); font-weight: 600; margin-bottom: 0.8rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--white); line-height: 1.2; margin-bottom: 1rem; }
+  .hero-title span { color: var(--pink); font-style: italic; }
+  .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 480px; margin: 0 auto; }
+  .stat-bar { background: var(--navy); padding: 1.5rem 1.2rem; }
+  .stat-bar-inner { max-width: 600px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center; }
+  .stat-item-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--lime); line-height: 1; }
+  .stat-item-label { font-size: 0.72rem; color: rgba(255,255,255,0.65); margin-top: 0.3rem; line-height: 1.4; }
+  .section { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--coral); font-weight: 600; margin-bottom: 0.5rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy); margin-bottom: 1rem; line-height: 1.2; }
+  .section-body { font-size: 0.95rem; color: var(--dark); line-height: 1.8; margin-bottom: 1rem; }
+  .section-body strong { color: var(--green); }
+  .pull-quote { background: var(--navy); border-radius: 16px; padding: 1.5rem 1.5rem 1.5rem 2rem; margin: 1.5rem 0; position: relative; }
+  .pull-quote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 5rem; color: var(--pink); position: absolute; top: -0.5rem; left: 0.8rem; line-height: 1; opacity: 0.5; }
+  .pull-quote-text { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--white); line-height: 1.6; font-style: italic; }
+  .pull-quote-text span { color: var(--lime); }
+  .what-we-do { display: flex; flex-direction: column; gap: 0.8rem; margin: 1.2rem 0; }
+  .what-item { display: flex; gap: 1rem; align-items: flex-start; background: var(--white); border-radius: 14px; padding: 1rem 1.1rem; border: 2px solid var(--border); }
+  .what-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .what-text { font-size: 0.88rem; color: var(--dark); line-height: 1.6; }
+  .what-text strong { color: var(--navy); font-size: 0.92rem; display: block; margin-bottom: 0.2rem; }
+  .men-welcome { background: var(--white); border: 2px solid var(--lime); border-radius: 18px; padding: 1.5rem; margin: 1.5rem 0; }
+  .men-welcome-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.6rem; }
+  .men-welcome-body { font-size: 0.9rem; color: var(--dark); line-height: 1.7; margin-bottom: 0.7rem; }
+  .men-welcome-body strong { color: var(--green); }
+  .badge-explainer { background: var(--white); border: 2px solid var(--lime); border-radius: 16px; padding: 1.5rem; margin: 1.2rem 0; }
+  .badge-title { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.8rem; }
+  .badge-icon { font-size: 1.8rem; }
+  .badge-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); }
+  .badge-desc { font-size: 0.88rem; color: var(--dark); line-height: 1.7; }
+  .badge-criteria { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.8rem; }
+  .badge-criterion { display: flex; gap: 0.6rem; align-items: flex-start; font-size: 0.83rem; color: var(--dark); }
+  .badge-check { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 0.1rem; }
+  .get-involved { background: var(--green); border-radius: 18px; padding: 1.8rem 1.5rem; margin: 1.5rem 0; text-align: center; }
+  .get-involved-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--white); margin-bottom: 0.6rem; }
+  .get-involved-sub { font-size: 0.9rem; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 1.5rem; }
+  .get-involved-btns { display: flex; flex-direction: column; gap: 0.7rem; }
+  .btn-primary { background: var(--lime); color: var(--navy); border: none; padding: 0.9rem 1.5rem; border-radius: 12px; font-size: 0.95rem; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; text-decoration: none; display: block; transition: transform 0.18s; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-secondary { background: rgba(255,255,255,0.15); color: var(--white); border: 2px solid rgba(255,255,255,0.3); padding: 0.9rem 1.5rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; text-decoration: none; display: block; transition: background 0.18s; }
+  .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+  .contact-section { padding: 2rem 0; text-align: center; }
+  .contact-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 0.5rem; }
+  .contact-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+  .contact-email { color: var(--green); font-weight: 600; text-decoration: none; font-size: 0.95rem; }
+  .contact-email:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left"></div>
+    <div class="header-logo-wrap">
+      <img src="logo-icon.png" alt="Friends on Par">
+      <div class="header-tagline">Ratings that reveal what the scorecard doesn't</div>
+    </div>
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</div>
+
+<div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
+<div class="nav-drawer" id="navDrawer">
+  <div class="nav-drawer-header">
+    <div class="nav-drawer-logo">Friends on Par</div>
+    <button class="nav-close-btn" onclick="closeNav()">✕</button>
+  </div>
+  <div class="nav-items">
+    <a href="/" class="nav-item"><span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span></a>
+    <a href="/index.html" class="nav-item"><span class="nav-item-icon">⛳</span><span class="nav-item-label">Rate a Course</span></a>
+    <a href="/dashboard.html" class="nav-item"><span class="nav-item-icon">📊</span><span class="nav-item-label">My Dashboard</span></a>
+    <span class="nav-item coming-soon"><span class="nav-item-icon">🗺️</span><span class="nav-item-label">Community Map</span><span class="nav-coming-tag">Soon</span></span>
+    <a href="/about.html" class="nav-item active"><span class="nav-item-icon">ℹ️</span><span class="nav-item-label">About Us</span></a>
+  </div>
+  <div class="nav-footer">friendsonpar.com · Built by women</div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">About Friends on Par</div>
+    <div class="hero-title">Women golfers are one of the game's greatest <span>untapped assets</span></div>
+    <div class="hero-sub">28% of all golfers are women — loyal, passionate, and growing. The courses that recognize this are winning. Friends on Par is here to show them how.</div>
+  </div>
+</div>
+
+<div class="stat-bar">
+  <div class="stat-bar-inner">
+    <div>
+      <div class="stat-item-val">28%</div>
+      <div class="stat-item-label">of all golfers are women — and growing</div>
+    </div>
+    <div>
+      <div class="stat-item-val">$5B+</div>
+      <div class="stat-item-label">women's golf market annually</div>
+    </div>
+    <div>
+      <div class="stat-item-val">💚</div>
+      <div class="stat-item-label">loyal advocates for courses that get it right</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-label">The Opportunity</div>
+    <div class="section-title">The courses that invest in women golfers are winning</div>
+    <div class="section-body">Women golfers are one of the most loyal and influential consumer groups in the game. When a woman finds a course where she feels genuinely welcomed — where the facilities reflect her needs, the staff greets her with respect, and the experience says "you belong here" — she comes back. And she brings her friends.</div>
+    <div class="pull-quote">
+      <div class="pull-quote-text">Women golfers who feel valued don't just return — they become a course's <span>most powerful advocates.</span></div>
+    </div>
+    <div class="section-body">Friends on Par bridges the gap between what women golfers experience and what the golf industry understands about them. We collect honest, detailed reviews that give courses the intelligence to unlock a powerful and growing audience — and give women golfers the information they need to find the courses that truly welcome them.</div>
+    <div class="section-body"><strong>When women thrive on the course, everyone benefits.</strong> Better facilities, a more inclusive culture, and a higher standard of hospitality makes golf better for every golfer who walks through the gate.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">What We Do</div>
+    <div class="section-title">Intelligence the scorecard never captures</div>
+    <div class="section-body">A golf course's rating has always been about the layout. Friends on Par captures something more valuable — the full experience of every golfer who plays it.</div>
+    <div class="what-we-do">
+      <div class="what-item">
+        <div class="what-icon">⭐</div>
+        <div class="what-text"><strong>Honest course ratings</strong>Facilities, pace of play, safety, staff attitude, and overall vibe — rated by real golfers who've been there and know what to look for.</div>
+      </div>
+      <div class="what-item">
+        <div class="what-icon">❓</div>
+        <div class="what-text"><strong>Women's experience insights</strong>Seven targeted questions that capture what matters most to women golfers — from parking safety to restroom standards to feeling genuinely valued. Data the industry has never had before.</div>
+      </div>
+      <div class="what-item">
+        <div class="what-icon">📊</div>
+        <div class="what-text"><strong>The gap that tells the story</strong>When women consistently rate a course lower than men on staff attitude or facilities, that gap is the most powerful piece of data a course operator can receive. Specific, actionable, and impossible to ignore.</div>
+      </div>
+      <div class="what-item">
+        <div class="what-icon">🗺️</div>
+        <div class="what-text"><strong>Course discovery built for everyone</strong>Find courses near you across Michigan and beyond — by name, city, or GPS. Every golfer benefits from courses that meet a higher standard.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">A Note to Men</div>
+    <div class="section-title">Your perspective matters here too</div>
+    <div class="men-welcome">
+      <div class="men-welcome-title">⛳ Welcome, gentlemen</div>
+      <div class="men-welcome-body">Friends on Par was built by women and centers the women's golf experience — but men are genuinely welcome here, and your reviews matter.</div>
+      <div class="men-welcome-body"><strong>The comparison between men's and women's ratings is some of the most powerful data we collect.</strong> When men rate a course highly and women rate it lower, that gap tells course operators exactly where the experience breaks down — and gives them a clear path to improvement.</div>
+      <div class="men-welcome-body">If you're a husband, partner, father, or friend of a woman golfer — or simply someone who believes the game is better when everyone feels welcome — your review is a contribution to a golf industry that serves all of us better.</div>
+      <div class="men-welcome-body" style="margin-bottom:0;"><strong>Rate a course. Help close the gap.</strong></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Our Standard</div>
+    <div class="section-title">The Women-Approved badge</div>
+    <div class="section-body">The Women-Approved badge is the gold standard for courses that have demonstrated a genuine commitment to the women's golf experience. It is earned — not purchased, not requested, and not negotiated.</div>
+    <div class="badge-explainer">
+      <div class="badge-title">
+        <div class="badge-icon">⭐</div>
+        <div class="badge-name">Women-Approved</div>
+      </div>
+      <div class="badge-desc">A course earns the Women-Approved badge when verified women reviewers consistently report that they felt safe, valued, and well served across every part of their experience. The badge is awarded automatically by our system — and held to the same standard every day.</div>
+      <div class="badge-criteria">
+        <div class="badge-criterion"><span class="badge-check">✓</span>Minimum verified reviews from women golfers</div>
+        <div class="badge-criterion"><span class="badge-check">✓</span>Strong overall score from women reviewers</div>
+        <div class="badge-criterion"><span class="badge-check">✓</span>High yes rates on key women's experience questions</div>
+        <div class="badge-criterion"><span class="badge-check">✓</span>Restroom and facility standards that reflect genuine care</div>
+      </div>
+    </div>
+    <div class="section-body">For course operators, the Women-Approved badge is more than recognition — it's a signal to one of golf's most loyal and vocal audiences that your course is worth their time, their money, and their recommendation.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Get Involved</div>
+    <div class="section-title">Every review raises the standard</div>
+    <div class="section-body">Every review you submit adds to a growing body of intelligence that helps women golfers find the courses that deserve their loyalty — and helps course operators understand what it takes to earn it. You earn points for every verified review, with bonuses for the details that matter most.</div>
+    <div class="get-involved">
+      <div class="get-involved-title">Ready to make your voice count?</div>
+      <div class="get-involved-sub">Rate a course you've played. Share your honest experience. Help raise the standard for every golfer — and help the industry discover what women already know.</div>
+      <div class="get-involved-btns">
+        <a href="/index.html" class="btn-primary">⛳ Rate a Course Now</a>
+        <a href="/dashboard.html" class="btn-secondary">📊 View My Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <div class="contact-title">Questions or feedback?</div>
+    <div class="contact-sub">We'd love to hear from you — whether you're a golfer, a course operator, or someone who believes the game can be better for everyone.</div>
+    <a href="mailto:hello@friendsonpar.com" class="contact-email">hello@friendsonpar.com</a>
+    <div style="margin-top:1.5rem;font-size:0.78rem;color:var(--muted);">
+      <a href="/privacy.html" style="color:var(--green);text-decoration:none;">Privacy & Community Policy</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleNav() {
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  const btn = document.getElementById('hamburgerBtn');
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+function closeNav() {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+  document.getElementById('hamburgerBtn').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>
