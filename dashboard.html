@@ -93,6 +93,26 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading { text-align: center; padding: 2rem; }
   .empty-state { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.88rem; }
+  .sort-toggle { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+  .sort-btn { flex: 1; padding: 0.45rem 0.5rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: 2px solid var(--border); background: var(--white); color: var(--muted); font-family: DM Sans, sans-serif; transition: all 0.18s; text-align: center; }
+  .sort-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
+  .review-course-group { background: var(--white); border-radius: 14px; border: 2px solid var(--border); margin-bottom: 0.8rem; overflow: hidden; }
+  .review-course-header { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.1rem; cursor: pointer; }
+  .review-course-header:hover { background: var(--gray); }
+  .review-course-title { font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+  .review-course-meta { display: flex; align-items: center; gap: 0.6rem; }
+  .review-latest-score { font-family: Playfair Display, serif; font-size: 1.1rem; font-weight: 900; color: var(--green); }
+  .review-trend { font-size: 0.9rem; }
+  .review-expand-btn { font-size: 0.75rem; color: var(--muted); background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem; }
+  .review-history-list { border-top: 1px solid var(--border); display: none; }
+  .review-history-list.open { display: block; }
+  .review-history-item { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--border); }
+  .review-history-item:last-child { border-bottom: none; }
+  .review-history-date { font-size: 0.78rem; color: var(--muted); }
+  .review-history-score { font-size: 0.9rem; font-weight: 600; color: var(--green); }
+  .review-status { display: inline-block; font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 100px; margin-left: 0.4rem; }
+  .review-status.verified { background: #e8f7ee; color: var(--green); }
+  .review-status.pending { background: #fff8e1; color: #7a5c00; }
 
   /* ── SHARED HEADER & NAV ── */
   .header { background: var(--green); padding: 0.6rem 1.2rem 0.8rem; position: sticky; top: 0; z-index: 100; }
@@ -238,6 +258,11 @@
     <!-- REVIEW HISTORY -->
     <div class="section">
       <div class="section-title">My Reviews</div>
+      <div class="sort-toggle">
+        <button class="sort-btn active" id="sortAlpha" onclick="sortReviews('alpha')">A–Z</button>
+        <button class="sort-btn" id="sortScore" onclick="sortReviews('score')">Highest Rated</button>
+        <button class="sort-btn" id="sortRecent" onclick="sortReviews('recent')">Most Recent</button>
+      </div>
       <div id="reviewList"><div class="empty-state">No reviews yet.</div></div>
     </div>
 
@@ -364,27 +389,9 @@ async function lookupReviewer() {
     ledgerList.innerHTML = '<div class="empty-state">No points earned yet — submit and verify a review to earn your first 50 points!</div>';
   }
 
-  // Reviews
-  const reviewList = document.getElementById('reviewList');
-  if (reviews && reviews.length > 0) {
-    reviewList.innerHTML = reviews.map(r => {
-      const date   = new Date(r.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const score  = r.score_overall ? parseFloat(r.score_overall).toFixed(1) : '–';
-      const status = r.verified
-        ? '<span class="review-status verified">✓ Verified</span>'
-        : '<span class="review-status pending">⏳ Pending</span>';
-      return `
-        <div class="review-item">
-          <div class="review-item-top">
-            <div class="review-course-name">${r.course_name}</div>
-            <div class="review-item-score">${score}</div>
-          </div>
-          <div class="review-item-meta">${date}${status}</div>
-        </div>`;
-    }).join('');
-  } else {
-    reviewList.innerHTML = '<div class="empty-state">No reviews submitted yet.</div>';
-  }
+  // Store reviews globally for sorting
+  window.allReviews = reviews || [];
+  renderReviews('alpha');
 
   // Build map
   if (reviews && reviews.length > 0) {
@@ -432,6 +439,103 @@ async function lookupReviewer() {
 
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('dashboard').style.display    = 'block';
+}
+
+function getTrend(reviews) {
+  if (reviews.length < 2) return '';
+  const sorted = [...reviews].sort((a, b) => new Date(a.submitted_at) - new Date(b.submitted_at));
+  const first = parseFloat(sorted[0].score_overall) || 0;
+  const last  = parseFloat(sorted[sorted.length - 1].score_overall) || 0;
+  const diff  = last - first;
+  if (diff >= 0.5) return '📈';
+  if (diff <= -0.5) return '📉';
+  return '➡️';
+}
+
+function renderReviews(sortBy) {
+  const reviews = window.allReviews || [];
+  const reviewList = document.getElementById('reviewList');
+
+  if (!reviews.length) {
+    reviewList.innerHTML = '<div class="empty-state">No reviews submitted yet.</div>';
+    return;
+  }
+
+  // Group by course
+  const grouped = {};
+  reviews.forEach(r => {
+    const key = r.course_id || r.course_name;
+    if (!grouped[key]) grouped[key] = { name: r.course_name, reviews: [] };
+    grouped[key].reviews.push(r);
+  });
+
+  // Sort each course reviews by date
+  Object.values(grouped).forEach(g => {
+    g.reviews.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
+    g.latestScore = parseFloat(g.reviews[0].score_overall) || 0;
+    g.latestDate  = g.reviews[0].submitted_at;
+    g.isVerified  = g.reviews[0].verified;
+  });
+
+  // Sort courses
+  let courses = Object.values(grouped);
+  if (sortBy === 'alpha')  courses.sort((a, b) => a.name.localeCompare(b.name));
+  if (sortBy === 'score')  courses.sort((a, b) => b.latestScore - a.latestScore);
+  if (sortBy === 'recent') courses.sort((a, b) => new Date(b.latestDate) - new Date(a.latestDate));
+
+  reviewList.innerHTML = courses.map((g, i) => {
+    const score   = g.latestScore ? g.latestScore.toFixed(1) : '–';
+    const trend   = getTrend(g.reviews);
+    const status  = g.isVerified
+      ? '<span class="review-status verified">✓ Verified</span>'
+      : '<span class="review-status pending">⏳ Pending</span>';
+    const hasHistory = g.reviews.length > 1;
+
+    const historyRows = hasHistory ? g.reviews.map((r, j) => {
+      const d = new Date(r.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const s = r.score_overall ? parseFloat(r.score_overall).toFixed(1) : '–';
+      const st = r.verified
+        ? '<span class="review-status verified">✓ Verified</span>'
+        : '<span class="review-status pending">⏳ Pending</span>';
+      return `<div class="review-history-item">
+        <div><div class="review-history-date">${j === 0 ? 'Most recent — ' : ''}${d}${st}</div></div>
+        <div class="review-history-score">${s}</div>
+      </div>`;
+    }).join('') : '';
+
+    return `<div class="review-course-group">
+      <div class="review-course-header" onclick="toggleHistory('hist-${i}')">
+        <div>
+          <div class="review-course-title">${g.name}</div>
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.2rem;">
+            ${g.reviews.length} review${g.reviews.length > 1 ? 's' : ''}${status}
+          </div>
+        </div>
+        <div class="review-course-meta">
+          <div class="review-latest-score">${score}</div>
+          ${trend ? '<div class="review-trend">' + trend + '</div>' : ''}
+          ${hasHistory ? '<button class="review-expand-btn" onclick="event.stopPropagation();toggleHistory("hist-' + i + '")">▼</button>' : ''}
+        </div>
+      </div>
+      ${hasHistory ? '<div class="review-history-list" id="hist-' + i + '">' + historyRows + '</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
+function sortReviews(sortBy) {
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sort' + sortBy.charAt(0).toUpperCase() + sortBy.slice(1) === 'sortAlpha' ? 'Alpha' : sortBy === 'score' ? 'Score' : 'Recent').classList.add('active');
+  const map = { alpha: 'sortAlpha', score: 'sortScore', recent: 'sortRecent' };
+  document.getElementById(map[sortBy]).classList.add('active');
+  renderReviews(sortBy);
+}
+
+function toggleHistory(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+  const btn = el.previousElementSibling.querySelector('.review-expand-btn');
+  if (btn) btn.textContent = el.classList.contains('open') ? '▲' : '▼';
 }
 
 function showError(msg) {
