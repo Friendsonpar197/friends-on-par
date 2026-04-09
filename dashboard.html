@@ -297,8 +297,8 @@ function toggleHistory(id) {
     <div class="section">
       <div class="section-title">My Reviews</div>
       <div class="sort-toggle">
-        <button class="sort-btn active" id="sortAlpha" onclick="sortReviews('alpha')">A–Z</button>
-        <button class="sort-btn" id="sortScore" onclick="sortReviews('score')">Highest Rated</button>
+        <button class="sort-btn" id="sortAlpha" onclick="sortReviews('alpha')">A–Z</button>
+        <button class="sort-btn active" id="sortScore" onclick="sortReviews('score')">Highest Rated</button>
         <button class="sort-btn" id="sortRecent" onclick="sortReviews('recent')">Most Recent</button>
       </div>
       <div id="reviewList"><div class="empty-state">No reviews yet.</div></div>
@@ -429,7 +429,7 @@ async function lookupReviewer() {
 
   // Store reviews globally for sorting
   window.allReviews = reviews || [];
-  renderReviews('alpha');
+  renderReviews('score');
 
   // Build map
   if (reviews && reviews.length > 0) {
@@ -560,21 +560,7 @@ function renderReviews(sortBy) {
   }).join('');
 }
 
-function sortReviews(sortBy) {
-  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('sort' + sortBy.charAt(0).toUpperCase() + sortBy.slice(1) === 'sortAlpha' ? 'Alpha' : sortBy === 'score' ? 'Score' : 'Recent').classList.add('active');
-  const map = { alpha: 'sortAlpha', score: 'sortScore', recent: 'sortRecent' };
-  document.getElementById(map[sortBy]).classList.add('active');
-  renderReviews(sortBy);
-}
-
-function toggleHistory(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.classList.toggle('open');
-  const btn = el.previousElementSibling.querySelector('.review-expand-btn');
-  if (btn) btn.textContent = el.classList.contains('open') ? '▲' : '▼';
-}
+// sortReviews and toggleHistory defined in head
 
 function showError(msg) {
   const el = document.getElementById('errorMsg');
