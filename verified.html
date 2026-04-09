@@ -16,34 +16,12 @@
     --white: #FFFFFF;
     --border: #E8E4DC;
     --dark:  #2A2A2A;
+    --gray:  #F5F4F0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; display: flex; flex-direction: column; }
-  .header { background: var(--green); padding: 1rem 1.5rem; }
-  .header-inner { max-width: 500px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
-  .header-logo { display: flex; align-items: center; gap: 0.6rem; }
-  .header-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--pink); }
-  .header-title span { font-style: italic; }
-  .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.2rem; }
-  .card { background: var(--white); border-radius: 20px; border: 2px solid var(--border); padding: 2.5rem 2rem; max-width: 440px; width: 100%; text-align: center; }
-  .icon { font-size: 4rem; margin-bottom: 1.2rem; }
-  .title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.2; }
-  .subtitle { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; }
-  .points-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem; border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 2rem; }
-  .divider { height: 1px; background: var(--border); margin: 0 0 1.5rem; }
-  .feedback-section { background: var(--navy); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.5rem; text-align: left; }
-  .feedback-label { font-size: 0.78rem; font-weight: 600; color: var(--lime); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.6rem; }
-  .feedback-text { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 1rem; }
-  .feedback-input { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; resize: none; min-height: 80px; outline: none; }
-  .feedback-btn { width: 100%; background: var(--lime); color: var(--navy); border: none; padding: 0.8rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 0.6rem; transition: opacity 0.2s; }
-  .feedback-btn:hover { opacity: 0.85; }
-  .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .feedback-thanks { font-size: 0.85rem; color: var(--lime); text-align: center; margin-top: 0.6rem; display: none; }
-  .btn-rate { display: block; width: 100%; background: var(--green); color: var(--white); border: none; padding: 1rem; border-radius: 14px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 0.7rem; transition: transform 0.18s; }
-  .btn-rate:hover { transform: translateY(-2px); }
-  .btn-home { display: block; width: 100%; background: #F5F4F0; color: var(--dark); border: none; padding: 0.9rem; border-radius: 14px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; }
 
-  /* ── SHARED HEADER & NAV ── */
+  /* ── HEADER & NAV ── */
   .header { background: var(--green); padding: 0.6rem 1.2rem 0.8rem; position: sticky; top: 0; z-index: 100; }
   .header-inner { max-width: 560px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
   .header-logo-wrap { display: flex; flex-direction: column; align-items: center; flex: 1; }
@@ -72,6 +50,37 @@
   .nav-coming-tag { font-size: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.1rem 0.4rem; border-radius: 100px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
   .nav-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--muted); }
 
+  /* ── PAGE CONTENT ── */
+  .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1.2rem; }
+  .card { background: var(--white); border-radius: 20px; border: 2px solid var(--border); padding: 2.5rem 2rem; max-width: 440px; width: 100%; text-align: center; }
+  .icon { font-size: 4rem; margin-bottom: 1.2rem; }
+  .title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.2; }
+  .subtitle { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; }
+  .points-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem; border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 2rem; }
+  .divider { height: 1px; background: var(--border); margin: 0 0 1.5rem; }
+
+  .feedback-section { background: var(--navy); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.2rem; text-align: left; }
+  .feedback-label { font-size: 0.78rem; font-weight: 600; color: var(--lime); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .feedback-text { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 1rem; }
+  .feedback-input { width: 100%; padding: 0.8rem 1rem; border-radius: 10px; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; resize: none; min-height: 80px; outline: none; }
+  .feedback-btn { width: 100%; background: var(--lime); color: var(--navy); border: none; padding: 0.8rem; border-radius: 10px; font-size: 0.9rem; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 0.6rem; transition: opacity 0.2s; }
+  .feedback-btn:hover { opacity: 0.85; }
+  .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .feedback-thanks { font-size: 0.85rem; color: var(--lime); text-align: center; margin-top: 0.6rem; display: none; }
+
+  .invite-section { background: var(--gray); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.2rem; text-align: left; }
+  .invite-label { font-size: 0.78rem; font-weight: 600; color: var(--green); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .invite-text { font-size: 0.85rem; color: var(--dark); line-height: 1.6; margin-bottom: 1rem; }
+  .invite-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+  .invite-btn { width: 100%; padding: 0.75rem; border-radius: 10px; font-size: 0.88rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: opacity 0.2s; }
+  .invite-btn.copy { background: var(--green); color: var(--white); }
+  .invite-btn.text { background: var(--white); color: var(--green); border: 2px solid var(--green); }
+  .invite-btn:hover { opacity: 0.85; }
+  .invite-copied { font-size: 0.78rem; color: var(--green); text-align: center; margin-top: 0.4rem; display: none; }
+
+  .btn-rate { display: block; width: 100%; background: var(--green); color: var(--white); border: none; padding: 1rem; border-radius: 14px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 0.7rem; transition: transform 0.18s; }
+  .btn-rate:hover { transform: translateY(-2px); }
+  .btn-home { display: block; width: 100%; background: #F5F4F0; color: var(--dark); border: none; padding: 0.9rem; border-radius: 14px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; text-decoration: none; }
 </style>
 
 <script>
@@ -95,8 +104,33 @@ function closeNav() {
   btn.classList.remove('open');
   document.body.style.overflow = '';
 }
+function submitFeedback() {
+  var text = document.getElementById('feedbackText').value.trim();
+  if (!text) return;
+  var btn = document.getElementById('feedbackBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  setTimeout(function() {
+    document.getElementById('feedbackThanks').style.display = 'block';
+    document.getElementById('feedbackText').style.display = 'none';
+    btn.style.display = 'none';
+  }, 800);
+}
+function copyInviteLink() {
+  navigator.clipboard.writeText('https://friendsonpar.com').then(function() {
+    document.getElementById('inviteCopied').style.display = 'block';
+    setTimeout(function() {
+      document.getElementById('inviteCopied').style.display = 'none';
+    }, 2500);
+  }).catch(function() {
+    prompt('Copy this link to share:', 'https://friendsonpar.com');
+  });
+}
+function sendInviteText() {
+  var msg = encodeURIComponent("Hey! I've been rating golf courses on Friends on Par — honest reviews that reveal what the scorecard doesn't. Check it out! friendsonpar.com");
+  window.location.href = 'sms:?body=' + msg;
+}
 </script>
-
 </head>
 <body>
 
@@ -112,6 +146,7 @@ function closeNav() {
     </button>
   </div>
 </div>
+
 <div class="nav-overlay" id="navOverlay" onclick="closeNav()"></div>
 <div class="nav-drawer" id="navDrawer">
   <div class="nav-drawer-header">
@@ -119,26 +154,27 @@ function closeNav() {
     <button class="nav-close-btn" onclick="closeNav()">✕</button>
   </div>
   <div class="nav-items">
-    <a href="/" class="nav-item "><span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span></a>
-    <a href="/index.html" class="nav-item "><span class="nav-item-icon">⛳</span><span class="nav-item-label">Rate a Course</span></a>
-    <a href="/dashboard.html" class="nav-item "><span class="nav-item-icon">📊</span><span class="nav-item-label">My Dashboard</span></a>
+    <a href="/" class="nav-item"><span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span></a>
+    <a href="/index.html" class="nav-item"><span class="nav-item-icon">⛳</span><span class="nav-item-label">Rate a Course</span></a>
+    <a href="/dashboard.html" class="nav-item"><span class="nav-item-icon">📊</span><span class="nav-item-label">My Dashboard</span></a>
+    <a href="/profile.html" class="nav-item"><span class="nav-item-icon">💚</span><span class="nav-item-label">My Profile</span></a>
     <span class="nav-item coming-soon"><span class="nav-item-icon">🗺️</span><span class="nav-item-label">Community Map</span><span class="nav-coming-tag">Soon</span></span>
-    <a href="/about.html" class="nav-item"><span class="nav-item-icon">ℹ️</span><span class="nav-item-label">About Us</span></a>
+    <a href="/about.html" class="nav-item"><span class="nav-item-icon">ℹ️</span><span class="nav-item-label">About</span></a>
   </div>
   <div class="nav-footer">friendsonpar.com · Built by women</div>
 </div>
-
 
 <div class="main">
   <div class="card">
     <div class="icon">🎉</div>
     <div class="title">Your email is verified!</div>
-    <div class="subtitle">Thank you for helping women golfers across Michigan make better decisions. Your review is now pending approval — once verified your points will be credited automatically.</div>
+    <div class="subtitle">Thank you for helping golfers across Michigan make better decisions. Your review is now pending approval — once verified your points will be credited automatically.</div>
 
     <div class="points-badge">⭐ 50 Points Pending</div>
 
     <div class="divider"></div>
 
+    <!-- FEEDBACK -->
     <div class="feedback-section">
       <div class="feedback-label">💬 Help us build Friends on Par</div>
       <div class="feedback-text">What would you love to see on this site? We read every suggestion.</div>
@@ -147,43 +183,21 @@ function closeNav() {
       <div class="feedback-thanks" id="feedbackThanks">Thank you — we really appreciate your input! ⛳</div>
     </div>
 
-    <a href="/" class="btn-rate">🏌️ Rate Another Course</a>
+    <!-- INVITE FRIENDS -->
+    <div class="invite-section">
+      <div class="invite-label">🤝 Know someone who loves golf?</div>
+      <div class="invite-text">Bring a friend to Friends on Par and help grow a community where every golfer's voice matters.</div>
+      <div class="invite-btns">
+        <button class="invite-btn copy" onclick="copyInviteLink()">📋 Copy My Invite Link</button>
+        <button class="invite-btn text" onclick="sendInviteText()">💬 Send a Text</button>
+      </div>
+      <div class="invite-copied" id="inviteCopied">✓ Link copied to clipboard!</div>
+    </div>
+
+    <a href="/" class="btn-rate">⛳ Rate Another Course</a>
     <a href="/" class="btn-home">Back to Home</a>
   </div>
 </div>
-
-<script>
-function submitFeedback() {
-  const text = document.getElementById('feedbackText').value.trim();
-  if (!text) return;
-  const btn = document.getElementById('feedbackBtn');
-  btn.disabled = true;
-  btn.textContent = 'Sending...';
-  setTimeout(() => {
-    document.getElementById('feedbackThanks').style.display = 'block';
-    document.getElementById('feedbackText').style.display = 'none';
-    btn.style.display = 'none';
-  }, 800);
-}
-</script>
-
-<script>
-function toggleNav() {
-  const drawer = document.getElementById('navDrawer');
-  const overlay = document.getElementById('navOverlay');
-  const btn = document.getElementById('hamburgerBtn');
-  drawer.classList.toggle('open');
-  overlay.classList.toggle('open');
-  btn.classList.toggle('open');
-  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
-}
-function closeNav() {
-  document.getElementById('navDrawer').classList.remove('open');
-  document.getElementById('navOverlay').classList.remove('open');
-  document.getElementById('hamburgerBtn').classList.remove('open');
-  document.body.style.overflow = '';
-}
-</script>
 
 </body>
 </html>
