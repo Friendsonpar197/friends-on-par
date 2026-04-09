@@ -904,24 +904,6 @@ function goNext() {
     document.getElementById('step' + currentStep).classList.add('active');
     updateProgress();
 
-// Pre-load gender on page start so Step 3 shows correctly
-try {
-  const saved = getCookie('fop_reviewer');
-  if (saved) {
-    const info = JSON.parse(saved);
-    if (info.gender) {
-      selectedGender = info.gender;
-      document.querySelectorAll('.gender-opt').forEach(o => {
-        if (o.textContent.trim() === info.gender) {
-          o.classList.add('selected');
-          if (info.gender === 'Woman') {
-            document.getElementById('womenQuestionsSection').style.display = 'block';
-          }
-        }
-      });
-    }
-  }
-} catch(e) {}
     window.scrollTo(0, 0);
     if (currentStep === 4) loadSavedInfo();
   }
@@ -1007,7 +989,7 @@ function calculatePotentialPoints() {
 // ── REMEMBER ME (cookie-based for iPhone Safari compatibility) ──
 function setCookie(name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
-  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax';
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/; SameSite=Lax; Secure';
 }
 
 function getCookie(name) {
@@ -1030,8 +1012,6 @@ function saveReviewerInfo(firstName, email, zip, skill, gender) {
 function loadSavedInfo() {
   try {
     const saved = getCookie('fop_reviewer');
-    console.log('FOP Cookie:', saved);
-    alert('Cookie check: ' + (saved ? 'Found: ' + saved.substring(0, 50) : 'Not found'));
     if (!saved) return;
     const info = JSON.parse(saved);
     if (info.firstName) document.getElementById('firstName').value = info.firstName;
@@ -1142,7 +1122,8 @@ async function submitReview() {
     });
     if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
 
-    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified' } });
+    saveReviewerInfo(firstName, email, zip, selectedSkill, selectedGender);
+    await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified.html' } });
 
     loadingOverlay.classList.remove('show');
     document.getElementById('mainContent').style.display = 'none';
@@ -1208,6 +1189,25 @@ function resetForm() {
 }
 
 updateProgress();
+
+// Pre-load saved reviewer info on page start
+try {
+  const saved = getCookie('fop_reviewer');
+  if (saved) {
+    const info = JSON.parse(saved);
+    if (info.gender) {
+      selectedGender = info.gender;
+      document.querySelectorAll('.gender-opt').forEach(o => {
+        if (o.textContent.trim() === info.gender) {
+          o.classList.add('selected');
+          if (info.gender === 'Woman') {
+            document.getElementById('womenQuestionsSection').style.display = 'block';
+          }
+        }
+      });
+    }
+  }
+} catch(e) {}
 </script>
 
 <script>
