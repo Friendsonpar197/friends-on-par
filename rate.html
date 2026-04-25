@@ -534,9 +534,9 @@ function closeNav() {
   <!-- STEP 5: CONFIRM -->
   <div class="step-panel" id="step5">
     <div class="step-header">
-      <div class="step-label">Step 5</div>
+      <div class="step-label">Step 5 of 5 — Final Step</div>
       <div class="step-title">Review your submission</div>
-      <div class="step-sub">Everything look right?</div>
+      <div class="step-sub">Does everything look right? Tap Submit My Review below to complete.</div>
     </div>
     <div class="error-banner" id="errorBanner"></div>
     <div class="confirm-card" style="position:relative;">
@@ -558,7 +558,10 @@ function closeNav() {
         <div class="confirm-score-item" style="grid-column:span 2"><div class="cscore-label">Overall Vibe</div><div class="cscore-stars" id="cs-vibe">–</div></div>
       </div>
     </div>
-    <button class="btn-submit" id="submitBtn" onclick="submitReview()">🏌️ Submit My Review</button>
+    <div style="background:#e8f7ee;border:2px solid var(--lime);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;text-align:center;font-size:0.85rem;color:var(--green);font-weight:600;">
+      &#9757; Tap the button below to submit your review
+    </div>
+    <button class="btn-submit" id="submitBtn" onclick="submitReview()" style="font-size:1.1rem;padding:1.2rem;background:var(--green);box-shadow:0 6px 20px rgba(45,106,79,0.4);">&#9971; Submit My Review</button>
     <div class="data-explainer">
       <div class="data-explainer-icon">⭐</div>
       <div class="data-explainer-text">You'll earn <strong>50 points</strong> once your review is verified — redeemable for golf gear and local partner perks!</div>
@@ -568,8 +571,8 @@ function closeNav() {
 </div>
 
 <div class="nav-btns" id="navBtns">
-  <button class="btn-back hidden" id="backBtn" onclick="goBack()">← Back</button>
-  <button class="btn-next" id="nextBtn" onclick="goNext()">Next →</button>
+  <button class="btn-back hidden" id="backBtn" onclick="goBack()">&#8592; Back</button>
+  <button class="btn-next" id="nextBtn" onclick="goNext()">Next &#8594;</button>
 </div>
 
 <div class="success-screen" id="successScreen">
