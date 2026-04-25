@@ -914,7 +914,8 @@ function updateProgress() {
   document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
   document.getElementById('stepCounter').textContent = `Step ${currentStep} of ${totalSteps}`;
   document.getElementById('backBtn').classList.toggle('hidden', currentStep === 1);
-  document.getElementById('nextBtn').textContent = currentStep === totalSteps ? 'Review →' : 'Next →';
+  document.getElementById('nextBtn').textContent = 'Next →';
+  document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
 }
 
 function goNext() {
