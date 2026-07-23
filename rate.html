@@ -172,7 +172,11 @@
   .success-q-ans.no { color: var(--coral); }
   .success-q-ans.skip { color: var(--muted); }
   .btn-home { background: var(--gray); color: var(--dark); border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; }
-  .not-listed { background: var(--white); border: 2px dashed var(--border); border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 1rem; cursor: pointer; transition: border-color 0.2s; }
+  .rating-num-btn { background: var(--white); border: 2px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--dark); padding: 0.55rem 0; cursor: pointer; transition: all 0.15s; }
+  .rating-num-btn:hover { border-color: var(--green); color: var(--green); }
+  .rating-num-btn.selected { background: var(--green); border-color: var(--green); color: var(--white); }
+  .rating-num-btn.low.selected { background: var(--coral); border-color: var(--coral); color: var(--white); }
+  .rating-num-btn.mid.selected { background: var(--gold); border-color: var(--gold); color: var(--navy); }
   .not-listed:hover { border-color: var(--green); }
   .not-listed-label { font-size: 0.85rem; font-weight: 600; color: var(--green); }
   .not-listed-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
@@ -322,13 +326,30 @@ function closeNav() {
     </div>
   </div>
 
-  <!-- STEP 2: RATINGS -->
-  <!-- STEP 2: TAGS + YES/NO + REVIEW -->
+  <!-- STEP 2: RATE + YES/NO + REVIEW -->
   <div class="step-panel" id="step2">
     <div class="step-header">
       <div class="step-label">Step 2</div>
       <div class="step-title">Your experience</div>
-      <div class="step-sub">5 yes/no questions about your experience</div>
+      <div class="step-sub">Rate the course and answer 5 quick questions</div>
+    </div>
+
+    <!-- 1-10 OVERALL RATING -->
+    <div style="background:var(--white);border:2px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:1rem;">
+      <div class="chips-label" style="margin-bottom:0.7rem;">⭐ Overall course rating <span style="color:var(--coral);font-size:0.7rem;margin-left:4px;">required</span></div>
+      <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:4px;" id="ratingBtns">
+        <button class="rating-num-btn" onclick="setOverallRating(1)">1</button>
+        <button class="rating-num-btn" onclick="setOverallRating(2)">2</button>
+        <button class="rating-num-btn" onclick="setOverallRating(3)">3</button>
+        <button class="rating-num-btn" onclick="setOverallRating(4)">4</button>
+        <button class="rating-num-btn" onclick="setOverallRating(5)">5</button>
+        <button class="rating-num-btn" onclick="setOverallRating(6)">6</button>
+        <button class="rating-num-btn" onclick="setOverallRating(7)">7</button>
+        <button class="rating-num-btn" onclick="setOverallRating(8)">8</button>
+        <button class="rating-num-btn" onclick="setOverallRating(9)">9</button>
+        <button class="rating-num-btn" onclick="setOverallRating(10)">10</button>
+      </div>
+      <div id="ratingLabel" style="text-align:center;font-size:0.82rem;color:var(--muted);margin-top:0.6rem;">Tap a number to rate</div>
     </div>
 
     <!-- YES/NO QUESTIONS -->
@@ -806,6 +827,9 @@ function goNext() {
   if (currentStep === 1) {
     if (!selectedCourse) { alert('Please select or enter a course.'); return; }
   }
+  if (currentStep === 2) {
+    if (!overallRating) { alert('Please rate this course before submitting.'); return; }
+  }
   if (currentStep < totalSteps) {
     document.getElementById('step' + currentStep).classList.remove('active');
     currentStep++;
@@ -935,7 +959,23 @@ function answerQ(qId, answer, btn) {
   card.classList.add(answer ? 'answered-yes' : 'answered-no');
 }
 
-function showSuccessScreen() {
+let overallRating = null;
+
+function setOverallRating(val) {
+  overallRating = val;
+  const labels = ['','Avoid','Poor','Below Average','Below Average','Average','Average','Good','Good','Excellent','Exceptional'];
+  const colors  = ['','low','low','low','mid','mid','mid','','','',''];
+  document.querySelectorAll('.rating-num-btn').forEach((btn, i) => {
+    btn.classList.remove('selected','low','mid');
+    if (i + 1 <= val) {
+      btn.classList.add('selected');
+      if (colors[i + 1]) btn.classList.add(colors[i + 1]);
+    }
+  });
+  document.getElementById('ratingLabel').textContent = val + '/10 — ' + labels[val];
+  document.getElementById('ratingLabel').style.color = 'var(--navy)';
+  document.getElementById('ratingLabel').style.fontWeight = '600';
+}
   const fmt = v => v === true ? { text: '✓ Yes', cls: 'yes' } : v === false ? { text: '✗ No', cls: 'no' } : { text: '–', cls: 'skip' };
   const pairs = [
     ['tee', qAnswers.q1],
@@ -951,7 +991,7 @@ function showSuccessScreen() {
     el.className = 'success-q-ans ' + r.cls;
   });
   document.getElementById('successCourseName').textContent = selectedCourse || '–';
-  document.getElementById('successCourseLoc').textContent = selectedCourseLoc || '–';
+  document.getElementById('successCourseLoc').textContent = (selectedCourseLoc || '–') + (overallRating ? '  ·  ' + overallRating + '/10' : '');
   const reviewText = document.getElementById('reviewText') ? document.getElementById('reviewText').value : '';
   const reviewTextEl = document.getElementById('successReviewText');
   if (reviewText && reviewText.trim()) {
@@ -991,7 +1031,7 @@ async function submitReview() {
     const { error: reviewError } = await db.from('reviews').insert({
       course_id: selectedCourseId, course_name: selectedCourse, course_location: selectedCourseLoc,
       reviewer_id: reviewer.id, reviewer_name: firstName || null, reviewer_zip: zip || null,
-      reviewer_skill: selectedSkill || null,
+      reviewer_skill: selectedSkill || null, score_overall: overallRating,
       tags_positive: [...document.querySelectorAll('.chip.good.selected')].map(c => c.textContent),
       tags_negative: [...document.querySelectorAll('.chip.bad.selected')].map(c => c.textContent),
       review_text: document.getElementById('reviewText').value || null,
@@ -1036,8 +1076,11 @@ function resetForm() {
   document.getElementById('reviewText').value = '';
   document.getElementById('charCount').textContent = '0';
   document.getElementById('soloToggle').classList.remove('on');
-  document.getElementById('firstTimeToggle').classList.remove('on');
-  document.getElementById('locationStatus').textContent = '';
+  overallRating = null;
+  document.querySelectorAll('.rating-num-btn').forEach(b => b.classList.remove('selected','low','mid'));
+  document.getElementById('ratingLabel').textContent = 'Tap a number to rate';
+  document.getElementById('ratingLabel').style.color = '';
+  document.getElementById('ratingLabel').style.fontWeight = '';
   document.getElementById('locationStatus').className = 'location-status';
   document.getElementById('courseSearch').value = '';
   document.getElementById('courseSuggestions').innerHTML = `<div style="text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:0.9rem;line-height:1.6;">
