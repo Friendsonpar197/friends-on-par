@@ -854,9 +854,23 @@ function goNext() {
     currentStep++;
     document.getElementById('step' + currentStep).classList.add('active');
     updateProgress();
-
     window.scrollTo(0, 0);
-    if (currentStep === 4) loadSavedInfo();
+    if (currentStep === 3) {
+      loadSavedInfo();
+      // If we have saved info, skip straight to confirm
+      const saved = getCookie('fop_reviewer');
+      if (saved) {
+        try {
+          const info = JSON.parse(saved);
+          if (info.email) {
+            document.getElementById('step3').classList.remove('active');
+            currentStep = 4;
+            document.getElementById('step4').classList.add('active');
+            updateProgress();
+          }
+        } catch(e) {}
+      }
+    }
   }
   if (currentStep === totalSteps) buildConfirmStep();
 }
@@ -865,6 +879,11 @@ function goBack() {
   if (currentStep > 1) {
     document.getElementById('step' + currentStep).classList.remove('active');
     currentStep--;
+    // Skip Step 3 going back if returning user
+    if (currentStep === 3) {
+      const saved = getCookie('fop_reviewer');
+      if (saved) { try { if (JSON.parse(saved).email) currentStep = 2; } catch(e) {} }
+    }
     document.getElementById('step' + currentStep).classList.add('active');
     updateProgress();
     window.scrollTo(0, 0);
