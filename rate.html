@@ -162,9 +162,15 @@
   .success-icon { font-size: 4rem; margin-bottom: 1.2rem; }
   .success-title { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 0.6rem; }
   .success-sub { font-size: 1rem; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; }
-  .points-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem; border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 2rem; }
+  .points-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--lime); color: var(--navy); padding: 0.7rem 1.5rem; border-radius: 100px; font-weight: 700; font-size: 1rem; margin-bottom: 1.2rem; }
   .btn-another { background: var(--green); color: white; border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; display: block; width: 100%; margin-bottom: 0.7rem; transition: transform 0.18s; }
   .btn-another:hover { transform: translateY(-2px); }
+  .success-q-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; gap: 0.5rem; }
+  .success-q-label { color: var(--dark); flex: 1; }
+  .success-q-ans { font-weight: 600; flex-shrink: 0; }
+  .success-q-ans.yes { color: var(--green); }
+  .success-q-ans.no { color: var(--coral); }
+  .success-q-ans.skip { color: var(--muted); }
   .btn-home { background: var(--gray); color: var(--dark); border: none; padding: 0.9rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; }
   .not-listed { background: var(--white); border: 2px dashed var(--border); border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 1rem; cursor: pointer; transition: border-color 0.2s; }
   .not-listed:hover { border-color: var(--green); }
@@ -405,89 +411,16 @@ function closeNav() {
       <div><div class="toggle-label">First time at this course</div><div class="toggle-desc">Helps us track first-impression scores</div></div>
       <div class="toggle" id="firstTimeToggle" onclick="toggleFirstTime()"></div>
     </div>
-  </div>
 
-  <!-- STEP 3: ABOUT YOU -->
-  <div class="step-panel" id="step3">
-    <div class="step-header">
-      <div class="step-label">Step 3</div>
-      <div class="step-title">A few details about you</div>
-      <div class="step-sub">Helps us verify your review and personalize results</div>
-    </div>
-
-    <!-- RETURNING USER BANNER -->
-    <div id="returningBanner" style="display:none;background:#e8f7ee;border:2px solid var(--lime);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1rem;display:none;">
-      <div style="display:flex;align-items:center;justify-content:space-between;">
-        <div>
-          <div style="font-size:0.88rem;font-weight:600;color:var(--green);">Welcome back! 👋</div>
-          <div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;" id="returningName"></div>
-        </div>
-        <button type="button" onclick="clearSavedInfo()" style="font-size:0.75rem;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;">Not you?</button>
-      </div>
-    </div>
-
-    <div class="input-group">
-      <label class="input-label">First name</label>
-      <input type="text" class="input-field" placeholder="e.g. Jessica" id="firstName">
-    </div>
-    <div class="input-group">
-      <label class="input-label">Email (for verification)</label>
-      <input type="email" class="input-field" placeholder="you@example.com" id="emailField">
-    </div>
-    <div class="input-group">
-      <label class="input-label">Your ZIP code</label>
-      <input type="text" class="input-field" placeholder="e.g. 48302" id="zipField" maxlength="5" inputmode="numeric">
-    </div>
-
-    <div style="margin-bottom:1.2rem;">
-      <div class="input-label" style="margin-bottom:0.6rem;">Skill level</div>
-      <div class="skill-options">
-        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🌱</div><div class="skill-opt-label">Beginner</div><div class="skill-opt-desc">Learning the game</div></div>
-        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">⛳</div><div class="skill-opt-label">Casual</div><div class="skill-opt-desc">Play for fun</div></div>
-        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏌️</div><div class="skill-opt-label">Intermediate</div><div class="skill-opt-desc">Regular player</div></div>
-        <div class="skill-opt" onclick="selectSkill(this)"><div class="skill-opt-icon">🏆</div><div class="skill-opt-label">Advanced</div><div class="skill-opt-desc">Competitive play</div></div>
-      </div>
-    </div>
-    <div class="photo-upload" onclick="triggerPhotoUpload()">
-      <div class="photo-upload-icon">📸</div>
-      <div class="photo-upload-text"><strong>Add photos</strong> (optional)<br>Course, facilities, views — tap to upload</div>
-    </div>
-    <div class="data-explainer">
-      <div class="data-explainer-icon">🔒</div>
-      <div class="data-explainer-text">Your email is only used to verify your review. <strong>We never share or sell your data.</strong></div>
-    </div>
-  </div>
-
-  <!-- STEP 4: CONFIRM -->
-  <div class="step-panel" id="step4">
-    <div class="step-header">
-      <div class="step-label">Step 4 of 4 — Final Step</div>
-      <div class="step-title">Review your submission</div>
-      <div class="step-sub">Does everything look right? Tap Submit My Review below to complete.</div>
-    </div>
     <div class="error-banner" id="errorBanner"></div>
-    <div class="confirm-card" style="position:relative;">
-      <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <div style="font-size:0.9rem;color:var(--green);font-weight:600;">Saving your review...</div>
-      </div>
-      <div class="confirm-course-name" id="confirmCourseName">–</div>
-      <div class="confirm-loc" id="confirmCourseLoc">–</div>
-      <div class="confirm-scores">
-        <div class="confirm-score-item"><div class="cscore-label">🌺 Tee boxes</div><div class="cscore-stars" id="cs-tee">–</div></div>
-        <div class="confirm-score-item"><div class="cscore-label">🥗 Healthy food</div><div class="cscore-stars" id="cs-food">–</div></div>
-        <div class="confirm-score-item"><div class="cscore-label">🛍 Pro shop</div><div class="cscore-stars" id="cs-proshop">–</div></div>
-        <div class="confirm-score-item"><div class="cscore-label">🚻 Restrooms</div><div class="cscore-stars" id="cs-restroom">–</div></div>
-        <div class="confirm-score-item" style="grid-column:span 2"><div class="cscore-label">👍 Recommend</div><div class="cscore-stars" id="cs-recommend">–</div></div>
-      </div>
+    <div class="loading-overlay" id="loadingOverlay" style="position:fixed;inset:0;background:rgba(255,248,238,0.9);z-index:99;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem;">
+      <div class="spinner"></div>
+      <div style="font-size:0.9rem;color:var(--green);font-weight:600;">Saving your review...</div>
     </div>
-    <div style="background:#e8f7ee;border:2px solid var(--lime);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;text-align:center;font-size:0.85rem;color:var(--green);font-weight:600;">
-      &#9757; Tap the button below to submit your review
-    </div>
-    <button class="btn-submit" id="submitBtn" onclick="submitReview()" style="font-size:1.1rem;padding:1.2rem;background:var(--green);box-shadow:0 6px 20px rgba(45,106,79,0.4);">&#9971; Submit My Review</button>
+    <button class="btn-submit" id="submitBtn" onclick="submitReview()" style="font-size:1.1rem;padding:1.2rem;background:var(--green);box-shadow:0 6px 20px rgba(45,106,79,0.4);margin-top:0.5rem;">⛳ Submit My Review</button>
     <div class="data-explainer">
       <div class="data-explainer-icon">⭐</div>
-      <div class="data-explainer-text">You'll earn <strong>50 points</strong> once your review is verified — redeemable for golf gear and local partner perks!</div>
+      <div class="data-explainer-text">You'll earn <strong>50 points</strong> once your review is verified!</div>
     </div>
   </div>
 
@@ -503,7 +436,36 @@ function closeNav() {
   <div class="success-title">Review Submitted!</div>
   <div class="success-sub">Thanks for helping women golfers make better decisions. Check your email to verify your review and unlock your points.</div>
   <div class="points-badge" id="successPointsBadge">⭐ Points Pending Verification</div>
-  <div id="successBonusBreakdown" style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.8;"></div>
+
+  <!-- Review summary -->
+  <div style="background:var(--white);border:2px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.2rem;text-align:left;">
+    <div id="successCourseName" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--navy);margin-bottom:0.2rem;">–</div>
+    <div id="successCourseLoc" style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem;">–</div>
+    <div style="display:flex;flex-direction:column;gap:0.55rem;">
+      <div class="success-q-row" id="sq-tee">
+        <span class="success-q-label">🌺 Women's tee boxes flat and maintained</span>
+        <span class="success-q-ans" id="sq-tee-ans">–</span>
+      </div>
+      <div class="success-q-row" id="sq-food">
+        <span class="success-q-label">🥗 Healthy food options available</span>
+        <span class="success-q-ans" id="sq-food-ans">–</span>
+      </div>
+      <div class="success-q-row" id="sq-proshop">
+        <span class="success-q-label">🛍 Pro shop carries women's gear</span>
+        <span class="success-q-ans" id="sq-proshop-ans">–</span>
+      </div>
+      <div class="success-q-row" id="sq-restroom">
+        <span class="success-q-label">🚻 Restrooms clean and maintained</span>
+        <span class="success-q-ans" id="sq-restroom-ans">–</span>
+      </div>
+      <div class="success-q-row" id="sq-recommend">
+        <span class="success-q-label">👍 Would recommend to another woman golfer</span>
+        <span class="success-q-ans" id="sq-recommend-ans">–</span>
+      </div>
+    </div>
+    <div id="successReviewText" style="margin-top:0.9rem;font-size:0.85rem;color:var(--dark);font-style:italic;line-height:1.6;border-top:1px solid var(--border);padding-top:0.8rem;display:none;"></div>
+  </div>
+
   <div id="successBadgeSection" style="background:var(--white);border:2px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:1.5rem;text-align:center;display:none;">
     <div id="successBadgeIcon" style="font-size:2.5rem;margin-bottom:0.4rem;"></div>
     <div id="successBadgeName" style="font-size:1rem;font-weight:600;color:var(--navy);"></div>
@@ -521,7 +483,7 @@ const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentStep = 1;
-const totalSteps = 4;
+const totalSteps = 2;
 let selectedCourse    = null;
 let selectedCourseId  = null;
 let selectedCourseLoc = null;
@@ -837,7 +799,6 @@ function updateProgress() {
   document.getElementById('progressFill').style.width = (currentStep / totalSteps * 100) + '%';
   document.getElementById('stepCounter').textContent = `Step ${currentStep} of ${totalSteps}`;
   document.getElementById('backBtn').classList.toggle('hidden', currentStep === 1);
-  document.getElementById('nextBtn').textContent = 'Next →';
   document.getElementById('nextBtn').style.display = currentStep === totalSteps ? 'none' : 'block';
 }
 
@@ -845,45 +806,20 @@ function goNext() {
   if (currentStep === 1) {
     if (!selectedCourse) { alert('Please select or enter a course.'); return; }
   }
-  if (currentStep === 3) {
-    const email = document.getElementById('emailField').value.trim();
-    if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
-  }
   if (currentStep < totalSteps) {
     document.getElementById('step' + currentStep).classList.remove('active');
     currentStep++;
     document.getElementById('step' + currentStep).classList.add('active');
+    loadSavedInfo();
     updateProgress();
     window.scrollTo(0, 0);
-    if (currentStep === 3) {
-      loadSavedInfo();
-      // If we have saved info, skip straight to confirm
-      const saved = getCookie('fop_reviewer');
-      if (saved) {
-        try {
-          const info = JSON.parse(saved);
-          if (info.email) {
-            document.getElementById('step3').classList.remove('active');
-            currentStep = 4;
-            document.getElementById('step4').classList.add('active');
-            updateProgress();
-          }
-        } catch(e) {}
-      }
-    }
   }
-  if (currentStep === totalSteps) buildConfirmStep();
 }
 
 function goBack() {
   if (currentStep > 1) {
     document.getElementById('step' + currentStep).classList.remove('active');
     currentStep--;
-    // Skip Step 3 going back if returning user
-    if (currentStep === 3) {
-      const saved = getCookie('fop_reviewer');
-      if (saved) { try { if (JSON.parse(saved).email) currentStep = 2; } catch(e) {} }
-    }
     document.getElementById('step' + currentStep).classList.add('active');
     updateProgress();
     window.scrollTo(0, 0);
@@ -971,34 +907,22 @@ function loadSavedInfo() {
     const saved = getCookie('fop_reviewer');
     if (!saved) return;
     const info = JSON.parse(saved);
-    if (info.firstName) document.getElementById('firstName').value = info.firstName;
-    if (info.email)     document.getElementById('emailField').value = info.email;
-    if (info.zip)       document.getElementById('zipField').value = info.zip;
     if (info.skill) {
       document.querySelectorAll('.skill-opt').forEach(o => {
-        if (o.querySelector('.skill-opt-label').textContent === info.skill) {
+        if (o.querySelector('.skill-opt-label') && o.querySelector('.skill-opt-label').textContent === info.skill) {
           o.classList.add('selected');
           selectedSkill = info.skill;
         }
       });
-    }
-    const banner = document.getElementById('returningBanner');
-    if (banner && info.firstName) {
-      banner.style.display = 'block';
-      document.getElementById('returningName').textContent = info.email;
     }
   } catch(e) {}
 }
 
 function clearSavedInfo() {
   try { deleteCookie('fop_reviewer'); } catch(e) {}
-  document.getElementById('firstName').value = '';
-  document.getElementById('emailField').value = '';
-  document.getElementById('zipField').value = '';
   document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
   selectedSkill = null;
   selectedGender = null;
-  document.getElementById('returningBanner').style.display = 'none';
 }
 
 function answerQ(qId, answer, btn) {
@@ -1011,28 +935,49 @@ function answerQ(qId, answer, btn) {
   card.classList.add(answer ? 'answered-yes' : 'answered-no');
 }
 
-function buildConfirmStep() {
-  document.getElementById('confirmCourseName').textContent = selectedCourse || '–';
-  document.getElementById('confirmCourseLoc').textContent = selectedCourseLoc || '–';
-  const fmt = v => v === true ? '✓ Yes' : v === false ? '✗ No' : '–';
-  document.getElementById('cs-tee').textContent      = fmt(qAnswers.q1);
-  document.getElementById('cs-food').textContent     = fmt(qAnswers.q2);
-  document.getElementById('cs-proshop').textContent  = fmt(qAnswers.q3);
-  document.getElementById('cs-restroom').textContent = fmt(qAnswers.q4);
-  document.getElementById('cs-recommend').textContent = fmt(qAnswers.q5);
-  document.getElementById('errorBanner').classList.remove('show');
+function showSuccessScreen() {
+  const fmt = v => v === true ? { text: '✓ Yes', cls: 'yes' } : v === false ? { text: '✗ No', cls: 'no' } : { text: '–', cls: 'skip' };
+  const pairs = [
+    ['tee', qAnswers.q1],
+    ['food', qAnswers.q2],
+    ['proshop', qAnswers.q3],
+    ['restroom', qAnswers.q4],
+    ['recommend', qAnswers.q5]
+  ];
+  pairs.forEach(([key, val]) => {
+    const r = fmt(val);
+    const el = document.getElementById('sq-' + key + '-ans');
+    el.textContent = r.text;
+    el.className = 'success-q-ans ' + r.cls;
+  });
+  document.getElementById('successCourseName').textContent = selectedCourse || '–';
+  document.getElementById('successCourseLoc').textContent = selectedCourseLoc || '–';
+  const reviewText = document.getElementById('reviewText') ? document.getElementById('reviewText').value : '';
+  const reviewTextEl = document.getElementById('successReviewText');
+  if (reviewText && reviewText.trim()) {
+    reviewTextEl.textContent = '"' + reviewText.trim() + '"';
+    reviewTextEl.style.display = 'block';
+  }
+  document.getElementById('successScreen').classList.add('show');
 }
 
 async function submitReview() {
   const submitBtn      = document.getElementById('submitBtn');
   const loadingOverlay = document.getElementById('loadingOverlay');
   const errorBanner    = document.getElementById('errorBanner');
-  const email     = document.getElementById('emailField').value.trim().toLowerCase();
-  const firstName = document.getElementById('firstName').value.trim();
-  const zip       = document.getElementById('zipField').value.trim();
+  let email = '', firstName = '', zip = '';
+  try {
+    const saved = getCookie('fop_reviewer');
+    if (saved) { const info = JSON.parse(saved); email = info.email || ''; firstName = info.firstName || ''; zip = info.zip || ''; }
+  } catch(e) {}
+  if (!email || !email.includes('@')) {
+    const entered = prompt('Please enter your email address to submit your review:');
+    if (!entered || !entered.includes('@')) { submitBtn.disabled = false; return; }
+    email = entered.trim().toLowerCase();
+  }
 
   submitBtn.disabled = true;
-  loadingOverlay.classList.add('show');
+  loadingOverlay.style.display = 'flex';
   errorBanner.classList.remove('show');
 
   try {
@@ -1062,14 +1007,14 @@ async function submitReview() {
     saveReviewerInfo(firstName, email, zip, selectedSkill, selectedGender);
     await db.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + '/verified.html' } });
 
-    loadingOverlay.classList.remove('show');
+    loadingOverlay.style.display = 'none';
     document.getElementById('mainContent').style.display = 'none';
     document.getElementById('navBtns').style.display = 'none';
-    document.getElementById('successScreen').classList.add('show');
+    showSuccessScreen();
     window.scrollTo(0, 0);
 
   } catch (err) {
-    loadingOverlay.classList.remove('show');
+    loadingOverlay.style.display = 'none';
     submitBtn.disabled = false;
     errorBanner.textContent = 'Something went wrong: ' + err.message + '. Please try again.';
     errorBanner.classList.add('show');
@@ -1092,9 +1037,6 @@ function resetForm() {
   document.getElementById('charCount').textContent = '0';
   document.getElementById('soloToggle').classList.remove('on');
   document.getElementById('firstTimeToggle').classList.remove('on');
-  document.getElementById('firstName').value = '';
-  document.getElementById('emailField').value = '';
-  document.getElementById('zipField').value = '';
   document.getElementById('locationStatus').textContent = '';
   document.getElementById('locationStatus').className = 'location-status';
   document.getElementById('courseSearch').value = '';
@@ -1116,6 +1058,8 @@ function resetForm() {
   document.getElementById('mainContent').style.display = '';
   document.getElementById('navBtns').style.display = '';
   document.getElementById('successScreen').classList.remove('show');
+  document.getElementById('successReviewText').style.display = 'none';
+  document.getElementById('successReviewText').textContent = '';
   renderCourses();
   updateProgress();
   window.scrollTo(0, 0);
