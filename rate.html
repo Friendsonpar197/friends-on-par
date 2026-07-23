@@ -508,7 +508,6 @@ const totalSteps = 2;
 let selectedCourse    = null;
 let selectedCourseId  = null;
 let selectedCourseLoc = null;
-let ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
 let soloPlayer    = false;
 let firstTime     = false;
 let selectedSkill = null;
@@ -848,17 +847,9 @@ function goBack() {
   }
 }
 
-function rate(cat, val) {
-  ratings[cat] = val;
-  document.querySelector(`[data-cat="${cat}"]`).querySelectorAll('.star').forEach((s, i) => s.classList.toggle('lit', i < val));
-  document.getElementById('val-' + cat).textContent = val + '/5';
-  document.getElementById('row-' + cat).classList.add('rated');
-}
-
-function toggleChip(el) { el.classList.toggle('selected'); }
 function toggleSolo() { soloPlayer = !soloPlayer; document.getElementById('soloToggle').classList.toggle('on', soloPlayer); }
 function toggleFirstTime() { firstTime = !firstTime; document.getElementById('firstTimeToggle').classList.toggle('on', firstTime); }
-function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('reviewText').value.length; }
+function updateCharCount() { const el = document.getElementById('charCount'); if (el) el.textContent = document.getElementById('reviewText').value.length; }
 
 function selectSkill(el) {
   document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
@@ -974,6 +965,8 @@ function setOverallRating(val) {
   document.getElementById('ratingLabel').style.color = 'var(--navy)';
   document.getElementById('ratingLabel').style.fontWeight = '600';
 }
+
+function showSuccessScreen() {
   const fmt = v => v === true ? { text: '✓ Yes', cls: 'yes' } : v === false ? { text: '✗ No', cls: 'no' } : { text: '–', cls: 'skip' };
   const pairs = [
     ['tee', qAnswers.q1],
