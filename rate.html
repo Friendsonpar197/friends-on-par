@@ -596,8 +596,6 @@ async function searchCourses(val) {
       .order('name')
       .limit(15);
 
-    container.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--muted);font-size:0.78rem;">Debug: searched for ' + searchTerm + ', error: ' + (nameError ? nameError.message : 'none') + ', results: ' + (nameResults ? nameResults.length : 'null') + '</div>';
-
     const { data: locResults } = await db
       .from('courses')
       .select('id, name, location, county, state, review_count, women_approved')
