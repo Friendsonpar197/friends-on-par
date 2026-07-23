@@ -366,33 +366,23 @@ function closeNav() {
       </div>
       <div class="chips-label">⚠️ Needs improvement</div>
       <div class="chips-group">
+        <span class="chip bad" onclick="toggleChip(this)">Poorly Maintained Women's Tees</span>
+        <span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
         <span class="chip bad" onclick="toggleChip(this)">Slow Groups</span>
         <span class="chip bad" onclick="toggleChip(this)">Paired With Strangers Without Notice</span>
         <span class="chip bad" onclick="toggleChip(this)">Poor Course Condition</span>
-        <span class="chip bad" onclick="toggleChip(this)">Limited Healthy Food Options</span>
       </div>
     </div>
 
-    <!-- GENDER SELECTOR -->
-    <div style="margin-bottom:1.2rem;">
-      <div class="chips-label" style="margin-bottom:0.6rem;">How do you identify?</div>
-      <div class="gender-options">
-        <span class="gender-opt" onclick="selectGenderStep3(this, 'Woman')">Woman</span>
-        <span class="gender-opt" onclick="selectGenderStep3(this, 'Man')">Man</span>
-        <span class="gender-opt" onclick="selectGenderStep3(this, 'Non-binary')">Non-binary</span>
-        <span class="gender-opt" onclick="selectGenderStep3(this, 'Prefer not to say')">Prefer not to say</span>
-      </div>
-    </div>
-
-    <!-- YES/NO QUESTIONS — only shown for women -->
-    <div id="womenQuestionsSection" style="display:none;">
-    <div class="chips-label" style="margin-bottom:0.8rem;">Quick questions — tap yes ✓ or no ✗</div>
+    <!-- YES/NO QUESTIONS -->
+    <div id="womenQuestionsSection">
+    <div class="chips-label" style="margin-bottom:0.8rem;">5 quick questions — tap yes ✓ or no ✗</div>
 
     <div class="journey-section">
-      <div class="journey-label">🚗 Arrival</div>
+      <div class="journey-label">🌺 Women's Tee Boxes</div>
       <div class="q-list">
         <div class="q-card" id="q1">
-          <div class="q-text">Did you feel safe walking to and from your car?</div>
+          <div class="q-text">Were the women's tee boxes flat and well-maintained?</div>
           <div class="q-btns">
             <button class="q-btn yes" onclick="answerQ('q1', true, this)">✓</button>
             <button class="q-btn no" onclick="answerQ('q1', false, this)">✗</button>
@@ -402,24 +392,30 @@ function closeNav() {
     </div>
 
     <div class="journey-section">
-      <div class="journey-label">🏌️ Pro Shop &amp; Facilities</div>
+      <div class="journey-label">🥗 Food &amp; Pro Shop</div>
       <div class="q-list">
         <div class="q-card" id="q2">
-          <div class="q-text">Did staff greet you proactively and respectfully?</div>
+          <div class="q-text">Did this course offer healthy food options?</div>
           <div class="q-btns">
             <button class="q-btn yes" onclick="answerQ('q2', true, this)">✓</button>
             <button class="q-btn no" onclick="answerQ('q2', false, this)">✗</button>
           </div>
         </div>
         <div class="q-card" id="q3">
-          <div class="q-text">Did the pro shop have a fitting area or space designed for women?</div>
+          <div class="q-text">Did the pro shop carry women's gear?</div>
           <div class="q-btns">
             <button class="q-btn yes" onclick="answerQ('q3', true, this)">✓</button>
             <button class="q-btn no" onclick="answerQ('q3', false, this)">✗</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="journey-section">
+      <div class="journey-label">🚻 Restrooms</div>
+      <div class="q-list">
         <div class="q-card" id="q4">
-          <div class="q-text">Did the women's restroom reflect a high standard of care — clean, fresh, well-lit, and properly stocked?</div>
+          <div class="q-text">Were the women's restrooms clean and well-maintained?</div>
           <div class="q-btns">
             <button class="q-btn yes" onclick="answerQ('q4', true, this)">✓</button>
             <button class="q-btn no" onclick="answerQ('q4', false, this)">✗</button>
@@ -429,33 +425,13 @@ function closeNav() {
     </div>
 
     <div class="journey-section">
-      <div class="journey-label">⛳ On the Course</div>
+      <div class="journey-label">🏁 Overall</div>
       <div class="q-list">
         <div class="q-card" id="q5">
-          <div class="q-text">Were proper women's restrooms available on the course? (not just a porta potty)</div>
+          <div class="q-text">Would you recommend this course to another woman golfer?</div>
           <div class="q-btns">
             <button class="q-btn yes" onclick="answerQ('q5', true, this)">✓</button>
             <button class="q-btn no" onclick="answerQ('q5', false, this)">✗</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="journey-section">
-      <div class="journey-label">🏁 Overall Reflection</div>
-      <div class="q-list">
-        <div class="q-card" id="q6">
-          <div class="q-text">Would you recommend this course to a woman golfer friend?</div>
-          <div class="q-btns">
-            <button class="q-btn yes" onclick="answerQ('q6', true, this)">✓</button>
-            <button class="q-btn no" onclick="answerQ('q6', false, this)">✗</button>
-          </div>
-        </div>
-        <div class="q-card" id="q7">
-          <div class="q-text">Did you feel valued as a woman golfer at this course?</div>
-          <div class="q-btns">
-            <button class="q-btn yes" onclick="answerQ('q7', true, this)">✓</button>
-            <button class="q-btn no" onclick="answerQ('q7', false, this)">✗</button>
           </div>
         </div>
       </div>
@@ -609,7 +585,7 @@ let selectedSkill = null;
 let selectedGender = null;
 let activeCounty  = 'All';
 let allCourses    = [];
-let qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null };
+let qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null };
 
 const ZIP_COUNTIES = {
   '48301':'Oakland','48302':'Oakland','48303':'Oakland','48304':'Oakland','48305':'Oakland',
@@ -966,19 +942,6 @@ function selectSkill(el) {
   el.classList.add('selected');
   selectedSkill = el.querySelector('.skill-opt-label').textContent;
 }
-function selectGenderStep3(el, value) {
-  document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
-  document.getElementById('womenQuestionsSection').style.display = 'none';
-  document.getElementById('returningBanner').style.display = 'none';
-  el.classList.add('selected');
-  selectedGender = value === 'Woman' ? 'Woman' : null;
-  document.getElementById('womenQuestionsSection').style.display = value === 'Woman' ? 'block' : 'none';
-  if (value !== 'Woman') {
-    qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null };
-    document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected'));
-    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered-yes', 'answered-no'));
-  }
-}
 function selectGender(el) {
   document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
@@ -1051,17 +1014,6 @@ function loadSavedInfo() {
         if (o.querySelector('.skill-opt-label').textContent === info.skill) {
           o.classList.add('selected');
           selectedSkill = info.skill;
-        }
-      });
-    }
-    if (info.gender) {
-      selectedGender = info.gender;
-      document.querySelectorAll('.gender-opt').forEach(o => {
-        if (o.textContent.trim() === info.gender) {
-          o.classList.add('selected');
-          if (info.gender === 'Woman') {
-            document.getElementById('womenQuestionsSection').style.display = 'block';
-          }
         }
       });
     }
@@ -1141,13 +1093,11 @@ async function submitReview() {
       tags_negative: [...document.querySelectorAll('.chip.bad.selected')].map(c => c.textContent),
       review_text: document.getElementById('reviewText').value || null,
       solo_player: soloPlayer, first_visit: firstTime, verified: false, region: 'Michigan',
-      q_safe_parking:      qAnswers.q1,
-      q_staff_greeting:    qAnswers.q2,
+      q_tee_box_condition: qAnswers.q1,
+      q_healthy_food:      qAnswers.q2,
       q_proshop_women:     qAnswers.q3,
       q_restroom_standard: qAnswers.q4,
-      q_oncourse_restroom: qAnswers.q5,
-      q_recommend:         qAnswers.q6,
-      q_felt_valued:       qAnswers.q7
+      q_recommend:         qAnswers.q5
     });
     if (reviewError) throw new Error('Could not save review: ' + reviewError.message);
 
@@ -1173,7 +1123,7 @@ function resetForm() {
   selectedCourse = selectedCourseId = selectedCourseLoc = null;
   ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
   soloPlayer = false; firstTime = false; selectedSkill = null; selectedGender = null; activeCounty = 'All';
-  qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null, q6: null, q7: null };
+  qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null };
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step1').classList.add('active');
   document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
@@ -1222,20 +1172,6 @@ updateProgress();
 // Pre-load saved reviewer info on page start
 try {
   const saved = getCookie('fop_reviewer');
-  if (saved) {
-    const info = JSON.parse(saved);
-    if (info.gender) {
-      selectedGender = info.gender;
-      document.querySelectorAll('.gender-opt').forEach(o => {
-        if (o.textContent.trim() === info.gender) {
-          o.classList.add('selected');
-          if (info.gender === 'Woman') {
-            document.getElementById('womenQuestionsSection').style.display = 'block';
-          }
-        }
-      });
-    }
-  }
 } catch(e) {}
 </script>
 
