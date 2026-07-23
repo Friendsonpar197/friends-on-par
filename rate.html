@@ -317,42 +317,12 @@ function closeNav() {
   </div>
 
   <!-- STEP 2: RATINGS -->
+  <!-- STEP 2: TAGS + YES/NO + REVIEW -->
   <div class="step-panel" id="step2">
     <div class="step-header">
       <div class="step-label">Step 2</div>
-      <div class="step-title">Rate your experience</div>
-      <div class="step-sub">Tap the stars — all 5 categories required</div>
-    </div>
-    <div class="rating-categories">
-      <div class="rating-row" id="row-facilities">
-        <div class="rating-top"><div><div class="rating-cat-name">🏠 Facilities &amp; Locker Room</div><div class="rating-cat-desc">Cleanliness, women's amenities, restrooms</div></div><div class="rating-val" id="val-facilities">–</div></div>
-        <div class="stars-row" data-cat="facilities"><span class="star" onclick="rate('facilities',1)">★</span><span class="star" onclick="rate('facilities',2)">★</span><span class="star" onclick="rate('facilities',3)">★</span><span class="star" onclick="rate('facilities',4)">★</span><span class="star" onclick="rate('facilities',5)">★</span></div>
-      </div>
-      <div class="rating-row" id="row-pace">
-        <div class="rating-top"><div><div class="rating-cat-name">⚡ Pace of Play</div><div class="rating-cat-desc">Wait times, flow, respect for all skill levels</div></div><div class="rating-val" id="val-pace">–</div></div>
-        <div class="stars-row" data-cat="pace"><span class="star" onclick="rate('pace',1)">★</span><span class="star" onclick="rate('pace',2)">★</span><span class="star" onclick="rate('pace',3)">★</span><span class="star" onclick="rate('pace',4)">★</span><span class="star" onclick="rate('pace',5)">★</span></div>
-      </div>
-      <div class="rating-row" id="row-safety">
-        <div class="rating-top"><div><div class="rating-cat-name">🛡️ Safety &amp; Parking</div><div class="rating-cat-desc">Well-lit, secure, comfortable environment</div></div><div class="rating-val" id="val-safety">–</div></div>
-        <div class="stars-row" data-cat="safety"><span class="star" onclick="rate('safety',1)">★</span><span class="star" onclick="rate('safety',2)">★</span><span class="star" onclick="rate('safety',3)">★</span><span class="star" onclick="rate('safety',4)">★</span><span class="star" onclick="rate('safety',5)">★</span></div>
-      </div>
-      <div class="rating-row" id="row-staff">
-        <div class="rating-top"><div><div class="rating-cat-name">😊 Staff Attitude</div><div class="rating-cat-desc">Welcoming, respectful, helpful to women players</div></div><div class="rating-val" id="val-staff">–</div></div>
-        <div class="stars-row" data-cat="staff"><span class="star" onclick="rate('staff',1)">★</span><span class="star" onclick="rate('staff',2)">★</span><span class="star" onclick="rate('staff',3)">★</span><span class="star" onclick="rate('staff',4)">★</span><span class="star" onclick="rate('staff',5)">★</span></div>
-      </div>
-      <div class="rating-row" id="row-vibe">
-        <div class="rating-top"><div><div class="rating-cat-name">🌿 Overall Vibe</div><div class="rating-cat-desc">Would you feel at home? Recommend to a friend?</div></div><div class="rating-val" id="val-vibe">–</div></div>
-        <div class="stars-row" data-cat="vibe"><span class="star" onclick="rate('vibe',1)">★</span><span class="star" onclick="rate('vibe',2)">★</span><span class="star" onclick="rate('vibe',3)">★</span><span class="star" onclick="rate('vibe',4)">★</span><span class="star" onclick="rate('vibe',5)">★</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 3: TAGS + YES/NO + REVIEW -->
-  <div class="step-panel" id="step3">
-    <div class="step-header">
-      <div class="step-label">Step 3</div>
       <div class="step-title">Your experience</div>
-      <div class="step-sub">Quick tags and a few yes/no questions</div>
+      <div class="step-sub">Quick tags and 5 yes/no questions</div>
     </div>
 
     <!-- TAGS -->
@@ -456,10 +426,10 @@ function closeNav() {
     </div>
   </div>
 
-  <!-- STEP 4: ABOUT YOU -->
-  <div class="step-panel" id="step4">
+  <!-- STEP 3: ABOUT YOU -->
+  <div class="step-panel" id="step3">
     <div class="step-header">
-      <div class="step-label">Step 4</div>
+      <div class="step-label">Step 3</div>
       <div class="step-title">A few details about you</div>
       <div class="step-sub">Helps us verify your review and personalize results</div>
     </div>
@@ -507,10 +477,10 @@ function closeNav() {
     </div>
   </div>
 
-  <!-- STEP 5: CONFIRM -->
-  <div class="step-panel" id="step5">
+  <!-- STEP 4: CONFIRM -->
+  <div class="step-panel" id="step4">
     <div class="step-header">
-      <div class="step-label">Step 5 of 5 — Final Step</div>
+      <div class="step-label">Step 4 of 4 — Final Step</div>
       <div class="step-title">Review your submission</div>
       <div class="step-sub">Does everything look right? Tap Submit My Review below to complete.</div>
     </div>
@@ -522,16 +492,12 @@ function closeNav() {
       </div>
       <div class="confirm-course-name" id="confirmCourseName">–</div>
       <div class="confirm-loc" id="confirmCourseLoc">–</div>
-      <div class="overall-score-big">
-        <div class="score-num" id="overallScore">–</div>
-        <div class="score-label">Overall Score<br><span style="font-size:0.78rem;opacity:0.7;">Average of your 5 ratings × 2</span></div>
-      </div>
       <div class="confirm-scores">
-        <div class="confirm-score-item"><div class="cscore-label">Facilities</div><div class="cscore-stars" id="cs-facilities">–</div></div>
-        <div class="confirm-score-item"><div class="cscore-label">Pace of Play</div><div class="cscore-stars" id="cs-pace">–</div></div>
-        <div class="confirm-score-item"><div class="cscore-label">Safety</div><div class="cscore-stars" id="cs-safety">–</div></div>
-        <div class="confirm-score-item"><div class="cscore-label">Staff</div><div class="cscore-stars" id="cs-staff">–</div></div>
-        <div class="confirm-score-item" style="grid-column:span 2"><div class="cscore-label">Overall Vibe</div><div class="cscore-stars" id="cs-vibe">–</div></div>
+        <div class="confirm-score-item"><div class="cscore-label">🌺 Tee boxes</div><div class="cscore-stars" id="cs-tee">–</div></div>
+        <div class="confirm-score-item"><div class="cscore-label">🥗 Healthy food</div><div class="cscore-stars" id="cs-food">–</div></div>
+        <div class="confirm-score-item"><div class="cscore-label">🛍 Pro shop</div><div class="cscore-stars" id="cs-proshop">–</div></div>
+        <div class="confirm-score-item"><div class="cscore-label">🚻 Restrooms</div><div class="cscore-stars" id="cs-restroom">–</div></div>
+        <div class="confirm-score-item" style="grid-column:span 2"><div class="cscore-label">👍 Recommend</div><div class="cscore-stars" id="cs-recommend">–</div></div>
       </div>
     </div>
     <div style="background:#e8f7ee;border:2px solid var(--lime);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;text-align:center;font-size:0.85rem;color:var(--green);font-weight:600;">
@@ -574,7 +540,7 @@ const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let currentStep = 1;
-const totalSteps = 5;
+const totalSteps = 4;
 let selectedCourse    = null;
 let selectedCourseId  = null;
 let selectedCourseLoc = null;
@@ -898,8 +864,7 @@ function goNext() {
   if (currentStep === 1) {
     if (!selectedCourse) { alert('Please select or enter a course.'); return; }
   }
-  if (currentStep === 2 && !Object.values(ratings).every(v => v > 0)) { alert('Please rate all 5 categories to continue.'); return; }
-  if (currentStep === 4) {
+  if (currentStep === 3) {
     const email = document.getElementById('emailField').value.trim();
     if (!email || !email.includes('@')) { alert('Please enter a valid email address.'); return; }
   }
@@ -1049,13 +1014,12 @@ function answerQ(qId, answer, btn) {
 function buildConfirmStep() {
   document.getElementById('confirmCourseName').textContent = selectedCourse || '–';
   document.getElementById('confirmCourseLoc').textContent = selectedCourseLoc || '–';
-  const cats = ['facilities', 'pace', 'safety', 'staff', 'vibe'];
-  cats.forEach(c => {
-    const v = ratings[c];
-    document.getElementById('cs-' + c).textContent = v ? '★'.repeat(v) + '☆'.repeat(5 - v) : '–';
-  });
-  const avg = cats.reduce((a, c) => a + ratings[c], 0) / cats.length;
-  document.getElementById('overallScore').textContent = avg ? (avg * 2).toFixed(1) : '–';
+  const fmt = v => v === true ? '✓ Yes' : v === false ? '✗ No' : '–';
+  document.getElementById('cs-tee').textContent      = fmt(qAnswers.q1);
+  document.getElementById('cs-food').textContent     = fmt(qAnswers.q2);
+  document.getElementById('cs-proshop').textContent  = fmt(qAnswers.q3);
+  document.getElementById('cs-restroom').textContent = fmt(qAnswers.q4);
+  document.getElementById('cs-recommend').textContent = fmt(qAnswers.q5);
   document.getElementById('errorBanner').classList.remove('show');
 }
 
@@ -1079,16 +1043,10 @@ async function submitReview() {
       .select('id').single();
     if (reviewerError) throw new Error('Could not save reviewer: ' + reviewerError.message);
 
-    const cats = ['facilities', 'pace', 'safety', 'staff', 'vibe'];
-    const avg  = cats.reduce((a, c) => a + ratings[c], 0) / cats.length;
-    const overallScore = parseFloat((avg * 2).toFixed(1));
-
     const { error: reviewError } = await db.from('reviews').insert({
       course_id: selectedCourseId, course_name: selectedCourse, course_location: selectedCourseLoc,
       reviewer_id: reviewer.id, reviewer_name: firstName || null, reviewer_zip: zip || null,
-      reviewer_skill: selectedSkill || null, score_facilities: ratings.facilities,
-      score_pace: ratings.pace, score_safety: ratings.safety, score_staff: ratings.staff,
-      score_vibe: ratings.vibe, score_overall: overallScore,
+      reviewer_skill: selectedSkill || null,
       tags_positive: [...document.querySelectorAll('.chip.good.selected')].map(c => c.textContent),
       tags_negative: [...document.querySelectorAll('.chip.bad.selected')].map(c => c.textContent),
       review_text: document.getElementById('reviewText').value || null,
@@ -1121,15 +1079,11 @@ async function submitReview() {
 function resetForm() {
   currentStep = 1;
   selectedCourse = selectedCourseId = selectedCourseLoc = null;
-  ratings = { facilities: 0, pace: 0, safety: 0, staff: 0, vibe: 0 };
   soloPlayer = false; firstTime = false; selectedSkill = null; selectedGender = null; activeCounty = 'All';
   qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null };
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('step1').classList.add('active');
-  document.querySelectorAll('.star').forEach(s => s.classList.remove('lit'));
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
-  document.querySelectorAll('.rating-row').forEach(r => r.classList.remove('rated'));
-  document.querySelectorAll('.rating-val').forEach(v => v.textContent = '–');
   document.querySelectorAll('.skill-opt').forEach(o => o.classList.remove('selected'));
   document.querySelectorAll('.gender-opt').forEach(o => o.classList.remove('selected'));
   document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('selected'));
