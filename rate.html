@@ -311,6 +311,9 @@ function closeNav() {
     <div class="not-listed" id="notListedBox" onclick="openNotListed()">
       <div class="not-listed-label">+ My course isn't listed</div>
       <div class="not-listed-sub">Tap to suggest a public course — we'll add it right away</div>
+
+    <!-- Existing reviews panel — shown when a course is selected -->
+    <div id="existingReviewsPanel" style="display:none;background:var(--surface,#f9f9f6);border:1.5px solid var(--border);border-radius:12px;padding:0.9rem 1rem;margin-bottom:1rem;"></div>
       <div id="notListedForm" style="display:none;" onclick="event.stopPropagation()">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseName" type="text" placeholder="Course name *">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCity" type="text" placeholder="City *">
@@ -745,11 +748,69 @@ async function searchByCounty(county) {
   });
 }
 
-function selectCourse(el, id, name, loc) {
+async function selectCourse(el, id, name, loc) {
   document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
   selectedCourseId = id; selectedCourse = name; selectedCourseLoc = loc;
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // Load and display existing reviews for this course
+  const panel = document.getElementById('existingReviewsPanel');
+  panel.style.display = 'block';
+  panel.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--muted);font-size:0.85rem;">Loading reviews...</div>';
+
+  const { data: reviews, error } = await db
+    .from('reviews')
+    .select('reviewer_name, score_overall, q_tee_box_condition, q_healthy_food, q_proshop_women, q_restroom_standard, q_recommend, submitted_at')
+    .eq('course_id', id)
+    .order('submitted_at', { ascending: false })
+    .limit(10);
+
+  if (error || !reviews || reviews.length === 0) {
+    panel.innerHTML = '<div style="text-align:center;padding:0.8rem;color:var(--muted);font-size:0.85rem;">No reviews yet — be the first!</div>';
+    return;
+  }
+
+  const fmt = v => v === true ? '<span style="color:var(--green);font-weight:600;">✓</span>' : v === false ? '<span style="color:var(--coral);font-weight:600;">✗</span>' : '<span style="color:var(--muted);">–</span>';
+
+  const avgScore = reviews.filter(r => r.score_overall).reduce((a, r) => a + r.score_overall, 0) / reviews.filter(r => r.score_overall).length;
+
+  let html = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.8rem;">
+      <div style="font-size:0.8rem;font-weight:600;color:var(--navy);letter-spacing:0.04em;text-transform:uppercase;">What others are saying</div>
+      ${avgScore ? `<div style="background:var(--lime);color:var(--navy);font-size:0.78rem;font-weight:700;padding:3px 10px;border-radius:100px;">${avgScore.toFixed(1)}/10 avg</div>` : ''}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--gray);border-radius:8px;padding:6px;margin-bottom:0.8rem;font-size:0.7rem;text-align:center;">
+      <div style="color:var(--muted);">🌺 Tees</div>
+      <div style="color:var(--muted);">🥗 Food</div>
+      <div style="color:var(--muted);">🛍 Shop</div>
+      <div style="color:var(--muted);">🚻 Restrooms</div>
+      <div style="color:var(--muted);">👍 Recommend</div>
+    </div>`;
+
+  reviews.forEach(r => {
+    const firstName = r.reviewer_name ? r.reviewer_name.split(' ')[0] : 'Anonymous';
+    const date = new Date(r.submitted_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    html += `
+    <div style="border:1px solid var(--border);border-radius:10px;padding:0.7rem 0.9rem;margin-bottom:0.5rem;background:var(--white);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">
+        <div style="font-size:0.85rem;font-weight:600;color:var(--navy);">${firstName}</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          ${r.score_overall ? `<span style="background:var(--green);color:white;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:100px;">${r.score_overall}/10</span>` : ''}
+          <span style="font-size:0.72rem;color:var(--muted);">${date}</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;text-align:center;font-size:0.88rem;">
+        <div>${fmt(r.q_tee_box_condition)}</div>
+        <div>${fmt(r.q_healthy_food)}</div>
+        <div>${fmt(r.q_proshop_women)}</div>
+        <div>${fmt(r.q_restroom_standard)}</div>
+        <div>${fmt(r.q_recommend)}</div>
+      </div>
+    </div>`;
+  });
+
+  panel.innerHTML = html;
 }
 
 function openNotListed() {
@@ -1067,6 +1128,8 @@ function resetForm() {
   document.getElementById('reviewText').value = '';
   document.getElementById('charCount').textContent = '0';
   document.getElementById('soloToggle').classList.remove('on');
+  document.getElementById('existingReviewsPanel').style.display = 'none';
+  document.getElementById('existingReviewsPanel').innerHTML = '';
   overallRating = null;
   document.querySelectorAll('.rating-num-btn').forEach(b => b.classList.remove('selected','low','mid'));
   document.getElementById('ratingLabel').textContent = 'Tap a number to rate';
@@ -1127,3 +1190,4 @@ function closeNav() {
 
 </body>
 </html>
+
