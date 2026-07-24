@@ -499,6 +499,14 @@ function closeNav() {
     </div>
   </div>
   <button class="btn-another" onclick="resetForm()">Rate Another Course</button>
+
+  <!-- Text invite -->
+  <div style="background:var(--white);border:2px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;margin-top:0.8rem;text-align:left;">
+    <div style="font-size:0.8rem;font-weight:600;color:var(--navy);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.4rem;">📲 Know someone who played there?</div>
+    <div style="font-size:0.85rem;color:var(--muted);margin-bottom:0.9rem;line-height:1.5;">Invite a friend to add her review — tap to open your Messages app with the note pre-written.</div>
+    <a id="smsShareBtn" href="#" style="display:block;text-align:center;background:#2d6a4f;color:white;font-size:0.95rem;font-weight:600;padding:0.9rem;border-radius:10px;text-decoration:none;">💬 Text a Friend to Rate This Course</a>
+  </div>
+
   <a href="dashboard.html" class="btn-home" style="display:block;text-align:center;text-decoration:none;padding:0.9rem 2rem;border-radius:12px;background:var(--gray);color:var(--dark);font-size:0.95rem;font-weight:500;margin-top:0.7rem;">View My Dashboard</a>
 </div>
 
@@ -1051,6 +1059,13 @@ function showSuccessScreen() {
     reviewTextEl.style.display = 'block';
   }
   document.getElementById('successScreen').classList.add('show');
+
+  // Build pre-filled SMS invite
+  const courseUrl = 'https://friendsonpar.com/rate.html';
+  const smsBody = encodeURIComponent(
+    `I just rated ${selectedCourse} on Friends on Par — a golf review site built for women golfers. Have you played it? I'd love to see your take! Add your review here: ${courseUrl}`
+  );
+  document.getElementById('smsShareBtn').href = `sms:?&body=${smsBody}`;
 }
 
 async function submitReview() {
@@ -1063,7 +1078,9 @@ async function submitReview() {
     if (saved) { const info = JSON.parse(saved); email = info.email || ''; firstName = info.firstName || ''; zip = info.zip || ''; }
   } catch(e) {}
   if (!email || !email.includes('@')) {
-    const entered = prompt('Please enter your email address to submit your review:');
+    const enteredName = prompt('First name (so we can credit your review):');
+    if (enteredName) firstName = enteredName.trim();
+    const entered = prompt('Your email address (to verify your review):');
     if (!entered || !entered.includes('@')) { submitBtn.disabled = false; return; }
     email = entered.trim().toLowerCase();
   }
@@ -1102,6 +1119,7 @@ async function submitReview() {
     loadingOverlay.style.display = 'none';
     document.getElementById('mainContent').style.display = 'none';
     document.getElementById('navBtns').style.display = 'none';
+    document.getElementById('successScreen').querySelector('.success-title').textContent = firstName ? `Thanks, ${firstName}! 🎉` : 'Review Submitted! 🎉';
     showSuccessScreen();
     window.scrollTo(0, 0);
 
@@ -1190,4 +1208,3 @@ function closeNav() {
 
 </body>
 </html>
-
