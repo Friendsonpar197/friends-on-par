@@ -244,7 +244,7 @@ function closeNav() {
 
     <div id="reviewsList"></div>
 
-    <a href="/" class="rate-btn">🏌️ Rate This Course</a>
+    <a id="rateCourseBtn" href="/rate.html" class="rate-btn">⛳ Rate This Course</a>
   </div>
 </div>
 
@@ -360,6 +360,7 @@ async function loadCourse() {
     });
   }
 
+  document.getElementById('rateCourseBtn').href = `/rate.html?course_id=${courseId}`;
   document.getElementById('loadingState').style.display  = 'none';
   document.getElementById('courseContent').style.display = 'block';
 }
