@@ -602,14 +602,14 @@ async function searchCourses(val) {
 
     const { data: nameResults, error: nameError } = await db
       .from('courses')
-      .select('id, name, location, county, state, review_count, women_approved')
+      .select('id, name, location, county, state, review_count, women_approved, is_private')
       .ilike('name', '%' + searchTerm + '%')
       .order('name')
       .limit(15);
 
     const { data: locResults } = await db
       .from('courses')
-      .select('id, name, location, county, state, review_count, women_approved')
+      .select('id, name, location, county, state, review_count, women_approved, is_private')
       .ilike('location', '%' + searchTerm + '%')
       .order('name')
       .limit(10);
@@ -641,6 +641,7 @@ async function searchCourses(val) {
             <span class="course-loc">${c.location}</span>
             <span class="course-county-tag">${c.state || c.county || ''}</span>
             ${c.women_approved ? '<span style="font-size:0.65rem;font-weight:600;color:#FF00FF;padding:0.1rem 0.5rem;border-radius:100px;background:#ffe0ff;">⭐ Women-Approved</span>' : ''}
+            ${c.is_private ? '<span style="font-size:0.65rem;font-weight:600;color:#993556;padding:0.1rem 0.5rem;border-radius:100px;background:#FBEAF0;">🔒 Private</span>' : ''}
           </div>
           <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
             <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}','${c.state || ''}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
@@ -724,8 +725,7 @@ async function searchByCounty(county) {
 
   const { data, error } = await db
     .from('courses')
-    .select('id, name, location, county, state, review_count, women_approved')
-    .ilike('county', county)
+    .select('id, name, location, county, state, review_count, women_approved, is_private')
     .order('name')
     .limit(30);
 
@@ -745,6 +745,7 @@ async function searchByCounty(county) {
           <span class="course-loc">${c.location}</span>
           <span class="course-county-tag">${c.state || c.county || ''}</span>
           ${c.women_approved ? '<span style="font-size:0.65rem;font-weight:600;color:#FF00FF;padding:0.1rem 0.5rem;border-radius:100px;background:#ffe0ff;">⭐ Women-Approved</span>' : ''}
+          ${c.is_private ? '<span style="font-size:0.65rem;font-weight:600;color:#993556;padding:0.1rem 0.5rem;border-radius:100px;background:#FBEAF0;">🔒 Private</span>' : ''}
         </div>
         <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
           <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}','${c.state || ''}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
@@ -860,7 +861,7 @@ async function submitNewCourse() {
       needs_review: true,
       submitted_by: document.getElementById('emailField') ? document.getElementById('emailField').value.trim() : null
     })
-    .select('id, name, location, county, review_count, women_approved')
+    .select('id, name, location, county, review_count, women_approved, is_private')
     .single();
 
   if (error) {
