@@ -336,8 +336,8 @@ let currentReviewer = null;
 
 const PROFILE_FIELDS = ['gender','skill_level','play_frequency','play_duration','course_preference','round_preference','league'];
 
-async function lookupProfile() {
-  const email = document.getElementById('emailInput').value.trim().toLowerCase();
+async function lookupProfile(emailOverride) {
+  const email = emailOverride || document.getElementById('emailInput').value.trim().toLowerCase();
   if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
 
   const btn = document.getElementById('lookupBtn');
@@ -457,6 +457,24 @@ function showError(msg) {
   if (msg) el.textContent = msg;
   el.classList.add('show');
 }
+
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const saved = getCookie('fop_reviewer');
+    if (saved) {
+      const info = JSON.parse(saved);
+      if (info.email) {
+        lookupProfile(info.email);
+        return;
+      }
+    }
+  } catch(e) {}
+});
 </script>
 </body>
 </html>
