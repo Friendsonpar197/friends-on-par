@@ -647,6 +647,7 @@ async function searchCourses(val) {
             <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}','${c.state || ''}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
             ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
           </div>
+          ${!c.is_private ? `<div style="margin-top:0.4rem;text-align:right;"><button type="button" onclick="event.stopPropagation();flagAsPrivate('${c.id}',this)" style="background:none;border:none;font-size:0.72rem;color:var(--muted);cursor:pointer;text-decoration:underline;padding:0;">🔒 Flag as private</button></div>` : ''}
         </div>
         <div class="course-check">✓</div>`;
       div.onclick = () => selectCourse(div, c.id, c.name, c.location, c.state);
@@ -751,11 +752,32 @@ async function searchByCounty(county) {
           <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}','${c.state || ''}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
           ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
         </div>
+        ${!c.is_private ? `<div style="margin-top:0.4rem;text-align:right;"><button type="button" onclick="event.stopPropagation();flagAsPrivate('${c.id}',this)" style="background:none;border:none;font-size:0.72rem;color:var(--muted);cursor:pointer;text-decoration:underline;padding:0;">🔒 Flag as private</button></div>` : ''}
       </div>
       <div class="course-check">✓</div>`;
     div.onclick = () => selectCourse(div, c.id, c.name, c.location, c.state);
     container.appendChild(div);
   });
+}
+
+async function flagAsPrivate(courseId, btn) {
+  btn.textContent = 'Flagging...';
+  btn.disabled = true;
+  const { error } = await db
+    .from('courses')
+    .update({ is_private: true })
+    .eq('id', courseId);
+  if (error) {
+    btn.textContent = '🔒 Flag as private';
+    btn.disabled = false;
+  } else {
+    const meta = btn.closest('.course-meta') || btn.closest('.course-info').querySelector('.course-meta');
+    const badge = document.createElement('span');
+    badge.style.cssText = 'font-size:0.65rem;font-weight:600;color:#993556;padding:0.1rem 0.5rem;border-radius:100px;background:#FBEAF0;';
+    badge.textContent = '🔒 Private';
+    if (meta) meta.appendChild(badge);
+    btn.parentElement.remove();
+  }
 }
 
 async function selectCourse(el, id, name, loc, state) {
