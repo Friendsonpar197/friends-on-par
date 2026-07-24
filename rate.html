@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Rate a Course — Friends on Par · Michigan</title>
+<title>Rate a Course — Friends on Par · Women's Golf Reviews</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -318,14 +318,14 @@ function closeNav() {
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseName" type="text" placeholder="Course name *">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCity" type="text" placeholder="City *">
         <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseCounty" type="text" placeholder="County (e.g. Oakland)">
-        <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseState" type="text" placeholder="State (e.g. Michigan)" value="Michigan">
+        <input class="not-listed-input" style="display:block;margin-bottom:0.5rem;" id="newCourseState" type="text" placeholder="State (e.g. Michigan, Florida)">
         <button type="button" onclick="event.stopPropagation();event.preventDefault();submitNewCourse()" style="width:100%;padding:0.7rem;background:var(--green);color:white;border:none;border-radius:10px;font-family:DM Sans,sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">Add This Course</button>
         <div id="newCourseStatus" style="font-size:0.78rem;text-align:center;margin-top:0.5rem;color:var(--green);display:none;"></div>
       </div>
     </div>
     <div class="data-explainer">
       <div class="data-explainer-icon">⛳</div>
-      <div class="data-explainer-text">Focused on <strong>public courses in Michigan</strong>. Coverage expanding soon!</div>
+      <div class="data-explainer-text">Covering public courses across Michigan, Ohio, Illinois, Indiana, Wisconsin, Florida, Oregon and Arizona.</div>
     </div>
   </div>
 
@@ -424,7 +424,7 @@ function closeNav() {
     <!-- WRITTEN REVIEW -->
     <div style="margin:1.2rem 0 1rem;">
       <div class="chips-label" style="margin-bottom:0.6rem;">✍️ In your own words (optional)</div>
-      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another golfer in Michigan to know about this course?" oninput="updateCharCount()"></textarea>
+      <textarea class="review-textarea" id="reviewText" maxlength="500" placeholder="What would you want another woman golfer to know about this course?" oninput="updateCharCount()"></textarea>
       <div class="char-count"><span id="charCount">0</span>/500</div>
     </div>
     <div class="toggle-row">
@@ -519,6 +519,7 @@ const totalSteps = 2;
 let selectedCourse    = null;
 let selectedCourseId  = null;
 let selectedCourseLoc = null;
+let selectedCourseState = null;
 let soloPlayer    = false;
 let firstTime     = false;
 let selectedSkill = null;
@@ -638,16 +639,16 @@ async function searchCourses(val) {
           <div class="course-name-opt">${c.name}</div>
           <div class="course-meta">
             <span class="course-loc">${c.location}</span>
-            <span class="course-county-tag">${c.county || ''}</span>
+            <span class="course-county-tag">${c.state || c.county || ''}</span>
             ${c.women_approved ? '<span style="font-size:0.65rem;font-weight:600;color:#FF00FF;padding:0.1rem 0.5rem;border-radius:100px;background:#ffe0ff;">⭐ Women-Approved</span>' : ''}
           </div>
           <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
-            <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
+            <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}','${c.state || ''}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
             ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
           </div>
         </div>
         <div class="course-check">✓</div>`;
-      div.onclick = () => selectCourse(div, c.id, c.name, c.location);
+      div.onclick = () => selectCourse(div, c.id, c.name, c.location, c.state);
       container.appendChild(div);
     });
   }, 300);
@@ -742,24 +743,24 @@ async function searchByCounty(county) {
         <div class="course-name-opt">${c.name}</div>
         <div class="course-meta">
           <span class="course-loc">${c.location}</span>
-          <span class="course-county-tag">${c.county || ''}</span>
+          <span class="course-county-tag">${c.state || c.county || ''}</span>
           ${c.women_approved ? '<span style="font-size:0.65rem;font-weight:600;color:#FF00FF;padding:0.1rem 0.5rem;border-radius:100px;background:#ffe0ff;">⭐ Women-Approved</span>' : ''}
         </div>
         <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
-          <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
+          <button type="button" onclick="event.stopPropagation();selectCourse(this.closest('.course-option'),'${c.id}','${c.name}','${c.location}','${c.state || ''}')" style="flex:1;padding:0.4rem 0.6rem;background:var(--green);color:white;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;font-family:DM Sans,sans-serif;cursor:pointer;">⛳ Rate This Course</button>
           ${c.review_count > 0 ? `<a href="course.html?id=${c.id}" onclick="event.stopPropagation()" style="flex:1;padding:0.4rem 0.6rem;background:#e8f7ee;color:var(--green);border:none;border-radius:8px;font-size:0.78rem;font-weight:600;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;">👁 View ${c.review_count} Review${c.review_count === 1 ? '' : 's'}</a>` : ''}
         </div>
       </div>
       <div class="course-check">✓</div>`;
-    div.onclick = () => selectCourse(div, c.id, c.name, c.location);
+    div.onclick = () => selectCourse(div, c.id, c.name, c.location, c.state);
     container.appendChild(div);
   });
 }
 
-async function selectCourse(el, id, name, loc) {
+async function selectCourse(el, id, name, loc, state) {
   document.querySelectorAll('.course-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
-  selectedCourseId = id; selectedCourse = name; selectedCourseLoc = loc;
+  selectedCourseId = id; selectedCourse = name; selectedCourseLoc = loc; selectedCourseState = state || null;
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   // Load and display existing reviews for this course
@@ -846,7 +847,7 @@ async function submitNewCourse() {
   status.textContent = 'Adding course...';
 
   const state = document.getElementById('newCourseState').value.trim() || 'Michigan';
-  const stateAbbr = state.toLowerCase() === 'michigan' ? 'MI' : state.toLowerCase() === 'florida' ? 'FL' : state.substring(0,2).toUpperCase();
+  const stateAbbr = { michigan:'MI', florida:'FL', ohio:'OH', illinois:'IL', indiana:'IN', wisconsin:'WI', oregon:'OR', arizona:'AZ' }[state.toLowerCase()] || state.substring(0,2).toUpperCase();
 
   const { data: newCourse, error } = await db
     .from('courses')
@@ -878,7 +879,7 @@ async function submitNewCourse() {
   document.getElementById('newCourseName').value = '';
   document.getElementById('newCourseCity').value = '';
   document.getElementById('newCourseCounty').value = '';
-  document.getElementById('newCourseState').value = 'Michigan';
+  document.getElementById('newCourseState').value = '';
   renderCourses(document.getElementById('courseSearch').value, activeCounty);
 }
 
@@ -1104,7 +1105,7 @@ async function submitReview() {
       tags_positive: [...document.querySelectorAll('.chip.good.selected')].map(c => c.textContent),
       tags_negative: [...document.querySelectorAll('.chip.bad.selected')].map(c => c.textContent),
       review_text: document.getElementById('reviewText').value || null,
-      solo_player: soloPlayer, first_visit: firstTime, verified: false, region: 'Michigan',
+      solo_player: soloPlayer, first_visit: firstTime, verified: false, region: selectedCourseState || null,
       q_tee_box_condition: qAnswers.q1,
       q_healthy_food:      qAnswers.q2,
       q_proshop_women:     qAnswers.q3,
@@ -1133,7 +1134,7 @@ async function submitReview() {
 
 function resetForm() {
   currentStep = 1;
-  selectedCourse = selectedCourseId = selectedCourseLoc = null;
+  selectedCourse = selectedCourseId = selectedCourseLoc = selectedCourseState = null;
   soloPlayer = false; firstTime = false; selectedSkill = null; selectedGender = null; activeCounty = 'All';
   qAnswers = { q1: null, q2: null, q3: null, q4: null, q5: null };
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
@@ -1163,7 +1164,7 @@ function resetForm() {
   document.getElementById('newCourseName').value = '';
   document.getElementById('newCourseCity').value = '';
   document.getElementById('newCourseCounty').value = '';
-  document.getElementById('newCourseState').value = 'Michigan';
+  document.getElementById('newCourseState').value = '';
   document.getElementById('newCourseStatus').style.display = 'none';
 
   document.getElementById('submitBtn').disabled = false;
