@@ -200,31 +200,40 @@ function closeNav() {
 
   <div class="container">
     <div class="section">
-      <div class="section-title">Category Scores</div>
+      <div class="section-title">Overall Score</div>
       <div class="category-row">
-        <div class="cat-label">🏠 Facilities</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-facilities"></div></div>
-        <div class="cat-score" id="score-facilities">–</div>
+        <div class="cat-label">⭐ Overall Rating</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-overall"></div></div>
+        <div class="cat-score" id="score-overall-bar">–</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Women's Experience</div>
+      <div class="category-row">
+        <div class="cat-label">🌺 Tee boxes flat & maintained</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-tee"></div></div>
+        <div class="cat-score" id="score-tee">–</div>
       </div>
       <div class="category-row">
-        <div class="cat-label">⚡ Pace of Play</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-pace"></div></div>
-        <div class="cat-score" id="score-pace">–</div>
+        <div class="cat-label">🥗 Healthy food available</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-food"></div></div>
+        <div class="cat-score" id="score-food">–</div>
       </div>
       <div class="category-row">
-        <div class="cat-label">🛡️ Safety</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-safety"></div></div>
-        <div class="cat-score" id="score-safety">–</div>
+        <div class="cat-label">🛍 Pro shop carries women's gear</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-proshop"></div></div>
+        <div class="cat-score" id="score-proshop">–</div>
       </div>
       <div class="category-row">
-        <div class="cat-label">😊 Staff</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-staff"></div></div>
-        <div class="cat-score" id="score-staff">–</div>
+        <div class="cat-label">🚻 Restrooms clean & maintained</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-restroom"></div></div>
+        <div class="cat-score" id="score-restroom">–</div>
       </div>
       <div class="category-row">
-        <div class="cat-label">🌿 Overall Vibe</div>
-        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-vibe"></div></div>
-        <div class="cat-score" id="score-vibe">–</div>
+        <div class="cat-label">👍 Would recommend to women</div>
+        <div class="cat-bar-wrap"><div class="cat-bar-fill" id="bar-recommend"></div></div>
+        <div class="cat-score" id="score-recommend">–</div>
       </div>
     </div>
 
@@ -284,12 +293,25 @@ async function loadCourse() {
 
   if (course.women_approved) document.getElementById('womenApprovedBadge').style.display = 'block';
 
-  [['facilities', course.score_facilities], ['pace', course.score_pace],
-   ['safety', course.score_safety], ['staff', course.score_staff], ['vibe', course.score_vibe]]
-  .forEach(([key, val]) => {
-    const v = parseFloat(val) || 0;
-    document.getElementById('bar-' + key).style.width   = (v / 5 * 100).toFixed(0) + '%';
-    document.getElementById('score-' + key).textContent = v > 0 ? (v * 2).toFixed(1) : '–';
+  // Overall score bar (out of 10)
+  const overallPct = overall > 0 ? (overall / 10 * 100).toFixed(0) : 0;
+  document.getElementById('bar-overall').style.width = overallPct + '%';
+  document.getElementById('score-overall-bar').textContent = overall > 0 ? overall.toFixed(1) + '/10' : '–';
+
+  // Yes/no question bars — show % yes from all reviews
+  const qFields = [
+    ['tee',       'q_tee_box_condition'],
+    ['food',      'q_healthy_food'],
+    ['proshop',   'q_proshop_women'],
+    ['restroom',  'q_restroom_standard'],
+    ['recommend', 'q_recommend']
+  ];
+  qFields.forEach(([key, field]) => {
+    const answered = (reviews || []).filter(r => r[field] !== null && r[field] !== undefined);
+    const yesCount = answered.filter(r => r[field] === true).length;
+    const pct = answered.length > 0 ? Math.round(yesCount / answered.length * 100) : null;
+    document.getElementById('bar-' + key).style.width = (pct || 0) + '%';
+    document.getElementById('score-' + key).textContent = pct !== null ? pct + '% yes' : '–';
   });
 
   const list = document.getElementById('reviewsList');
@@ -302,11 +324,10 @@ async function loadCourse() {
       const reviewerPts = r.reviewers?.points_lifetime || 0;
       const reviewerBadge = getBadge(reviewerPts);
       const showBadge = reviewerPts >= 1000;
-      const score    = r.score_overall ? parseFloat(r.score_overall).toFixed(1) : '–';
+      const score    = r.score_overall ? parseFloat(r.score_overall).toFixed(1) + '/10' : '–';
       const date     = new Date(r.submitted_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-      const goodTags = (r.tags_positive || []).map(t => `<span class="tag good">${t}</span>`).join('');
-      const badTags  = (r.tags_negative || []).map(t => `<span class="tag bad">${t}</span>`).join('');
       const badges   = [r.solo_player && 'Solo player', r.first_visit && 'First visit', r.reviewer_skill].filter(Boolean);
+      const fmt = v => v === true ? '<span style="color:#2d6a4f;font-weight:600;">✓</span>' : v === false ? '<span style="color:#e05c3a;font-weight:600;">✗</span>' : '<span style="color:#aaa;">–</span>';
 
       list.innerHTML += `
         <div class="review-card">
@@ -320,7 +341,18 @@ async function loadCourse() {
             </div>
             <div class="review-score">${score}</div>
           </div>
-          ${goodTags || badTags ? `<div class="review-tags">${goodTags}${badTags}</div>` : ''}
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;text-align:center;margin:0.6rem 0;background:#f5f5f2;border-radius:8px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:#888;">🌺 Tees</div>
+            <div style="font-size:0.65rem;color:#888;">🥗 Food</div>
+            <div style="font-size:0.65rem;color:#888;">🛍 Shop</div>
+            <div style="font-size:0.65rem;color:#888;">🚻 Restrooms</div>
+            <div style="font-size:0.65rem;color:#888;">👍 Recommend</div>
+            <div style="font-size:1rem;">${fmt(r.q_tee_box_condition)}</div>
+            <div style="font-size:1rem;">${fmt(r.q_healthy_food)}</div>
+            <div style="font-size:1rem;">${fmt(r.q_proshop_women)}</div>
+            <div style="font-size:1rem;">${fmt(r.q_restroom_standard)}</div>
+            <div style="font-size:1rem;">${fmt(r.q_recommend)}</div>
+          </div>
           ${r.review_text ? `<div class="review-text">${r.review_text}</div>` : ''}
           ${badges.length ? `<div class="review-badges">${badges.map(b => `<span class="review-badge">${b}</span>`).join('')}</div>` : ''}
           <div class="review-date">${date}</div>
