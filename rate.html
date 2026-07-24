@@ -1061,7 +1061,7 @@ function showSuccessScreen() {
   document.getElementById('successScreen').classList.add('show');
 
   // Build pre-filled SMS invite
-  const courseUrl = 'https://friendsonpar.com/rate.html';
+  const courseUrl = `https://friendsonpar.com/course.html?id=${selectedCourseId}`;
   const smsBody = encodeURIComponent(
     `I just rated ${selectedCourse} on Friends on Par — a golf review site built for women golfers. Have you played it? I'd love to see your take! Add your review here: ${courseUrl}`
   );
@@ -1186,6 +1186,26 @@ updateProgress();
 try {
   const saved = getCookie('fop_reviewer');
 } catch(e) {}
+
+// Auto-select course if arriving from a shared link
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const preloadId = params.get('course_id');
+  if (preloadId) {
+    const { data: course } = await db
+      .from('courses')
+      .select('id, name, location')
+      .eq('id', preloadId)
+      .single();
+    if (course) {
+      document.getElementById('courseSearch').value = course.name;
+      const tempDiv = document.createElement('div');
+      tempDiv.className = 'course-option';
+      document.getElementById('courseSuggestions').appendChild(tempDiv);
+      await selectCourse(tempDiv, course.id, course.name, course.location);
+    }
+  }
+});
 </script>
 
 <script>
