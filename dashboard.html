@@ -339,8 +339,8 @@ function getBadge(pts) {
   return BADGES.find(b => pts >= b.min && pts <= b.max) || BADGES[0];
 }
 
-async function lookupReviewer() {
-  const email = document.getElementById('emailInput').value.trim().toLowerCase();
+async function lookupReviewer(emailOverride) {
+  const email = emailOverride || document.getElementById('emailInput').value.trim().toLowerCase();
   if (!email || !email.includes('@')) {
     showError('Please enter a valid email address.');
     return;
@@ -584,6 +584,24 @@ function submitFeedback() {
     btn.style.display = 'none';
   }, 800);
 }
+
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? decodeURIComponent(match[2]) : null;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const saved = getCookie('fop_reviewer');
+    if (saved) {
+      const info = JSON.parse(saved);
+      if (info.email) {
+        lookupReviewer(info.email);
+        return;
+      }
+    }
+  } catch(e) {}
+});
 </script>
 
 <script>
